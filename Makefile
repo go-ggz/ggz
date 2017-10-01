@@ -31,7 +31,7 @@ all: build
 
 .PHONY: tar
 tar:
-	tar -zcvf release.tar.gz bin env Dockerfile Makefile
+	tar -zcvf release.tar.gz bin Dockerfile Makefile
 
 .PHONY: check_image
 check_image:
