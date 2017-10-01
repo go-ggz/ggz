@@ -18,13 +18,7 @@ import (
 
 // ShortenedIndex index page.
 func ShortenedIndex(c *gin.Context) {
-	c.JSON(
-		http.StatusOK,
-		gin.H{
-			"code":  http.StatusOK,
-			"error": "Welcome shorten URL server",
-		},
-	)
+	c.Redirect(http.StatusMovedPermanently, config.Server.Host)
 }
 
 // ShortenURL form struct
