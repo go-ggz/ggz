@@ -1,6 +1,6 @@
 workspace:
   base: /go
-  path: src/github.com/alphabag/api
+  path: src/github.com/go-ggz/ggz
 
 clone:
   git:
@@ -26,70 +26,6 @@ pipeline:
       - make generate
       - make docker_build
       - make tar
-
-  scp:
-    image: appleboy/drone-scp
-    pull: true
-    host: dev.fullinn.tw
-    port: 22
-    username: deploy
-    target: /home/deploy/drone/${DRONE_REPO}
-    secrets:
-      - source: deploy_key
-        target: scp_key
-    source:
-      - release.tar.gz
-    when:
-      branch: master
-
-  ssh:
-    image: appleboy/drone-ssh
-    pull: true
-    host: dev.fullinn.tw
-    port: 22
-    username: deploy
-    command_timeout: 120
-    secrets:
-      - source: deploy_key
-        target: ssh_key
-    script:
-      - rm -rf ${DRONE_REPO} && mkdir -p ${DRONE_REPO}
-      - tar -zxmf /home/deploy/drone/${DRONE_REPO}/release.tar.gz -C ${DRONE_REPO}
-      - cd ${DRONE_REPO} && make dev
-    when:
-      branch: master
-
-  # scp:
-  #   image: appleboy/drone-scp
-  #   pull: true
-  #   host: prod.fullinn.tw
-  #   port: 22
-  #   username: deploy
-  #   target: /home/deploy/drone/${DRONE_REPO}
-  #   secrets:
-  #     - source: deploy_key
-  #       target: scp_key
-  #   source:
-  #     - release.tar.gz
-  #   when:
-  #     event: tag
-
-  # ssh:
-  #   image: appleboy/drone-ssh
-  #   pull: true
-  #   host: prod.fullinn.tw
-  #   port: 22
-  #   username: deploy
-  #   command_timeout: 120
-  #   secrets:
-  #     - source: deploy_key
-  #       target: ssh_key
-  #   script:
-  #     - rm -rf ${DRONE_REPO} && mkdir -p ${DRONE_REPO}
-  #     - tar -zxmf /home/deploy/drone/${DRONE_REPO}/release.tar.gz -C ${DRONE_REPO}
-  #     - cd ${DRONE_REPO} && make prod
-  #   when:
-  #     event: tag
 
   discord:
     image: appleboy/drone-discord
