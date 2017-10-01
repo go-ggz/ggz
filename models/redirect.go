@@ -3,6 +3,8 @@ package models
 import (
 	"time"
 
+	"github.com/go-ggz/ggz/config"
+
 	"github.com/appleboy/com/random"
 )
 
@@ -49,7 +51,7 @@ func NewShortenURL(url string) (_ *Redirect, err error) {
 	slug := ""
 
 	for exists == true {
-		slug = random.String(5)
+		slug = random.String(config.Server.ShortenSize)
 		exists, err = row.GetFromSlug(slug)
 		if err != nil {
 			return nil, err

@@ -30,6 +30,7 @@ type server struct {
 	Token         string
 	ShortenAddr   string
 	ShortenHost   string
+	ShortenSize   int
 }
 
 type storage struct {

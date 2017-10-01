@@ -189,6 +189,13 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_SERVER_SHORTEN_HOST"},
 				Destination: &config.Server.ShortenHost,
 			},
+			&cli.IntFlag{
+				Name:        "shorten-size",
+				Value:       5,
+				Usage:       "shorten-size",
+				EnvVars:     []string{"GGZ_SERVER_SHORTEN_SIZE"},
+				Destination: &config.Server.ShortenSize,
+			},
 			&cli.StringFlag{
 				Name:        "storage-driver",
 				Value:       "disk",
