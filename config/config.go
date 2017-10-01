@@ -18,7 +18,6 @@ type database struct {
 type server struct {
 	Host          string
 	Addr          string
-	ShortenAddr   string
 	Cert          string
 	Key           string
 	Root          string
@@ -29,7 +28,13 @@ type server struct {
 	StrictCiphers bool
 	Pprof         bool
 	Token         string
+	ShortenAddr   string
 	ShortenHost   string
+}
+
+type storage struct {
+	Driver string
+	Path   string
 }
 
 type admin struct {
@@ -56,4 +61,7 @@ var (
 
 	// Session represents the informations about the session handling.
 	Session = &session{}
+
+	// Storage represents the informations about the storage bindings.
+	Storage = &storage{}
 )

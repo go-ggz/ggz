@@ -31,14 +31,14 @@ func Server() *cli.Command {
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "db-driver",
-				Value:       "mysql",
+				Value:       "sqlite",
 				Usage:       "Database driver selection",
 				EnvVars:     []string{"GGZ_DB_DRIVER"},
 				Destination: &config.Database.Driver,
 			},
 			&cli.StringFlag{
 				Name:        "db-name",
-				Value:       "test",
+				Value:       "ggz",
 				Usage:       "Name for database connection",
 				EnvVars:     []string{"GGZ_DB_NAME"},
 				Destination: &config.Database.Name,
@@ -91,13 +91,6 @@ func Server() *cli.Command {
 				Usage:       "Root folder of the app",
 				EnvVars:     []string{"GGZ_SERVER_ROOT"},
 				Destination: &config.Server.Root,
-			},
-			&cli.StringFlag{
-				Name:        "storage",
-				Value:       "storage/",
-				Usage:       "Folder for storing uploads",
-				EnvVars:     []string{"GGZ_SERVER_STORAGE"},
-				Destination: &config.Server.Storage,
 			},
 			&cli.BoolFlag{
 				Name:        "pprof",
@@ -195,6 +188,20 @@ func Server() *cli.Command {
 				Usage:       "shorten-host",
 				EnvVars:     []string{"GGZ_SERVER_SHORTEN_HOST"},
 				Destination: &config.Server.ShortenHost,
+			},
+			&cli.StringFlag{
+				Name:        "storage-driver",
+				Value:       "disk",
+				Usage:       "Storage driver selection",
+				EnvVars:     []string{"GGZ_STORAGE_DRIVER"},
+				Destination: &config.Storage.Driver,
+			},
+			&cli.StringFlag{
+				Name:        "storage-path",
+				Value:       "storage/",
+				Usage:       "Folder for storing uploads",
+				EnvVars:     []string{"GGZ_STORAGE_PATH"},
+				Destination: &config.Storage.Path,
 			},
 		},
 		Before: func(c *cli.Context) error {

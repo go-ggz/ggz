@@ -57,13 +57,15 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 	// default route /
 	root := e.Group(config.Server.Root)
 	{
-		root.StaticFS(
-			"/storage",
-			gin.Dir(
-				config.Server.Storage,
-				false,
-			),
-		)
+		if config.Storage.Driver == "disk" {
+			root.StaticFS(
+				"/storage",
+				gin.Dir(
+					config.Storage.Path,
+					false,
+				),
+			)
+		}
 
 		root.StaticFS(
 			"/assets",
