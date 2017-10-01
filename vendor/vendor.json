@@ -93,12 +93,6 @@
 			"revisionTime": "2017-09-11T14:33:19Z"
 		},
 		{
-			"checksumSHA1": "87LEfpY9cOk9CP7pWyIbmQ/6enU=",
-			"path": "github.com/go-ini/ini",
-			"revision": "c787282c39ac1fc618827141a1f762240def08a3",
-			"revisionTime": "2017-08-13T05:22:30Z"
-		},
-		{
 			"checksumSHA1": "HnjM0xNE7bh3cTub92/JjhAwBp8=",
 			"path": "github.com/go-sql-driver/mysql",
 			"revision": "7785c74297136c027fdf2fd6f8931c0e19be8aa7",
@@ -243,18 +237,6 @@
 			"revisionTime": "2017-08-22T13:27:46Z"
 		},
 		{
-			"checksumSHA1": "xkuxp8PnGrQUsIXMiIOCk4U5IGw=",
-			"path": "github.com/skip2/go-qrcode/bitset",
-			"revision": "695fc75a09738f9be56aaa3aecfd7dac28e66b63",
-			"revisionTime": "2017-08-12T16:12:11Z"
-		},
-		{
-			"checksumSHA1": "UtPg/z5chOpfiJvr29Or0oUx1Bs=",
-			"path": "github.com/skip2/go-qrcode/reedsolomon",
-			"revision": "695fc75a09738f9be56aaa3aecfd7dac28e66b63",
-			"revisionTime": "2017-08-12T16:12:11Z"
-		},
-		{
 			"checksumSHA1": "mGbTYZ8dHVTiPTTJu3ktp+84pPI=",
 			"path": "github.com/stretchr/testify/assert",
 			"revision": "890a5c3458b43e6104ff5da8dfa139d013d77544",
@@ -289,18 +271,6 @@
 			"path": "golang.org/x/net/context",
 			"revision": "278c6cf336eb9139d63479da09da0cfb40fdc4c8",
 			"revisionTime": "2017-09-21T05:18:56Z"
-		},
-		{
-			"checksumSHA1": "TBlnCuZUOzJHLu5DNY7XEj8TvbU=",
-			"path": "golang.org/x/net/webdav",
-			"revision": "0a9397675ba34b2845f758fe3cd68828369c6517",
-			"revisionTime": "2017-07-19T03:24:12Z"
-		},
-		{
-			"checksumSHA1": "XgtZlzd39qIkBHs6XYrq9dhTCog=",
-			"path": "golang.org/x/net/webdav/internal/xml",
-			"revision": "0a9397675ba34b2845f758fe3cd68828369c6517",
-			"revisionTime": "2017-07-19T03:24:12Z"
 		},
 		{
 			"checksumSHA1": "S0DP7Pn7sZUmXc55IzZnNvERu6s=",
