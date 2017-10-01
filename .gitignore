@@ -19,3 +19,4 @@ assets/ab0x.go
 *.tar.gz
 rev
 data
+storage

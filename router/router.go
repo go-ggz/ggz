@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"os"
 	"path"
 
 	"github.com/go-ggz/ggz/assets"
@@ -22,6 +23,13 @@ import (
 func GlobalInit() {
 	if err := models.NewEngine(); err != nil {
 		logrus.Fatalf("Failed to initialize ORM engine: %v", err)
+	}
+
+	if config.QRCode.Enable && config.Storage.Driver == "disk" {
+		storage := path.Join(config.Storage.Path, config.QRCode.Bucket)
+		if err := os.MkdirAll(storage, os.ModePerm); err != nil {
+			logrus.Fatalf("Failed to create storage folder: %v", err)
+		}
 	}
 }
 

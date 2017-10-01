@@ -1,13 +1,18 @@
 package web
 
 import (
+	"fmt"
 	"net/http"
+	"path"
 	"regexp"
 
+	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
+	qrcode "github.com/skip2/go-qrcode"
 )
 
 // ShortenedIndex index page.
@@ -52,6 +57,13 @@ func CreateShortenURL(c *gin.Context) {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)
 		return
 	}
+
+	// upload QRCode image.
+	go func(slug string) {
+		if err := QRCodeGenerator(slug); err != nil {
+			logrus.Errorln(err)
+		}
+	}(row.Slug)
 
 	c.JSON(
 		http.StatusBadRequest,
@@ -140,4 +152,22 @@ func ShortenedURL(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusMovedPermanently, row.URL)
+}
+
+// QRCodeGenerator create QRCode
+func QRCodeGenerator(slug string) error {
+	objectName := fmt.Sprintf("%s.png", slug)
+	filePath := path.Join(
+		config.Storage.Path,
+		config.QRCode.Bucket,
+		objectName,
+	)
+
+	if err := qrcode.WriteFile(
+		config.Server.ShortenHost+"/"+slug,
+		qrcode.Medium, 256, filePath); err != nil {
+		return err
+	}
+
+	return nil
 }

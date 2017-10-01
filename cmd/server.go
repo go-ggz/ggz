@@ -203,6 +203,19 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_STORAGE_PATH"},
 				Destination: &config.Storage.Path,
 			},
+			&cli.BoolFlag{
+				Name:        "qrcode-enable",
+				Usage:       "qrcode module enable",
+				EnvVars:     []string{"GGZ_QRCODE_ENABLE"},
+				Destination: &config.QRCode.Enable,
+			},
+			&cli.StringFlag{
+				Name:        "qrcode-bucket",
+				Value:       "qrcode",
+				Usage:       "qrcode bucket name",
+				EnvVars:     []string{"GGZ_QRCODE_BUCKET"},
+				Destination: &config.QRCode.Bucket,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {
@@ -338,7 +351,7 @@ func Server() *cli.Command {
 				}
 
 				g.Go(func() error {
-					logrus.Infof("Starting main server on %s", config.Server.Addr)
+					logrus.Infof("Starting app server on %s", config.Server.Addr)
 					return startServer(server01)
 				})
 
