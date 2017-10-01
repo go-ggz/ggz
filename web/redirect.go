@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"path"
 	"regexp"
+	"strings"
 
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/models"
@@ -163,8 +164,10 @@ func QRCodeGenerator(slug string) error {
 		objectName,
 	)
 
+	host := strings.TrimRight(config.Server.ShortenHost, "/")
+
 	if err := qrcode.WriteFile(
-		config.Server.ShortenHost+"/"+slug,
+		host+"/"+slug,
 		qrcode.Medium, 256, filePath); err != nil {
 		return err
 	}
