@@ -46,6 +46,11 @@ type session struct {
 	Expire time.Duration
 }
 
+type qrcode struct {
+	Enable bool
+	Bucket string
+}
+
 var (
 	// Debug represents the flag to enable or disable debug logging.
 	Debug bool
@@ -64,4 +69,7 @@ var (
 
 	// Storage represents the informations about the storage bindings.
 	Storage = &storage{}
+
+	// QRCode represents the informations about the qrcode settings.
+	QRCode = &qrcode{}
 )
