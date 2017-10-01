@@ -1,9 +1,10 @@
 FROM plugins/base:multiarch
-MAINTAINER Bo-Yi Wi <appleboy.tw@gmail.com>
 
-EXPOSE 3003
+LABEL maintainer="Bo-Yi Wi <appleboy.tw@gmail.com>"
 
-ADD bin/api /
+EXPOSE 8080 8081
 
-ENTRYPOINT ["/api"]
+ADD bin/ggz /
+
+ENTRYPOINT ["/ggz"]
 CMD ["server"]

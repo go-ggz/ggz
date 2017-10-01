@@ -14,8 +14,6 @@ yarn-error.log
 .env
 .assets
 bin
-template/ab0x.go
-assets/ab0x.go
 *.tar.gz
 rev
 data

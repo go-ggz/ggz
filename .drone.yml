@@ -23,7 +23,6 @@ pipeline:
   build:
     image: appleboy/golang-testing:1.9
     commands:
-      - make generate
       - make docker_build
       - make tar
 
