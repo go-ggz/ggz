@@ -13,7 +13,7 @@ pipeline:
     image: appleboy/golang-testing:1.9
     group: build
     commands:
-      - cp env/env.drone .env
+      - cp .env.example .env
       - make embedmd
       - make fmt-check
       - make misspell-check
