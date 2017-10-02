@@ -1,7 +1,7 @@
 DIST := dist
 EXECUTABLE := ggz
 
-DEPLOY_ACCOUNT := go-ggz
+DEPLOY_ACCOUNT := goggz
 DEPLOY_IMAGE := $(EXECUTABLE)
 GOFMT ?= gofmt "-s"
 
