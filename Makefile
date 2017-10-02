@@ -142,6 +142,14 @@ unused-check:
 	fi
 	for PKG in $(PACKAGES); do unused $$PKG || exit 1; done;
 
+upx:
+	@hash upx > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		echo "Missing upx command"; \
+		exit 1; \
+	fi
+	upx -o bin/ggz-small bin/gzz
+	mv bin/ggz-small bin/gzz
+
 test:
 	for PKG in $(PACKAGES); do go test -v $$PKG || exit 1; done;
 

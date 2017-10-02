@@ -1,6 +1,6 @@
 workspace:
-  base: /go
-  path: src/github.com/go-ggz/ggz
+  base: /go/src
+  path: github.com/go-ggz/ggz
 
 clone:
   git:
@@ -20,9 +20,16 @@ pipeline:
       - make test-vendor
       # - make stylesheets-check
 
+  vendor:
+    image: appleboy/golang-testing:1.9
+    group: build
+    commands:
+      - make test-vendor
+
   build:
     image: appleboy/golang-testing:1.9
     commands:
+      - make upx
       - make docker_build
       - make tar
 
