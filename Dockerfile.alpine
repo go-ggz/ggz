@@ -1,4 +1,6 @@
-FROM plugins/base:multiarch
+FROM alpine:3.6
+
+RUN apk add -U --no-cache ca-certificates
 
 LABEL maintainer="Bo-Yi Wi <appleboy.tw@gmail.com>"
 

@@ -36,6 +36,27 @@ pipeline:
       branch: [ master ]
       local: false
 
+  publish_server:
+    image: plugins/docker
+    repo: goggz/ggz
+    tags: [ 'latest' ]
+    secrets: [ docker_username, docker_password ]
+    when:
+      event: [ push ]
+      branch: [ master ]
+      local: false
+
+  publish_server_alpine:
+    image: plugins/docker
+    repo: goggz/ggz
+    dockerfile: Dockerfile.alpine
+    secrets: [ docker_username, docker_password ]
+    tag: [ alpine ]
+    when:
+      branch: master
+      event: push
+      local: false
+
   discord:
     image: appleboy/drone-discord
     pull: true
