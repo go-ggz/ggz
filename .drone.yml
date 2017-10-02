@@ -26,24 +26,14 @@ pipeline:
       - make docker_build
       - make tar
 
-  publish_linux_amd64:
-    image: plugins/docker
-    repo: goggz/ggz
-    tags: [ 'latest' ]
-    secrets: [ docker_username, docker_password ]
-    when:
-      event: [ push ]
-      branch: [ master ]
-      local: false
-
   publish_server:
     image: plugins/docker
     repo: goggz/ggz
     tags: [ 'latest' ]
     secrets: [ docker_username, docker_password ]
     when:
-      event: [ push ]
-      branch: [ master ]
+      event: push
+      branch: master
       local: false
 
   publish_server_alpine:
