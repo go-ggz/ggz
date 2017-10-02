@@ -17,7 +17,6 @@ pipeline:
       - make embedmd
       - make fmt-check
       - make misspell-check
-      - make test-vendor
       # - make stylesheets-check
 
   vendor:
