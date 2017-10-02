@@ -10,4 +10,3 @@
 [![Release](https://github-release-version.herokuapp.com/github/go-ggz/ggz/release.svg?style=flat)](https://github.com/go-ggz/ggz/releases/latest)
 
 An URL shortener service written in Golang
-
