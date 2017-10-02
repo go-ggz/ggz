@@ -28,8 +28,8 @@ pipeline:
   build:
     image: appleboy/golang-testing:1.9
     commands:
-      - make upx
       - make docker_build
+      - make upx
       - make tar
 
   publish_server:
