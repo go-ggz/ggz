@@ -147,8 +147,8 @@ upx:
 		echo "Missing upx command"; \
 		exit 1; \
 	fi
-	upx -o bin/ggz-small bin/gzz
-	mv bin/ggz-small bin/gzz
+	upx -o bin/ggz-small bin/ggz
+	mv bin/ggz-small bin/ggz
 
 test:
 	for PKG in $(PACKAGES); do go test -v $$PKG || exit 1; done;
