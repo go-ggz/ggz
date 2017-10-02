@@ -11,7 +11,7 @@ clone:
 pipeline:
   backend:
     image: appleboy/golang-testing:1.9
-    group: build
+    group: testing
     commands:
       - cp .env.example .env
       - make embedmd
@@ -21,16 +21,32 @@ pipeline:
 
   vendor:
     image: appleboy/golang-testing:1.9
-    group: build
+    group: testing
     commands:
       - make test-vendor
 
+  test:
+    image: appleboy/golang-testing:1.9
+    group: testing
+    commands:
+      - coverage all
+
   build:
     image: appleboy/golang-testing:1.9
+    group: build
     commands:
       - make docker_build
       - make upx
       - make tar
+
+  codecov:
+    image: robertstettner/drone-codecov
+    group: build
+    secrets: [ codecov_token ]
+    files:
+      - .cover/coverage.txt
+    when:
+      event: [ push, pull_request ]
 
   publish_server:
     image: plugins/docker
