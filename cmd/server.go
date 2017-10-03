@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	defaultAddr        = ":8080"
+	defaultHostAddr    = ":8080"
 	defaultShortenAddr = ":8081"
 )
 
@@ -73,7 +73,7 @@ func Server() *cli.Command {
 			},
 			&cli.StringFlag{
 				Name:        "addr",
-				Value:       defaultAddr,
+				Value:       defaultHostAddr,
 				Usage:       "Address to bind the server",
 				EnvVars:     []string{"GGZ_SERVER_ADDR"},
 				Destination: &config.Server.Addr,
