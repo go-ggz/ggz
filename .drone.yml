@@ -48,6 +48,27 @@ pipeline:
     when:
       event: [ push, pull_request ]
 
+  release:
+    image: appleboy/golang-testing:1.9
+    pull: true
+    commands:
+      - make release
+    when:
+      event: [ tag ]
+      branch: [ refs/tags/* ]
+      local: false
+
+  release_tag:
+    image: plugins/github-release
+    secrets: [ github_release_api_key ]
+    group: release
+    files:
+      - dist/release/*
+    when:
+      event: [ tag ]
+      branch: [ refs/tags/* ]
+      local: false
+
   publish_server:
     image: plugins/docker
     repo: goggz/ggz
