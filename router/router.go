@@ -8,6 +8,7 @@ import (
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/models"
+	"github.com/go-ggz/ggz/modules/minio"
 	"github.com/go-ggz/ggz/router/middleware/header"
 	"github.com/go-ggz/ggz/router/middleware/logger"
 	"github.com/go-ggz/ggz/router/middleware/prometheus"
@@ -29,6 +30,19 @@ func GlobalInit() {
 		storage := path.Join(config.Storage.Path, config.QRCode.Bucket)
 		if err := os.MkdirAll(storage, os.ModePerm); err != nil {
 			logrus.Fatalf("Failed to create storage folder: %v", err)
+		}
+	}
+
+	if config.QRCode.Enable && config.Storage.Driver == "s3" {
+		minio.NewEngine(
+			config.Minio.EndPoint,
+			config.Minio.AccessID,
+			config.Minio.SecretKey,
+			config.Minio.SSL,
+		)
+
+		if err := minio.S3.MakeBucket(config.Minio.Bucket, config.Minio.Region); err != nil {
+			logrus.Fatalf("Failed to create s3 bucket: %v", err)
 		}
 	}
 }

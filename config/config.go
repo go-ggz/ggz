@@ -52,6 +52,15 @@ type qrcode struct {
 	Bucket string
 }
 
+type s3 struct {
+	AccessID  string
+	SecretKey string
+	EndPoint  string
+	SSL       bool
+	Bucket    string
+	Region    string
+}
+
 var (
 	// Debug represents the flag to enable or disable debug logging.
 	Debug bool
@@ -73,4 +82,7 @@ var (
 
 	// QRCode represents the informations about the qrcode settings.
 	QRCode = &qrcode{}
+
+	// Minio represents the informations about the Minio server.
+	Minio = &s3{}
 )

@@ -223,6 +223,47 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_QRCODE_BUCKET"},
 				Destination: &config.QRCode.Bucket,
 			},
+			&cli.StringFlag{
+				Name:        "minio-access-id",
+				Value:       "",
+				Usage:       "minio-access-id",
+				EnvVars:     []string{"GGZ_MINIO_ACCESS_ID"},
+				Destination: &config.Minio.AccessID,
+			},
+			&cli.StringFlag{
+				Name:        "minio-secret-key",
+				Value:       "",
+				Usage:       "minio-secret-key",
+				EnvVars:     []string{"GGZ_MINIO_SECRET_KEY"},
+				Destination: &config.Minio.SecretKey,
+			},
+			&cli.StringFlag{
+				Name:        "minio-endpoint",
+				Value:       "",
+				Usage:       "minio-endpoint",
+				EnvVars:     []string{"GGZ_MINIO_ENDPOINT"},
+				Destination: &config.Minio.EndPoint,
+			},
+			&cli.BoolFlag{
+				Name:        "minio-ssl",
+				Usage:       "minio-ssl",
+				EnvVars:     []string{"GGZ_MINIO_SSL"},
+				Destination: &config.Minio.SSL,
+			},
+			&cli.StringFlag{
+				Name:        "minio-bucket",
+				Value:       "qrcode",
+				Usage:       "minio-bucket",
+				EnvVars:     []string{"GGZ_MINIO_BUCKET"},
+				Destination: &config.Minio.Bucket,
+			},
+			&cli.StringFlag{
+				Name:        "minio-region",
+				Value:       "us-east-1",
+				Usage:       "minio-region",
+				EnvVars:     []string{"GGZ_MINIO_REGION"},
+				Destination: &config.Minio.Region,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {
@@ -257,7 +298,7 @@ func Server() *cli.Command {
 				}
 
 				if config.Server.LetsEncrypt {
-					if config.Server.Addr != defaultAddr {
+					if config.Server.Addr != defaultHostAddr {
 						logrus.Infof("With Let's Encrypt bind port have been overwritten!")
 					}
 
