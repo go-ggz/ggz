@@ -3,12 +3,14 @@ package web
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"path"
 	"regexp"
 	"strings"
 
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/models"
+	"github.com/go-ggz/ggz/modules/minio"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -152,18 +154,36 @@ func ShortenedURL(c *gin.Context) {
 // QRCodeGenerator create QRCode
 func QRCodeGenerator(slug string) error {
 	objectName := fmt.Sprintf("%s.png", slug)
-	filePath := path.Join(
-		config.Storage.Path,
-		config.QRCode.Bucket,
-		objectName,
-	)
-
+	filePath := ""
 	host := strings.TrimRight(config.Server.ShortenHost, "/")
+
+	switch config.Storage.Driver {
+	case "disk":
+		filePath = path.Join(
+			config.Storage.Path,
+			config.QRCode.Bucket,
+			objectName,
+		)
+	case "s3":
+		filePath = fmt.Sprintf("%s/%s", os.TempDir(), objectName)
+	}
 
 	if err := qrcode.WriteFile(
 		host+"/"+slug,
 		qrcode.Medium, 256, filePath); err != nil {
 		return err
+	}
+
+	if config.Storage.Driver == "s3" {
+		contentType := "image/png"
+		if err := minio.S3.Upload(
+			config.Minio.Bucket,
+			objectName,
+			filePath,
+			contentType,
+		); err != nil {
+			return err
+		}
 	}
 
 	return nil
