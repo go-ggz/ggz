@@ -8,8 +8,8 @@ import (
 	"github.com/appleboy/com/random"
 )
 
-// Redirect shortener URL
-type Redirect struct {
+// Shorten shortener URL
+type Shorten struct {
 	Slug string    `xorm:"pk VARCHAR(14)" json:"slug"`
 	URL  string    `xorm:"NOT NULL VARCHAR(620)" json:"url"`
 	Date time.Time `json:"date"`
@@ -17,15 +17,15 @@ type Redirect struct {
 }
 
 // GetFromSlug get shorten URL data
-func (shorten *Redirect) GetFromSlug(slug string) (bool, error) {
+func (shorten *Shorten) GetFromSlug(slug string) (bool, error) {
 	return x.
 		Where("slug = ?", slug).
 		Get(shorten)
 }
 
 // GetShortenFromURL check url exist
-func GetShortenFromURL(url string) (*Redirect, error) {
-	var data Redirect
+func GetShortenFromURL(url string) (*Shorten, error) {
+	var data Shorten
 	has, err := x.
 		Where("url = ?", url).
 		Get(&data)
@@ -42,8 +42,8 @@ func GetShortenFromURL(url string) (*Redirect, error) {
 }
 
 // NewShortenURL create url item
-func NewShortenURL(url string) (_ *Redirect, err error) {
-	row := &Redirect{
+func NewShortenURL(url string) (_ *Shorten, err error) {
+	row := &Shorten{
 		Date: time.Now(),
 		URL:  url,
 	}
@@ -68,7 +68,7 @@ func NewShortenURL(url string) (_ *Redirect, err error) {
 }
 
 // UpdateHits udpate hit count
-func (shorten *Redirect) UpdateHits(slug string) error {
+func (shorten *Shorten) UpdateHits(slug string) error {
 	if _, err := x.Exec("UPDATE `redirect` SET hits = hits + 1 WHERE slug = ?", slug); err != nil {
 		return err
 	}

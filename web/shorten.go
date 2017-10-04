@@ -89,7 +89,7 @@ func FetchShortenedURL(c *gin.Context) {
 		return
 	}
 
-	row := &models.Redirect{}
+	row := &models.Shorten{}
 
 	has, err := row.GetFromSlug(slug)
 	if err != nil {
@@ -129,7 +129,7 @@ func ShortenedURL(c *gin.Context) {
 		return
 	}
 
-	row := &models.Redirect{}
+	row := &models.Shorten{}
 
 	has, err := row.GetFromSlug(slug)
 	if err != nil {

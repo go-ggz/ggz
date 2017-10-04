@@ -44,7 +44,7 @@ var (
 func init() {
 	tables = append(tables,
 		new(User),
-		new(Redirect),
+		new(Shorten),
 	)
 
 	gonicNames := []string{"SSL", "UID"}
