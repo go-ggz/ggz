@@ -12,7 +12,7 @@ func NotFound(c *gin.Context) {
 		http.StatusNotFound,
 		gin.H{
 			"code":  http.StatusNotFound,
-			"error": "404 NOT FOUND",
+			"error": "PAGE NOT FOUND",
 		},
 	)
 }
