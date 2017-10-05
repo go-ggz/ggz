@@ -11,7 +11,7 @@ func NotFound(c *gin.Context) {
 	c.JSON(
 		http.StatusNotFound,
 		gin.H{
-			"code":  404,
+			"code":  http.StatusNotFound,
 			"error": "404 NOT FOUND",
 		},
 	)
