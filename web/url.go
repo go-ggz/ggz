@@ -17,7 +17,7 @@ type MetaData struct {
 	Type        string    `meta:"og:type" json:"type"`
 	URL         url.URL   `meta:"og:url" json:"url"`
 	Image       string    `meta:"og:image" json:"image"`
-	Time        time.Time `meta:"article:published_time" json:"time"`
+	Time        time.Time `meta:"article:published_time,parsely-pub-date" json:"time"`
 	VideoWidth  int64     `meta:"og:video:width" json:"video_width"`
 	VideoHeight int64     `meta:"og:video:height" json:"video_height"`
 }
