@@ -98,6 +98,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		root.GET("/favicon.ico", web.Favicon)
 		root.GET("/metrics", prometheus.Handler())
 		root.GET("/healthz", web.Heartbeat)
+		root.POST("/s", web.CreateShortenURL)
 
 		api := e.Group("/v1")
 		{

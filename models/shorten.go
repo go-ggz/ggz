@@ -1,26 +1,32 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/modules/meta"
 
 	"github.com/appleboy/com/random"
 )
 
 // Shorten shortener URL
 type Shorten struct {
-	Slug string    `xorm:"pk VARCHAR(14)" json:"slug"`
-	URL  string    `xorm:"NOT NULL VARCHAR(620)" json:"url"`
-	Date time.Time `json:"date"`
-	Hits int64     `xorm:"NOT NULL DEFAULT 0" json:"hits"`
+	Slug        string    `xorm:"pk VARCHAR(14)" json:"slug"`
+	URL         string    `xorm:"NOT NULL VARCHAR(620)" json:"url"`
+	Date        time.Time `json:"date"`
+	Hits        int64     `xorm:"NOT NULL DEFAULT 0" json:"hits"`
+	Title       string    `xorm:"VARCHAR(512)"`
+	Description string    `xorm:"TEXT"`
+	Type        string
+	Image       string
 }
 
 // GetFromSlug get shorten URL data
-func (shorten *Shorten) GetFromSlug(slug string) (bool, error) {
+func (s *Shorten) GetFromSlug(slug string) (bool, error) {
 	return x.
 		Where("slug = ?", slug).
-		Get(shorten)
+		Get(s)
 }
 
 // GetShortenFromURL check url exist
@@ -35,7 +41,7 @@ func GetShortenFromURL(url string) (*Shorten, error) {
 	}
 
 	if has {
-		return nil, ErrURLExist{data.Slug, url}
+		return &data, ErrURLExist{data.Slug, url}
 	}
 
 	return &data, nil
@@ -64,13 +70,35 @@ func NewShortenURL(url string) (_ *Shorten, err error) {
 		return nil, err
 	}
 
+	go row.UpdateMetaData()
+
 	return row, nil
 }
 
 // UpdateHits udpate hit count
-func (shorten *Shorten) UpdateHits(slug string) error {
-	if _, err := x.Exec("UPDATE `redirect` SET hits = hits + 1 WHERE slug = ?", slug); err != nil {
+func (s *Shorten) UpdateHits(slug string) error {
+	if _, err := x.Exec("UPDATE `shorten` SET hits = hits + 1 WHERE slug = ?", slug); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// UpdateMetaData form raw body
+func (s *Shorten) UpdateMetaData() error {
+	data, err := meta.FetchData(s.URL)
+
+	if err != nil {
+		return err
+	}
+
+	s.Title = data.Title
+	s.Description = data.Description
+	s.Type = data.Type
+	s.Image = data.Image
+
+	if _, err := x.ID(s.Slug).Update(s); err != nil {
+		return fmt.Errorf("update shorten [%s]: %v", s.Slug, err)
 	}
 
 	return nil
