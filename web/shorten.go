@@ -51,7 +51,7 @@ func CreateShortenURL(c *gin.Context) {
 		return
 	}
 
-	row, err = models.NewShortenURL(data.URL)
+	row, err = models.NewShortenURL(data.URL, config.Server.ShortenSize)
 
 	if err != nil {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)

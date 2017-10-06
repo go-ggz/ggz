@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/modules/meta"
 
 	"github.com/appleboy/com/random"
@@ -48,7 +47,7 @@ func GetShortenFromURL(url string) (*Shorten, error) {
 }
 
 // NewShortenURL create url item
-func NewShortenURL(url string) (_ *Shorten, err error) {
+func NewShortenURL(url string, size int) (_ *Shorten, err error) {
 	row := &Shorten{
 		Date: time.Now(),
 		URL:  url,
@@ -57,7 +56,7 @@ func NewShortenURL(url string) (_ *Shorten, err error) {
 	slug := ""
 
 	for exists == true {
-		slug = random.String(config.Server.ShortenSize)
+		slug = random.String(size)
 		exists, err = row.GetFromSlug(slug)
 		if err != nil {
 			return nil, err
