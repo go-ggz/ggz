@@ -23,14 +23,14 @@ func ShortenedIndex(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, config.Server.Host)
 }
 
-// ShortenURL form struct
-type ShortenURL struct {
+// FormURL URL Struct
+type FormURL struct {
 	URL string `json:"url" binding:"required,url"`
 }
 
 // CreateShortenURL create shorten url
 func CreateShortenURL(c *gin.Context) {
-	var data ShortenURL
+	var data FormURL
 	if err := c.ShouldBindWith(&data, binding.JSON); err != nil {
 		errorJSON(c, http.StatusBadRequest, errBadRequest)
 		return
@@ -103,7 +103,7 @@ func FetchShortenedURL(c *gin.Context) {
 	}
 
 	c.JSON(
-		http.StatusBadRequest,
+		http.StatusOK,
 		row,
 	)
 }
