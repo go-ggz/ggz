@@ -36,10 +36,13 @@ func CreateShortenURL(c *gin.Context) {
 		return
 	}
 
-	_, err := models.GetShortenFromURL(data.URL)
+	row, err := models.GetShortenFromURL(data.URL)
 
 	if models.IsErrURLExist(err) {
-		errorJSON(c, http.StatusBadRequest, errURLExist)
+		c.JSON(
+			http.StatusOK,
+			row,
+		)
 		return
 	}
 
@@ -48,7 +51,7 @@ func CreateShortenURL(c *gin.Context) {
 		return
 	}
 
-	row, err := models.NewShortenURL(data.URL)
+	row, err = models.NewShortenURL(data.URL)
 
 	if err != nil {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)
@@ -63,7 +66,7 @@ func CreateShortenURL(c *gin.Context) {
 	}(row.Slug)
 
 	c.JSON(
-		http.StatusBadRequest,
+		http.StatusOK,
 		row,
 	)
 }
