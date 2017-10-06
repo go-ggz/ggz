@@ -153,6 +153,12 @@
 			"revisionTime": "2017-09-26T07:35:55Z"
 		},
 		{
+			"checksumSHA1": "8EZY2XEv8PUebo6PH1Z7Qa72n1U=",
+			"path": "github.com/keighl/metabolize",
+			"revision": "97ab655d403458d6b62b54003d5cf480f379ac5d",
+			"revisionTime": "2015-09-15T21:03:03Z"
+		},
+		{
 			"checksumSHA1": "/mlelB9eP/TxbND7uBtxVrLF1Ik=",
 			"path": "github.com/lib/pq",
 			"revision": "b77235e3890a962fe8a6f8c4c7198679ca7814e7",
@@ -343,6 +349,18 @@
 			"path": "golang.org/x/net/context",
 			"revision": "278c6cf336eb9139d63479da09da0cfb40fdc4c8",
 			"revisionTime": "2017-09-21T05:18:56Z"
+		},
+		{
+			"checksumSHA1": "/PGQlVbw8jILX3tLQaYAg6bTAFI=",
+			"path": "golang.org/x/net/html",
+			"revision": "a04bdaca5b32abe1c069418fb7088ae607de5bd0",
+			"revisionTime": "2017-10-03T05:09:24Z"
+		},
+		{
+			"checksumSHA1": "uMRr2bnIJS+9Xm0FqMBYUTzaSGs=",
+			"path": "golang.org/x/net/html/atom",
+			"revision": "a04bdaca5b32abe1c069418fb7088ae607de5bd0",
+			"revisionTime": "2017-10-03T05:09:24Z"
 		},
 		{
 			"checksumSHA1": "TBlnCuZUOzJHLu5DNY7XEj8TvbU=",
