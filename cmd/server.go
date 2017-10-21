@@ -305,7 +305,7 @@ func Server() *cli.Command {
 					parsed, err := url.Parse(config.Server.Host)
 
 					if err != nil {
-						logrus.Fatal("Failed to parse host name. %s", err)
+						logrus.Fatalf("Failed to parse host name. %s", err)
 					}
 
 					certManager := autocert.Manager{
@@ -354,7 +354,7 @@ func Server() *cli.Command {
 					)
 
 					if err != nil {
-						logrus.Fatal("Failed to load SSL certificates. %s", err)
+						logrus.Fatalf("Failed to load SSL certificates. %s", err)
 					}
 
 					cfg.Certificates = []tls.Certificate{
