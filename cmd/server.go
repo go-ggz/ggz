@@ -323,7 +323,8 @@ func Server() *cli.Command {
 					splitAddr := strings.SplitN(config.Server.Addr, ":", 2)
 					logrus.Infof("Starting on %s:80 and %s:443", splitAddr[0], splitAddr[0])
 
-					// load database
+					// load global script
+					logrus.Info("Initial module engine.")
 					router.GlobalInit()
 
 					g.Go(func() error {
@@ -360,7 +361,8 @@ func Server() *cli.Command {
 						cert,
 					}
 
-					// load database
+					// load global script
+					logrus.Info("Initial module engine.")
 					router.GlobalInit()
 
 					server := &http.Server{
@@ -381,7 +383,7 @@ func Server() *cli.Command {
 				)
 
 				// load global script
-				logrus.Info("Initial project script.")
+				logrus.Info("Initial module engine.")
 				router.GlobalInit()
 
 				server01 := &http.Server{
