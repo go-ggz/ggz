@@ -61,6 +61,10 @@ type s3 struct {
 	Region    string
 }
 
+type auth0 struct {
+	Secret string
+}
+
 var (
 	// Debug represents the flag to enable or disable debug logging.
 	Debug bool
@@ -85,4 +89,7 @@ var (
 
 	// Minio represents the informations about the Minio server.
 	Minio = &s3{}
+
+	// Auth0 token information
+	Auth0 = &auth0{}
 )

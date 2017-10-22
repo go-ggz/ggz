@@ -9,6 +9,7 @@ import (
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/models"
 	"github.com/go-ggz/ggz/modules/minio"
+	"github.com/go-ggz/ggz/modules/socket"
 	"github.com/go-ggz/ggz/router/middleware/header"
 	"github.com/go-ggz/ggz/router/middleware/logger"
 	"github.com/go-ggz/ggz/router/middleware/prometheus"
@@ -104,6 +105,12 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		{
 			api.POST("/url/meta", web.URLMeta)
 		}
+
+		// socket connection
+		root.GET("/socket.io/", socket.Handler())
+		root.POST("/socket.io/", socket.Handler())
+		root.Handle("WS", "/socket.io", socket.Handler())
+		root.Handle("WSS", "/socket.io", socket.Handler())
 	}
 
 	return e
