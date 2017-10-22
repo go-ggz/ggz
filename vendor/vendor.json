@@ -21,6 +21,12 @@
 			"revisionTime": "2017-08-29T19:49:58Z"
 		},
 		{
+			"checksumSHA1": "+TKtBzv23ywvmmqRiGEjUba4YmI=",
+			"path": "github.com/dgrijalva/jwt-go",
+			"revision": "dbeaa9332f19a944acb5736b4456cfcc02140e29",
+			"revisionTime": "2017-10-19T21:57:19Z"
+		},
+		{
 			"checksumSHA1": "imR2wF388/0fBU6RRWx8RvTi8Q8=",
 			"path": "github.com/facebookgo/clock",
 			"revision": "600d898af40aa09a7a93ecb9265d87b0504b6f03",
@@ -133,6 +139,54 @@
 			"path": "github.com/golang/protobuf/proto",
 			"revision": "130e6b02ab059e7b717a096f397c5b60111cae74",
 			"revisionTime": "2017-09-20T22:06:47Z"
+		},
+		{
+			"checksumSHA1": "CAo0j5Q4ZQ09hjIu3DTlBUR/kOs=",
+			"path": "github.com/googollee/go-engine.io",
+			"revision": "80ae0e43aca17b4c5a6834999d0f2eaa16b9afda",
+			"revisionTime": "2017-02-24T22:25:11Z"
+		},
+		{
+			"checksumSHA1": "Tv1/qmTmjl43MFulf61QbsGuu2c=",
+			"path": "github.com/googollee/go-engine.io/message",
+			"revision": "80ae0e43aca17b4c5a6834999d0f2eaa16b9afda",
+			"revisionTime": "2017-02-24T22:25:11Z"
+		},
+		{
+			"checksumSHA1": "Z3Zs8QiMD9WQdAnRNqyrfuElIxg=",
+			"path": "github.com/googollee/go-engine.io/parser",
+			"revision": "80ae0e43aca17b4c5a6834999d0f2eaa16b9afda",
+			"revisionTime": "2017-02-24T22:25:11Z"
+		},
+		{
+			"checksumSHA1": "Veyca3YORqrCpon9aIvt0CTB3JI=",
+			"path": "github.com/googollee/go-engine.io/polling",
+			"revision": "80ae0e43aca17b4c5a6834999d0f2eaa16b9afda",
+			"revisionTime": "2017-02-24T22:25:11Z"
+		},
+		{
+			"checksumSHA1": "WSC+XDEXrzu11rf+gv1Y2N7v/nE=",
+			"path": "github.com/googollee/go-engine.io/transport",
+			"revision": "80ae0e43aca17b4c5a6834999d0f2eaa16b9afda",
+			"revisionTime": "2017-02-24T22:25:11Z"
+		},
+		{
+			"checksumSHA1": "HKE4UBOwXdi/Qt48b0da4Z/ytSY=",
+			"path": "github.com/googollee/go-engine.io/websocket",
+			"revision": "80ae0e43aca17b4c5a6834999d0f2eaa16b9afda",
+			"revisionTime": "2017-02-24T22:25:11Z"
+		},
+		{
+			"checksumSHA1": "8RNlqwLKmM2mT+YrWoBZn9ETedA=",
+			"path": "github.com/googollee/go-socket.io",
+			"revision": "5447e71f36d394766bf855d5714a487596809f0d",
+			"revisionTime": "2017-05-25T14:10:29Z"
+		},
+		{
+			"checksumSHA1": "YQOnzUbPvYp17h+WFakcKAAsH1s=",
+			"path": "github.com/gorilla/websocket",
+			"revision": "71fa72d4842364bc5f74185f4161e0099ea3624a",
+			"revisionTime": "2017-10-11T16:07:11Z"
 		},
 		{
 			"checksumSHA1": "0cdNscA7+z4+lKF5usZYz3it/04=",

@@ -264,6 +264,13 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_MINIO_REGION"},
 				Destination: &config.Minio.Region,
 			},
+			&cli.StringFlag{
+				Name:        "auth0-secret",
+				Value:       "",
+				Usage:       "Auth0 JWT Secret Key",
+				EnvVars:     []string{"GGZ_AUTH0_SECRET"},
+				Destination: &config.Auth0.Secret,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {
