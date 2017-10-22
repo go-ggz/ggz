@@ -27,6 +27,11 @@ func GlobalInit() {
 		logrus.Fatalf("Failed to initialize ORM engine: %v", err)
 	}
 
+	// initial socket module
+	if err := socket.NewEngine(); err != nil {
+		logrus.Fatalf("Failed to initialize Socket IO engine: %v", err)
+	}
+
 	if config.QRCode.Enable && config.Storage.Driver == "disk" {
 		storage := path.Join(config.Storage.Path, config.QRCode.Bucket)
 		if err := os.MkdirAll(storage, os.ModePerm); err != nil {
