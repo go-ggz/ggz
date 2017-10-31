@@ -24,7 +24,7 @@ func ShortenedIndex(c *gin.Context) {
 
 // FormURL URL Struct
 type FormURL struct {
-	URL string `json:"url" binding:"required,url"`
+	URL string `json:"url,omitempty" binding:"required,url"`
 }
 
 // CreateShortenURL create shorten url
