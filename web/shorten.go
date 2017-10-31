@@ -13,7 +13,6 @@ import (
 	"github.com/go-ggz/ggz/modules/minio"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	qrcode "github.com/skip2/go-qrcode"
 )
@@ -31,7 +30,7 @@ type FormURL struct {
 // CreateShortenURL create shorten url
 func CreateShortenURL(c *gin.Context) {
 	var data FormURL
-	if err := c.ShouldBindWith(&data, binding.JSON); err != nil {
+	if err := c.ShouldBindJSON(&data); err != nil {
 		errorJSON(c, http.StatusBadRequest, errBadRequest)
 		return
 	}

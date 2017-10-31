@@ -75,16 +75,16 @@
 			"revisionTime": "2017-01-09T09:34:21Z"
 		},
 		{
-			"checksumSHA1": "xElbT/Dstt75aBUI2tXpcsUs7k8=",
+			"checksumSHA1": "l4bFymQ+vMtsZDQs7kFlWXC0nBE=",
 			"path": "github.com/gin-gonic/gin",
-			"revision": "5afc5b19730118c9b8324fe9dd995d44ec65c81a",
-			"revisionTime": "2017-09-11T14:33:19Z"
+			"revision": "6653d5d588740eb73d2245ef04d5a407d3c3f034",
+			"revisionTime": "2017-10-30T02:38:38Z"
 		},
 		{
-			"checksumSHA1": "ll8C4xWrYruQeGDfndcT9BcNJFU=",
+			"checksumSHA1": "M3iXOKdjG7gGxMpQPMI49uqsaQU=",
 			"path": "github.com/gin-gonic/gin/binding",
-			"revision": "5afc5b19730118c9b8324fe9dd995d44ec65c81a",
-			"revisionTime": "2017-09-11T14:33:19Z"
+			"revision": "6653d5d588740eb73d2245ef04d5a407d3c3f034",
+			"revisionTime": "2017-10-30T02:38:38Z"
 		},
 		{
 			"checksumSHA1": "YOwO5bkv3ei+GTVZqeEVB30kXDM=",
