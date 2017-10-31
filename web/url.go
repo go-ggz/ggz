@@ -6,13 +6,12 @@ import (
 	"github.com/go-ggz/ggz/modules/meta"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 )
 
 // URLMeta for fetch metadata from URL
 func URLMeta(c *gin.Context) {
 	var data FormURL
-	if err := c.ShouldBindWith(&data, binding.JSON); err != nil {
+	if err := c.ShouldBindJSON(&data); err != nil {
 		errorJSON(c, http.StatusBadRequest, errBadRequest)
 		return
 	}
