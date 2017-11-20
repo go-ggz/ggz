@@ -6,8 +6,8 @@ import (
 	"path"
 
 	"github.com/go-ggz/ggz/config"
-	"github.com/go-ggz/ggz/helper"
 
+	"github.com/appleboy/com/file"
 	"github.com/sirupsen/logrus"
 )
 
@@ -25,10 +25,10 @@ type ChainedFS struct {
 // Open just implements the HTTP filesystem interface.
 func (c ChainedFS) Open(origPath string) (http.File, error) {
 	if config.Server.Assets != "" {
-		if helper.IsDir(config.Server.Assets) {
+		if file.IsDir(config.Server.Assets) {
 			customPath := path.Join(config.Server.Assets, origPath)
 
-			if helper.IsFile(customPath) {
+			if file.IsFile(customPath) {
 				f, err := os.Open(customPath)
 
 				if err != nil {

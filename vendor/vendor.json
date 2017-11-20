@@ -3,6 +3,12 @@
 	"ignore": "test appengine",
 	"package": [
 		{
+			"checksumSHA1": "68eRWR2z9vFBtEHTJy4uqaGxquk=",
+			"path": "github.com/appleboy/com/file",
+			"revision": "4337b8d616c0de58b0c4f0e2ad720c064c18e661",
+			"revisionTime": "2017-11-20T06:17:52Z"
+		},
+		{
 			"checksumSHA1": "ZPkL/ha7+FVjS65ZmmlDGH8d12A=",
 			"path": "github.com/appleboy/com/random",
 			"revision": "c660fb542b269931e11955b12d14322508e633fb",
