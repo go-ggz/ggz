@@ -1,49 +1,51 @@
 package helper
 
 // InArray check string in array.
-func InArray(needle string, haystack []string) bool {
-	for _, val := range haystack {
+func InArray(needle string, haystack []string) ([]string, bool) {
+	if len(haystack) == 0 {
+		return haystack, false
+	}
+
+	for i, val := range haystack {
 		if val == needle {
-			return true
+			haystack = append(haystack[:i], haystack[i+1:]...)
+			return haystack, true
 		}
 	}
 
-	return false
+	return haystack, false
 }
 
 // DiffArray show difference in two array.
-func DiffArray(a, b []string) []string {
-	var s, t, v []string
-	if len(a) == 0 && len(b) == 0 {
+func DiffArray(s, t []string) []string {
+	v := []string{}
+	if len(s) == 0 && len(t) == 0 {
 		return []string{}
 	}
 
-	if len(a) == 0 {
-		return b
+	if len(s) == 0 {
+		return t
 	}
 
-	if len(b) == 0 {
-		return a
+	if len(t) == 0 {
+		return s
 	}
 
-	if len(a) > len(b) {
-		s = a
-		t = b
-	} else {
-		s = b
-		t = a
+	if len(s) > len(t) {
+		s, t = t, s
 	}
 
 	for _, val := range s {
-		if len(v)+len(t) == len(s) {
-			continue
-		}
-
-		if ok := InArray(val, t); ok {
+		if newT, ok := InArray(val, t); ok {
+			t = newT
 			continue
 		}
 
 		v = append(v, val)
+	}
+
+	if len(t) > 0 {
+		v = append(v, t...)
 	}
 
 	return v
