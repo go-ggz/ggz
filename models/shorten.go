@@ -11,9 +11,9 @@ import (
 
 // Shorten shortener URL
 type Shorten struct {
-	Slug        string `xorm:"pk VARCHAR(14)" json:"slug"`
-	UserID      int64
-	User        *User     `xorm:"-"`
+	Slug        string    `xorm:"pk VARCHAR(14)" json:"slug"`
+	UserID      int64     `json:"user_id"`
+	User        *User     `xorm:"-" json:"user"`
 	URL         string    `xorm:"NOT NULL VARCHAR(620)" json:"url"`
 	Date        time.Time `json:"date"`
 	Hits        int64     `xorm:"NOT NULL DEFAULT 0" json:"hits"`
