@@ -11,7 +11,9 @@ import (
 
 // Shorten shortener URL
 type Shorten struct {
-	Slug        string    `xorm:"pk VARCHAR(14)" json:"slug"`
+	Slug        string `xorm:"pk VARCHAR(14)" json:"slug"`
+	UserID      int64
+	User        *User     `xorm:"-"`
 	URL         string    `xorm:"NOT NULL VARCHAR(620)" json:"url"`
 	Date        time.Time `json:"date"`
 	Hits        int64     `xorm:"NOT NULL DEFAULT 0" json:"hits"`
@@ -101,4 +103,18 @@ func (s *Shorten) UpdateMetaData() error {
 	}
 
 	return nil
+}
+
+func (s *Shorten) getUser(e Engine) (err error) {
+	if s.User != nil {
+		return nil
+	}
+
+	s.User, err = getUserByID(e, s.UserID)
+	return err
+}
+
+// GetUser returns the shorten owner
+func (s *Shorten) GetUser() error {
+	return s.getUser(x)
 }

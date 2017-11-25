@@ -17,3 +17,19 @@ type User struct {
 	UpdatedAt time.Time
 	LastLogin time.Time
 }
+
+func getUserByID(e Engine, id int64) (*User, error) {
+	u := new(User)
+	has, err := e.ID(id).Get(u)
+	if err != nil {
+		return nil, err
+	} else if !has {
+		return nil, ErrUserNotExist{id, "", 0}
+	}
+	return u, nil
+}
+
+// GetUserByID returns the user object by given ID if exists.
+func GetUserByID(id int64) (*User, error) {
+	return getUserByID(x, id)
+}
