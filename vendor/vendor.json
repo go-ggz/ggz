@@ -15,6 +15,12 @@
 			"revisionTime": "2017-03-16T02:12:06Z"
 		},
 		{
+			"checksumSHA1": "n2KWrxS+GQrPiFI/RQfKSj1nZTs=",
+			"path": "github.com/auth0/go-jwt-middleware",
+			"revision": "5493cabe49f7bfa6e2ec444a09d334d90cd4e2bd",
+			"revisionTime": "2017-04-25T17:11:59Z"
+		},
+		{
 			"checksumSHA1": "spyv5/YFBjYyZLZa1U2LBfDR8PM=",
 			"path": "github.com/beorn7/perks/quantile",
 			"revision": "4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9",

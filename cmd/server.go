@@ -265,11 +265,16 @@ func Server() *cli.Command {
 				Destination: &config.Minio.Region,
 			},
 			&cli.StringFlag{
-				Name:        "auth0-secret",
-				Value:       "",
-				Usage:       "Auth0 JWT Secret Key",
-				EnvVars:     []string{"GGZ_AUTH0_SECRET"},
-				Destination: &config.Auth0.Secret,
+				Name:        "auth0-pem-path",
+				Usage:       "Auth0 Pem file path",
+				EnvVars:     []string{"GGZ_AUTH0_PEM_PATH"},
+				Destination: &config.Auth0.PemPath,
+			},
+			&cli.BoolFlag{
+				Name:        "auth0-debug",
+				Usage:       "Auth0 debug",
+				EnvVars:     []string{"GGZ_AUTH0_DEBUG"},
+				Destination: &config.Auth0.Debug,
 			},
 		},
 		Before: func(c *cli.Context) error {

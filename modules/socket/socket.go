@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/helper"
 
@@ -40,8 +41,14 @@ func NewEngine() error {
 			return errors.New("Required authorization token not found")
 		}
 
+		file, err := assets.ReadFile(config.Auth0.PemPath)
+		if err != nil {
+			logrus.Warnf("Failed to read builtin %s template. %s", file, err)
+			return errors.New("Failed to read builtin auth0 pem file")
+		}
+
 		parsedToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
-			return []byte(config.Auth0.Secret), nil
+			return jwt.ParseRSAPublicKeyFromPEM(file)
 		})
 
 		if err != nil {
