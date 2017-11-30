@@ -21,8 +21,10 @@ type MetaData struct {
 }
 
 // FetchData for fetch metadata from header of body
-func FetchData(url string) (meta *MetaData, err error) {
+func FetchData(url string) (*MetaData, error) {
 	var res *http.Response
+	var err error
+	meta := new(MetaData)
 
 	if res, err = http.Get(url); err != nil {
 		return nil, err
