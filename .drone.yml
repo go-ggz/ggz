@@ -86,7 +86,7 @@ pipeline:
     dockerfile: Dockerfile.alpine
     secrets: [ docker_username, docker_password ]
     default_tags: true
-    default_suffix: nanoserver
+    default_suffix: alpine
     when:
       event: [ push, tag ]
       local: false
