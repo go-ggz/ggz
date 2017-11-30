@@ -10,6 +10,7 @@ import (
 	"github.com/go-ggz/ggz/models"
 	"github.com/go-ggz/ggz/modules/minio"
 	"github.com/go-ggz/ggz/modules/socket"
+	"github.com/go-ggz/ggz/router/middleware/auth0"
 	"github.com/go-ggz/ggz/router/middleware/header"
 	"github.com/go-ggz/ggz/router/middleware/logger"
 	"github.com/go-ggz/ggz/router/middleware/prometheus"
@@ -104,11 +105,12 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		root.GET("/favicon.ico", web.Favicon)
 		root.GET("/metrics", prometheus.Handler())
 		root.GET("/healthz", web.Heartbeat)
-		root.POST("/s", web.CreateShortenURL)
 
 		api := e.Group("/v1")
+		api.Use(auth0.Check())
 		{
 			api.POST("/url/meta", web.URLMeta)
+			api.POST("/s", web.CreateShortenURL)
 		}
 
 		// socket connection
