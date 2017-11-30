@@ -69,6 +69,7 @@ pipeline:
 
   publish_server:
     image: plugins/docker
+    group: release
     pull: true
     repo: goggz/ggz
     secrets: [ docker_username, docker_password ]
@@ -79,6 +80,7 @@ pipeline:
 
   publish_alpine:
     image: plugins/docker
+    group: release
     pull: true
     repo: goggz/ggz
     dockerfile: Dockerfile.alpine
