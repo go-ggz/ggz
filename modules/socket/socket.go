@@ -41,14 +41,19 @@ func NewEngine() error {
 			return errors.New("Required authorization token not found")
 		}
 
-		file, err := assets.ReadFile(config.Auth0.PemPath)
-		if err != nil {
-			logrus.Warnf("Failed to read builtin %s template. %s", file, err)
-			return errors.New("Failed to read builtin auth0 pem file")
+		var reader []byte
+		if config.Auth0.Key != "" {
+			reader = []byte(config.Auth0.Key)
+		} else {
+			reader, err := assets.ReadFile(config.Auth0.PemPath)
+			if err != nil {
+				logrus.Warnf("Failed to read builtin %s template. %s", reader, err)
+				return errors.New("Failed to read builtin auth0 pem file")
+			}
 		}
 
 		parsedToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
-			return jwt.ParseRSAPublicKeyFromPEM(file)
+			return jwt.ParseRSAPublicKeyFromPEM(reader)
 		})
 
 		if err != nil {
