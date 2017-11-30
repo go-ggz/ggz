@@ -1,6 +1,7 @@
 package auth0
 
 import (
+	"crypto/rsa"
 	"errors"
 	"net/http"
 
@@ -13,6 +14,24 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// ParseRSAPublicKeyFromPEM Parse PEM encoded PKCS1 or PKCS8 public key
+func ParseRSAPublicKeyFromPEM() (*rsa.PublicKey, error) {
+	var reader []byte
+	var err error
+
+	if config.Auth0.Key != "" {
+		reader = []byte(config.Auth0.Key)
+	} else {
+		reader, err = assets.ReadSource(config.Auth0.PemPath)
+		if err != nil {
+			logrus.Warnf("Failed to read builtin %s template. %s", reader, err)
+			return nil, errors.New("Failed to read builtin auth0 pem file")
+		}
+	}
+
+	return jwt.ParseRSAPublicKeyFromPEM(reader)
+}
+
 func errorHandler(w http.ResponseWriter, r *http.Request, err string) {
 }
 
@@ -21,20 +40,7 @@ func Check() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		jwtMiddleware := jwtmiddleware.New(jwtmiddleware.Options{
 			ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-				var reader []byte
-				var err error
-
-				if config.Auth0.Key != "" {
-					reader = []byte(config.Auth0.Key)
-				} else {
-					reader, err = assets.ReadFile(config.Auth0.PemPath)
-					if err != nil {
-						logrus.Warnf("Failed to read builtin %s template. %s", reader, err)
-						return nil, errors.New("Failed to read builtin auth0 pem file")
-					}
-				}
-
-				return jwt.ParseRSAPublicKeyFromPEM(reader)
+				return ParseRSAPublicKeyFromPEM()
 			},
 			SigningMethod: jwt.SigningMethodRS256,
 			ErrorHandler:  errorHandler,

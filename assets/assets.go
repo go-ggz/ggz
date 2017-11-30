@@ -1,6 +1,7 @@
 package assets
 
 import (
+	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
@@ -49,4 +50,30 @@ func (c ChainedFS) Open(origPath string) (http.File, error) {
 	}
 
 	return f, nil
+}
+
+// ReadSource is adapTed from ioutil
+func ReadSource(origPath string) (content []byte, err error) {
+	content, err = ReadFile(origPath)
+
+	if err != nil {
+		logrus.Warnf("Failed to read builtin %s file. %s", origPath, err)
+	}
+
+	if config.Server.Assets != "" && file.IsDir(config.Server.Assets) {
+		origPath = path.Join(
+			config.Server.Assets,
+			origPath,
+		)
+
+		if file.IsFile(origPath) {
+			content, err = ioutil.ReadFile(origPath)
+
+			if err != nil {
+				logrus.Warnf("Failed to read custom %s file. %s", origPath, err)
+			}
+		}
+	}
+
+	return content, err
 }
