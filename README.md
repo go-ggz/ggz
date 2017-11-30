@@ -10,3 +10,28 @@
 [![Release](https://github-release-version.herokuapp.com/github/go-ggz/ggz/release.svg?style=flat)](https://github.com/go-ggz/ggz/releases/latest)
 
 An URL shortener service written in Golang
+
+## ggz example config
+
+See the `.env.example`
+
+```ini
+GGZ_DB_DRIVER=mysql
+GGZ_DB_USERNAME=root
+GGZ_DB_PASSWORD=123456
+GGZ_DB_NAME=ggz
+GGZ_DB_HOST=127.0.0.1:3307
+GGZ_SERVER_ADDR=:8080
+GGZ_SHORTEN_SERVER_ADDR=:8081
+GGZ_DEBUG=true
+GGZ_SERVER_HOST=http://localhost:8080
+GGZ_SERVER_SHORTEN_HOST=http://localhost:8081
+GGZ_STORAGE_DRIVER=disk
+GGZ_MINIO_ACCESS_ID=xxxxxxxx
+GGZ_MINIO_SECRET_KEY=xxxxxxxx
+GGZ_MINIO_ENDPOINT=s3.example.com
+GGZ_MINIO_BUCKET=qrcode
+GGZ_MINIO_SSL=true
+GGZ_AUTH0_PEM_PATH=pem/dev.pem
+GGZ_AUTH0_DEBUG=true
+```

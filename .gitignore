@@ -21,3 +21,4 @@ storage
 .cover
 dist
 !assets/dist
+test.pem
