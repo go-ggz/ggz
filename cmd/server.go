@@ -30,6 +30,13 @@ func Server() *cli.Command {
 		Usage: "Start the gzz service",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
+				Name:        "assets",
+				Value:       "",
+				Usage:       "Path to custom assets and templates",
+				EnvVars:     []string{"GGZ_SERVER_ASSETS"},
+				Destination: &config.Server.Assets,
+			},
+			&cli.StringFlag{
 				Name:        "db-driver",
 				Value:       "sqlite",
 				Usage:       "Database driver selection",

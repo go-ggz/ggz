@@ -21,14 +21,16 @@ type MetaData struct {
 }
 
 // FetchData for fetch metadata from header of body
-func FetchData(url string) (MetaData, error) {
-	res, _ := http.Get(url)
+func FetchData(url string) (meta *MetaData, err error) {
+	var res *http.Response
 
-	meta := new(MetaData)
-
-	if err := m.Metabolize(res.Body, meta); err != nil {
-		return *meta, err
+	if res, err = http.Get(url); err != nil {
+		return nil, err
 	}
 
-	return *meta, nil
+	if err := m.Metabolize(res.Body, meta); err != nil {
+		return nil, err
+	}
+
+	return meta, nil
 }

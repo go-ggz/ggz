@@ -22,10 +22,12 @@ func Check() gin.HandlerFunc {
 		jwtMiddleware := jwtmiddleware.New(jwtmiddleware.Options{
 			ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
 				var reader []byte
+				var err error
+
 				if config.Auth0.Key != "" {
 					reader = []byte(config.Auth0.Key)
 				} else {
-					reader, err := assets.ReadFile(config.Auth0.PemPath)
+					reader, err = assets.ReadFile(config.Auth0.PemPath)
 					if err != nil {
 						logrus.Warnf("Failed to read builtin %s template. %s", reader, err)
 						return nil, errors.New("Failed to read builtin auth0 pem file")
