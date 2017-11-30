@@ -276,6 +276,12 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_AUTH0_DEBUG"},
 				Destination: &config.Auth0.Debug,
 			},
+			&cli.StringFlag{
+				Name:        "auth0-key-name",
+				Usage:       "Auth0 key content",
+				EnvVars:     []string{"GGZ_AUTH0_Key"},
+				Destination: &config.Auth0.Key,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {

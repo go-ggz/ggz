@@ -62,6 +62,7 @@ type s3 struct {
 }
 
 type auth0 struct {
+	Key     string
 	PemPath string
 	Debug   bool
 }
