@@ -71,23 +71,24 @@ pipeline:
 
   publish_server:
     image: plugins/docker
+    pull: true
     repo: goggz/ggz
-    tags: [ 'latest' ]
     secrets: [ docker_username, docker_password ]
+    default_tags: true
     when:
-      event: push
-      branch: master
+      event: [ push, tag ]
       local: false
 
-  publish_server_alpine:
+  publish_alpine:
     image: plugins/docker
+    pull: true
     repo: goggz/ggz
     dockerfile: Dockerfile.alpine
     secrets: [ docker_username, docker_password ]
-    tag: [ alpine ]
+    default_tags: true
+    default_suffix: nanoserver
     when:
-      branch: master
-      event: push
+      event: [ push, tag ]
       local: false
 
   discord:
