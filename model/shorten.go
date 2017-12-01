@@ -12,7 +12,7 @@ import (
 // Shorten shortener URL
 type Shorten struct {
 	Slug        string    `xorm:"pk VARCHAR(14)" json:"slug"`
-	UserID      int64     `xorm:"INDEX" json:"user_id"`
+	UserID      int64     `xorm:"INDEX" json:"-"`
 	User        *User     `xorm:"-" json:"user"`
 	URL         string    `xorm:"NOT NULL VARCHAR(620)" json:"url"`
 	Date        time.Time `json:"date"`
@@ -32,20 +32,28 @@ func (s *Shorten) GetFromSlug(slug string) (bool, error) {
 
 // GetShortenFromURL check url exist
 func GetShortenFromURL(url string) (*Shorten, error) {
-	var data Shorten
+	shorten := new(Shorten)
 	has, err := x.
 		Where("url = ?", url).
-		Get(&data)
+		Get(shorten)
 
 	if err != nil {
 		return nil, err
 	}
 
-	if has {
-		return &data, ErrURLExist{data.Slug, url}
+	// get user data
+	if shorten.UserID != 0 {
+		u, _ := GetUserByID(shorten.UserID)
+		if u != nil {
+			shorten.User = u
+		}
 	}
 
-	return &data, nil
+	if has {
+		return shorten, ErrURLExist{shorten.Slug, url}
+	}
+
+	return nil, nil
 }
 
 // NewShortenURL create url item
@@ -59,6 +67,7 @@ func NewShortenURL(url string, size int, user *User) (_ *Shorten, err error) {
 
 	if user != nil {
 		row.UserID = user.ID
+		row.User = user
 	}
 
 	for exists == true {

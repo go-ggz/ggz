@@ -9,18 +9,18 @@ import (
 
 // User represents the object of individual and member of organization.
 type User struct {
-	ID       int64 `xorm:"pk autoincr"`
-	FullName string
+	ID       int64  `xorm:"pk autoincr" json:"id,omitempty"`
+	FullName string `json:"fullname,omitempty"`
 	// Email is the primary email address (to be used for communication)
 	Email       string `xorm:"UNIQUE NOT NULL" json:"email,omitempty"`
 	Location    string
 	Website     string
-	IsActive    bool   `xorm:"INDEX"` // Activate primary email
-	Avatar      string `xorm:"VARCHAR(2048) NOT NULL" json:"avatar,omitempty"`
-	AvatarEmail string `xorm:"NOT NULL"`
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	LastLogin   time.Time
+	IsActive    bool      `xorm:"INDEX"` // Activate primary email
+	Avatar      string    `xorm:"VARCHAR(2048) NOT NULL" json:"avatar,omitempty"`
+	AvatarEmail string    `xorm:"NOT NULL" json:"avatar_email,omitempty"`
+	CreatedAt   time.Time `json:"created_at,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at,omitempty"`
+	LastLogin   time.Time `json:"lastlogin,omitempty"`
 }
 
 func getUserByID(e Engine, id int64) (*User, error) {
