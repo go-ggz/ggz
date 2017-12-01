@@ -13,7 +13,6 @@ type User struct {
 	FullName string
 	// Email is the primary email address (to be used for communication)
 	Email       string `xorm:"UNIQUE NOT NULL" json:"email,omitempty"`
-	Passwd      string `xorm:"NOT NULL"`
 	Location    string
 	Website     string
 	IsActive    bool   `xorm:"INDEX"` // Activate primary email
