@@ -7,9 +7,9 @@ import (
 
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
-	"github.com/go-ggz/ggz/models"
-	"github.com/go-ggz/ggz/modules/minio"
-	"github.com/go-ggz/ggz/modules/socket"
+	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/module/minio"
+	"github.com/go-ggz/ggz/module/socket"
 	"github.com/go-ggz/ggz/router/middleware/auth0"
 	"github.com/go-ggz/ggz/router/middleware/header"
 	"github.com/go-ggz/ggz/router/middleware/logger"
@@ -24,7 +24,7 @@ import (
 
 // GlobalInit is for global configuration reload-able.
 func GlobalInit() {
-	if err := models.NewEngine(); err != nil {
+	if err := model.NewEngine(); err != nil {
 		logrus.Fatalf("Failed to initialize ORM engine: %v", err)
 	}
 

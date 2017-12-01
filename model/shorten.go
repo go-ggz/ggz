@@ -1,10 +1,10 @@
-package models
+package model
 
 import (
 	"fmt"
 	"time"
 
-	"github.com/go-ggz/ggz/modules/meta"
+	"github.com/go-ggz/ggz/module/meta"
 
 	"github.com/appleboy/com/random"
 )

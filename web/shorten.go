@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/go-ggz/ggz/config"
-	"github.com/go-ggz/ggz/models"
-	"github.com/go-ggz/ggz/modules/minio"
+	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/module/minio"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -35,9 +35,9 @@ func CreateShortenURL(c *gin.Context) {
 		return
 	}
 
-	row, err := models.GetShortenFromURL(data.URL)
+	row, err := model.GetShortenFromURL(data.URL)
 
-	if models.IsErrURLExist(err) {
+	if model.IsErrURLExist(err) {
 		c.JSON(
 			http.StatusOK,
 			row,
@@ -50,7 +50,7 @@ func CreateShortenURL(c *gin.Context) {
 		return
 	}
 
-	row, err = models.NewShortenURL(data.URL, config.Server.ShortenSize)
+	row, err = model.NewShortenURL(data.URL, config.Server.ShortenSize)
 
 	if err != nil {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)
@@ -91,7 +91,7 @@ func FetchShortenedURL(c *gin.Context) {
 		return
 	}
 
-	row := &models.Shorten{}
+	row := &model.Shorten{}
 
 	has, err := row.GetFromSlug(slug)
 	if err != nil {
@@ -131,7 +131,7 @@ func ShortenedURL(c *gin.Context) {
 		return
 	}
 
-	row := &models.Shorten{}
+	row := &model.Shorten{}
 
 	has, err := row.GetFromSlug(slug)
 	if err != nil {

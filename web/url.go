@@ -3,7 +3,7 @@ package web
 import (
 	"net/http"
 
-	"github.com/go-ggz/ggz/modules/meta"
+	"github.com/go-ggz/ggz/module/meta"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"

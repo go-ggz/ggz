@@ -1,6 +1,6 @@
 // +build sqlite
 
-package models
+package model
 
 import (
 	_ "github.com/mattn/go-sqlite3"

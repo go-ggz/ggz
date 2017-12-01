@@ -1,10 +1,10 @@
-package models
+package model
 
 import (
 	"strings"
 	"time"
 
-	"github.com/go-ggz/ggz/modules/base"
+	"github.com/go-ggz/ggz/module/base"
 )
 
 // User represents the object of individual and member of organization.
