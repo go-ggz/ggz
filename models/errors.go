@@ -36,3 +36,33 @@ func IsErrUserNotExist(err error) bool {
 func (err ErrUserNotExist) Error() string {
 	return fmt.Sprintf("user does not exist [uid: %d, name: %s, keyid: %d]", err.UID, err.Name, err.KeyID)
 }
+
+// ErrUserAlreadyExist represents a "user already exists" error.
+type ErrUserAlreadyExist struct {
+	Name string
+}
+
+// IsErrUserAlreadyExist checks if an error is a ErrUserAlreadyExists.
+func IsErrUserAlreadyExist(err error) bool {
+	_, ok := err.(ErrUserAlreadyExist)
+	return ok
+}
+
+func (err ErrUserAlreadyExist) Error() string {
+	return fmt.Sprintf("user already exists [name: %s]", err.Name)
+}
+
+// ErrEmailAlreadyUsed represents a "EmailAlreadyUsed" kind of error.
+type ErrEmailAlreadyUsed struct {
+	Email string
+}
+
+// IsErrEmailAlreadyUsed checks if an error is a ErrEmailAlreadyUsed.
+func IsErrEmailAlreadyUsed(err error) bool {
+	_, ok := err.(ErrEmailAlreadyUsed)
+	return ok
+}
+
+func (err ErrEmailAlreadyUsed) Error() string {
+	return fmt.Sprintf("e-mail has been used [email: %s]", err.Email)
+}
