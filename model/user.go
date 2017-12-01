@@ -13,7 +13,6 @@ type User struct {
 	FullName string
 	// Email is the primary email address (to be used for communication)
 	Email       string `xorm:"UNIQUE NOT NULL" json:"email,omitempty"`
-	UserName    string `xorm:"UNIQUE NULL" json:"username,omitempty"`
 	Passwd      string `xorm:"NOT NULL"`
 	Location    string
 	Website     string
@@ -58,6 +57,26 @@ func IsUserExist(uid int64, email string) (bool, error) {
 	return isUserExist(x, uid, email)
 }
 
+// GetUserByEmail returns the user object by given e-mail if exists.
+func GetUserByEmail(email string) (*User, error) {
+	if len(email) == 0 {
+		return nil, ErrUserNotExist{0, email, 0}
+	}
+
+	email = strings.ToLower(email)
+	// First try to find the user by primary email
+	user := &User{Email: email}
+	has, err := x.Get(user)
+	if err != nil {
+		return nil, err
+	}
+	if has {
+		return user, nil
+	}
+
+	return nil, ErrUserNotExist{0, email, 0}
+}
+
 // CreateUser creates record of a new user.
 func CreateUser(u *User) (err error) {
 	sess := x.NewSession()
@@ -74,15 +93,6 @@ func CreateUser(u *User) (err error) {
 		return err
 	} else if isExist {
 		return ErrEmailAlreadyUsed{u.Email}
-	}
-
-	if u.UserName != "" {
-		isExist, err := isUserExist(sess, 0, u.UserName)
-		if err != nil {
-			return err
-		} else if isExist {
-			return ErrUserAlreadyExist{u.UserName}
-		}
 	}
 
 	u.AvatarEmail = u.Email

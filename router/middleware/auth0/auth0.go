@@ -4,9 +4,11 @@ import (
 	"crypto/rsa"
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/model"
 
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
@@ -61,9 +63,48 @@ func Check() gin.HandlerFunc {
 			return
 		}
 
-		user := c.Request.Context().Value("user").(*jwt.Token).Claims.(jwt.MapClaims)
-		c.Set("email", user["email"])
-		c.Set("email_verified", user["email_verified"])
-		c.Set("name", user["name"])
+		userClaim := c.Request.Context().Value("user").(*jwt.Token).Claims.(jwt.MapClaims)
+
+		// check user exist
+		user := new(model.User)
+		user, err = model.GetUserByEmail(userClaim["email"].(string))
+
+		if err != nil {
+			if !model.IsErrUserNotExist(err) {
+				c.AbortWithStatusJSON(
+					http.StatusBadRequest,
+					gin.H{
+						"error": "database error",
+					},
+				)
+				return
+			}
+
+			// create new user
+			user = &model.User{
+				Email:     userClaim["email"].(string),
+				FullName:  userClaim["name"].(string),
+				IsActive:  userClaim["email_verified"].(bool),
+				CreatedAt: time.Now(),
+				UpdatedAt: time.Now(),
+				LastLogin: time.Now(),
+			}
+			err := model.CreateUser(user)
+
+			if err != nil {
+				logrus.Error(err)
+				c.AbortWithStatusJSON(
+					http.StatusBadRequest,
+					gin.H{
+						"error": "database error",
+					},
+				)
+				return
+			}
+		}
+
+		c.Set("email", user.Email)
+		c.Set("email_verified", user.IsActive)
+		c.Set("fullname", user.FullName)
 	}
 }
