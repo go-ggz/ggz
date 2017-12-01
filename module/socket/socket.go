@@ -69,7 +69,7 @@ func NewEngine() error {
 	})
 
 	Server.On("connection", func(so socketio.Socket) {
-		user := helper.GetUserData(so.Request().Context())
+		user := helper.GetUserDataFromToken(so.Request().Context())
 		room := user["email"].(string)
 		logrus.Debugf("room is %s", room)
 		so.Join(room)

@@ -9,6 +9,7 @@ import (
 
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
 
 	"github.com/auth0/go-jwt-middleware"
@@ -64,7 +65,7 @@ func Check() gin.HandlerFunc {
 			return
 		}
 
-		userClaim := c.Request.Context().Value("user").(*jwt.Token).Claims.(jwt.MapClaims)
+		userClaim := helper.GetUserDataFromToken(c.Request.Context())
 
 		// check user exist
 		user := new(model.User)
