@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/module/minio"
 
@@ -50,7 +51,8 @@ func CreateShortenURL(c *gin.Context) {
 		return
 	}
 
-	row, err = model.NewShortenURL(data.URL, config.Server.ShortenSize)
+	user := helper.GetUserDataFromModel(c.Request.Context())
+	row, err = model.NewShortenURL(data.URL, config.Server.ShortenSize, user)
 
 	if err != nil {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)
