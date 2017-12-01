@@ -1,6 +1,7 @@
 package auth0
 
 import (
+	"context"
 	"crypto/rsa"
 	"errors"
 	"net/http"
@@ -103,8 +104,7 @@ func Check() gin.HandlerFunc {
 			}
 		}
 
-		c.Set("email", user.Email)
-		c.Set("email_verified", user.IsActive)
-		c.Set("fullname", user.FullName)
+		ctx := context.WithValue(c.Request.Context(), config.ContextKeyUser, user)
+		c.Request = c.Request.WithContext(ctx)
 	}
 }

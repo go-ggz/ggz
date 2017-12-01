@@ -67,6 +67,13 @@ type auth0 struct {
 	Debug   bool
 }
 
+// ContextKey for context package
+type ContextKey string
+
+func (c ContextKey) String() string {
+	return "GGZ context key " + string(c)
+}
+
 var (
 	// Debug represents the flag to enable or disable debug logging.
 	Debug bool
@@ -94,4 +101,7 @@ var (
 
 	// Auth0 token information
 	Auth0 = &auth0{}
+
+	// ContextKeyUser for user
+	ContextKeyUser = ContextKey("user")
 )
