@@ -15,7 +15,9 @@ var rootQuery = graphql.NewObject(graphql.ObjectConfig{
 var rootMutation = graphql.NewObject(graphql.ObjectConfig{
 	Name:        "RootMutation",
 	Description: "Root Mutation",
-	Fields:      graphql.Fields{},
+	Fields: graphql.Fields{
+		"CreateShortenURL": &createShortenURL,
+	},
 })
 
 // Schema is the GraphQL schema served by the server.

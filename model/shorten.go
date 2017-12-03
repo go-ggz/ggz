@@ -17,10 +17,10 @@ type Shorten struct {
 	URL         string    `xorm:"NOT NULL VARCHAR(620)" json:"url"`
 	Date        time.Time `json:"date"`
 	Hits        int64     `xorm:"NOT NULL DEFAULT 0" json:"hits"`
-	Title       string    `xorm:"VARCHAR(512)"`
-	Description string    `xorm:"TEXT"`
-	Type        string
-	Image       string
+	Title       string    `xorm:"VARCHAR(512)" json:"title"`
+	Description string    `xorm:"TEXT" json:"description"`
+	Type        string    `json:"type"`
+	Image       string    `json:"image"`
 }
 
 // GetFromSlug get shorten URL data

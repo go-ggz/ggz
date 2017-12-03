@@ -1,10 +1,68 @@
 package schema
 
 import (
+	"fmt"
+
+	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/helper"
+	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/module/meta"
+	"github.com/go-ggz/ggz/web"
 
 	"github.com/graphql-go/graphql"
+	"github.com/sirupsen/logrus"
 )
+
+var shortenType = graphql.NewObject(graphql.ObjectConfig{
+	Name:        "ShortenType",
+	Description: "Shorten URL Type",
+	Fields: graphql.Fields{
+		"slug": &graphql.Field{
+			Type: graphql.String,
+		},
+		"user": &graphql.Field{
+			Type: userType,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				source := p.Source
+
+				if o, ok := source.(*model.Shorten); ok {
+					if o.User != nil {
+						return o.User, nil
+					}
+
+					if err := o.GetUser(); err != nil {
+						return nil, err
+					}
+
+					return o.User, nil
+				}
+
+				return nil, fmt.Errorf("source is empty")
+			},
+		},
+		"url": &graphql.Field{
+			Type: graphql.String,
+		},
+		"date": &graphql.Field{
+			Type: graphql.DateTime,
+		},
+		"hits": &graphql.Field{
+			Type: graphql.Int,
+		},
+		"title": &graphql.Field{
+			Type: graphql.String,
+		},
+		"description": &graphql.Field{
+			Type: graphql.String,
+		},
+		"type": &graphql.Field{
+			Type: graphql.String,
+		},
+		"image": &graphql.Field{
+			Type: graphql.String,
+		},
+	},
+})
 
 var urlType = graphql.NewObject(graphql.ObjectConfig{
 	Name:        "URL",
@@ -84,5 +142,45 @@ var queryURLMeta = graphql.Field{
 		url, _ := p.Args["url"].(string)
 
 		return meta.FetchData(url)
+	},
+}
+
+var createShortenURL = graphql.Field{
+	Name:        "CreateShortenURL",
+	Description: "Create Shorten URL",
+	Type:        shortenType,
+	Args: graphql.FieldConfigArgument{
+		"url": &graphql.ArgumentConfig{
+			Type: graphql.NewNonNull(graphql.String),
+		},
+	},
+	Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
+		url, _ := p.Args["url"].(string)
+		user := helper.GetUserDataFromModel(p.Context)
+
+		row, err := model.GetShortenFromURL(url)
+
+		if model.IsErrURLExist(err) {
+			return row, nil
+		}
+
+		if err != nil {
+			return nil, err
+		}
+
+		row, err = model.NewShortenURL(url, config.Server.ShortenSize, user)
+
+		if err != nil {
+			return nil, err
+		}
+
+		// upload QRCode image.
+		go func(slug string) {
+			if err := web.QRCodeGenerator(slug); err != nil {
+				logrus.Errorln(err)
+			}
+		}(row.Slug)
+
+		return row, nil
 	},
 }
