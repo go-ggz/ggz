@@ -9,7 +9,7 @@
 [![](https://images.microbadger.com/badges/image/goggz/ggz.svg)](https://microbadger.com/images/goggz/ggz "Get your own image badge on microbadger.com")
 [![Release](https://github-release-version.herokuapp.com/github/go-ggz/ggz/release.svg?style=flat)](https://github.com/go-ggz/ggz/releases/latest)
 
-An URL shortener service written in Golang
+An URL shortener service written in Golang.
 
 ## Features
 

@@ -201,6 +201,78 @@
 			"revisionTime": "2017-10-11T16:07:11Z"
 		},
 		{
+			"checksumSHA1": "yr8RiWvqlTcW9/saKJJxmb7OevI=",
+			"path": "github.com/graphql-go/graphql",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "/g29kXS7NodmiYAPKeIyEXYYI+g=",
+			"path": "github.com/graphql-go/graphql/gqlerrors",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "t2SAPiaZ29ocFRyAPwV17OTccLE=",
+			"path": "github.com/graphql-go/graphql/language/ast",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "FNFpZJ07U5Ud3MCc25ast14qVbo=",
+			"path": "github.com/graphql-go/graphql/language/kinds",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "8prb7ZKM8a07/nduiBn9bjby6GI=",
+			"path": "github.com/graphql-go/graphql/language/lexer",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "yskrC6tG5BTJdIk4GKHzGTenQOc=",
+			"path": "github.com/graphql-go/graphql/language/location",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "eOtYOcF6kb2TeM8jRwbxbeJdT6E=",
+			"path": "github.com/graphql-go/graphql/language/parser",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "vvZgiJe8nZ6r++mAFcgXw1O1+nE=",
+			"path": "github.com/graphql-go/graphql/language/printer",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "dRrl/Ky/0NTYA3bZznpxp4tG5Jc=",
+			"path": "github.com/graphql-go/graphql/language/source",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "f62XVj7So29WO/HJC6znxHbbeTs=",
+			"path": "github.com/graphql-go/graphql/language/typeInfo",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "qeUIi6ohnCSBjL7lbvqPcc+L0Ig=",
+			"path": "github.com/graphql-go/graphql/language/visitor",
+			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
+			"revisionTime": "2017-10-03T17:47:01Z"
+		},
+		{
+			"checksumSHA1": "sYv+ckzuxUntBeCBTUK9CF9loxk=",
+			"path": "github.com/graphql-go/handler",
+			"revision": "f0393b2c10daeebea900292b8e092e73475399d9",
+			"revisionTime": "2017-10-15T17:51:52Z"
+		},
+		{
 			"checksumSHA1": "0cdNscA7+z4+lKF5usZYz3it/04=",
 			"path": "github.com/joho/godotenv",
 			"revision": "a79fa1e548e2c689c241d10173efd51e5d689d5b",

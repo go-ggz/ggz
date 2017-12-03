@@ -11,6 +11,7 @@ import (
 	"github.com/go-ggz/ggz/module/minio"
 	"github.com/go-ggz/ggz/module/socket"
 	"github.com/go-ggz/ggz/router/middleware/auth0"
+	"github.com/go-ggz/ggz/router/middleware/graphql"
 	"github.com/go-ggz/ggz/router/middleware/header"
 	"github.com/go-ggz/ggz/router/middleware/logger"
 	"github.com/go-ggz/ggz/router/middleware/prometheus"
@@ -111,6 +112,12 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		{
 			api.POST("/url/meta", web.URLMeta)
 			api.POST("/s", web.CreateShortenURL)
+		}
+
+		g := e.Group("/graphql")
+		g.Use(auth0.Check())
+		{
+			g.POST("", graphql.Handler())
 		}
 
 		// socket connection
