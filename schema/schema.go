@@ -7,7 +7,9 @@ import (
 var rootQuery = graphql.NewObject(graphql.ObjectConfig{
 	Name:        "RootQuery",
 	Description: "Root Query",
-	Fields:      graphql.Fields{},
+	Fields: graphql.Fields{
+		"QueryURLMetadata": &queryURLMeta,
+	},
 })
 
 var rootMutation = graphql.NewObject(graphql.ObjectConfig{
