@@ -23,11 +23,20 @@ type Shorten struct {
 	Image       string    `json:"image"`
 }
 
-// GetFromSlug get shorten URL data
-func (s *Shorten) GetFromSlug(slug string) (bool, error) {
-	return x.
-		Where("slug = ?", slug).
-		Get(s)
+func getShortenBySlug(e Engine, slug string) (*Shorten, error) {
+	s := new(Shorten)
+	has, err := e.Where("slug = ?", slug).Get(s)
+	if err != nil {
+		return nil, err
+	} else if !has {
+		return nil, ErrShortenNotExist{slug}
+	}
+	return s, nil
+}
+
+// GetShortenBySlug returns the shorten object by given slug if exists.
+func GetShortenBySlug(slug string) (*Shorten, error) {
+	return getShortenBySlug(x, slug)
 }
 
 // GetShortenFromURL check url exist
@@ -72,8 +81,12 @@ func NewShortenURL(url string, size int, user *User) (_ *Shorten, err error) {
 
 	for exists == true {
 		slug = random.String(size)
-		exists, err = row.GetFromSlug(slug)
+		_, err = getShortenBySlug(x, slug)
 		if err != nil {
+			if IsErrShortenNotExist(err) {
+				exists = false
+				continue
+			}
 			return nil, err
 		}
 	}

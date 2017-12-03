@@ -37,6 +37,21 @@ func (err ErrUserNotExist) Error() string {
 	return fmt.Sprintf("user does not exist [uid: %d, name: %s, keyid: %d]", err.UID, err.Name, err.KeyID)
 }
 
+// ErrShortenNotExist represents a "ShortenNotExist" kind of error.
+type ErrShortenNotExist struct {
+	Slug string
+}
+
+// IsErrShortenNotExist checks if an error is a ErrUserNotExist.
+func IsErrShortenNotExist(err error) bool {
+	_, ok := err.(ErrShortenNotExist)
+	return ok
+}
+
+func (err ErrShortenNotExist) Error() string {
+	return fmt.Sprintf("shorten slug does not exist [slug: %s]", err.Slug)
+}
+
 // ErrUserAlreadyExist represents a "user already exists" error.
 type ErrUserAlreadyExist struct {
 	Name string

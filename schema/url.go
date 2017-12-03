@@ -184,3 +184,19 @@ var createShortenURL = graphql.Field{
 		return row, nil
 	},
 }
+
+var queryShortenURL = graphql.Field{
+	Name:        "QueryShortenURL",
+	Description: "Query Shorten URL",
+	Type:        shortenType,
+	Args: graphql.FieldConfigArgument{
+		"slug": &graphql.ArgumentConfig{
+			Type: graphql.NewNonNull(graphql.String),
+		},
+	},
+	Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
+		slug, _ := p.Args["slug"].(string)
+
+		return model.GetShortenBySlug(slug)
+	},
+}

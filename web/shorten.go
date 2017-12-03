@@ -93,15 +93,13 @@ func FetchShortenedURL(c *gin.Context) {
 		return
 	}
 
-	row := &model.Shorten{}
-
-	has, err := row.GetFromSlug(slug)
+	row, err := model.GetShortenBySlug(slug)
 	if err != nil {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)
 		return
 	}
 
-	if !has {
+	if model.IsErrShortenNotExist(err) {
 		errorJSON(c, http.StatusNotFound, errSlugNotFound)
 		return
 	}
@@ -133,15 +131,13 @@ func ShortenedURL(c *gin.Context) {
 		return
 	}
 
-	row := &model.Shorten{}
-
-	has, err := row.GetFromSlug(slug)
+	row, err := model.GetShortenBySlug(slug)
 	if err != nil {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)
 		return
 	}
 
-	if !has {
+	if model.IsErrShortenNotExist(err) {
 		errorJSON(c, http.StatusNotFound, errSlugNotFound)
 		return
 	}

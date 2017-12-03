@@ -9,6 +9,7 @@ var rootQuery = graphql.NewObject(graphql.ObjectConfig{
 	Description: "Root Query",
 	Fields: graphql.Fields{
 		"QueryURLMetadata": &queryURLMeta,
+		"QueryShortenURL":  &queryShortenURL,
 	},
 })
 
