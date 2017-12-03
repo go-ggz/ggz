@@ -14,7 +14,7 @@ An URL shortener service written in Golang.
 ## Features
 
 * Support [MySQL](https://www.mysql.com/), [Postgres](https://www.postgresql.org/) or [SQLite](https://www.sqlite.org/) Database.
-* Support [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) API.
+* Support [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) or [GraphQL](http://graphql.org/) API.
 * Support [Auth0](https://auth0.com/) Single Sign On.
 * Support expose [prometheus](https://prometheus.io/) metrics.
 * Support install TLS certificates from [Let's Encrypt](https://letsencrypt.org/) automatically.
