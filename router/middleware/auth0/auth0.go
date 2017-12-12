@@ -96,9 +96,14 @@ func Check() gin.HandlerFunc {
 			if err != nil {
 				logrus.Error(err)
 				c.AbortWithStatusJSON(
-					http.StatusBadRequest,
+					http.StatusOK,
 					gin.H{
-						"error": "database error",
+						"data": nil,
+						"errors": []map[string]interface{}{
+							{
+								"message": "token expire or parse error",
+							},
+						},
 					},
 				)
 				return
