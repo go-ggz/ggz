@@ -200,3 +200,30 @@ var queryShortenURL = graphql.Field{
 		return model.GetShortenBySlug(slug)
 	},
 }
+
+var queryAllShortenURL = graphql.Field{
+	Name:        "QueryAllShortenURL",
+	Description: "Query All Shorten URL",
+	Type:        graphql.NewList(shortenType),
+	Args: graphql.FieldConfigArgument{
+		"userID": &graphql.ArgumentConfig{
+			Type: graphql.Int,
+		},
+		"page": &graphql.ArgumentConfig{
+			Type:         graphql.Int,
+			DefaultValue: 1,
+		},
+		"pageSize": &graphql.ArgumentConfig{
+			Type:         graphql.Int,
+			DefaultValue: 10,
+		},
+	},
+	Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
+		id, _ := p.Args["userID"].(int)
+		page, _ := p.Args["page"].(int)
+		pageSize, _ := p.Args["pageSize"].(int)
+		userID := int64(id)
+
+		return model.GetShortenURLs(userID, page, pageSize, "")
+	},
+}

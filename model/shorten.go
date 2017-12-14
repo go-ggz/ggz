@@ -144,3 +144,27 @@ func (s *Shorten) getUser(e Engine) (err error) {
 func (s *Shorten) GetUser() error {
 	return s.getUser(x)
 }
+
+// GetShortenURLs returns a list of urls of given user.
+func GetShortenURLs(userID int64, page, pageSize int, orderBy string) ([]*Shorten, error) {
+	sess := x.NewSession()
+
+	if len(orderBy) == 0 {
+		orderBy = "date DESC"
+	}
+
+	if userID != 0 {
+		sess = sess.
+			Where("user_id = ?", userID)
+	}
+
+	sess = sess.OrderBy(orderBy)
+
+	if page <= 0 {
+		page = 1
+	}
+	sess.Limit(pageSize, (page-1)*pageSize)
+
+	urls := make([]*Shorten, 0, pageSize)
+	return urls, sess.Find(&urls)
+}
