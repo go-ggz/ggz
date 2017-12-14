@@ -57,9 +57,14 @@ func Check() gin.HandlerFunc {
 		if err != nil {
 			logrus.Errorf("JWT Error: %s", err.Error())
 			c.AbortWithStatusJSON(
-				http.StatusForbidden,
+				http.StatusOK,
 				gin.H{
-					"error": "You don't have permission",
+					"data": nil,
+					"errors": []map[string]interface{}{
+						{
+							"message": "token expire or parse error",
+						},
+					},
 				},
 			)
 			return
@@ -73,10 +78,16 @@ func Check() gin.HandlerFunc {
 
 		if err != nil {
 			if !model.IsErrUserNotExist(err) {
+				logrus.Errorf("Database Error: %s", err.Error())
 				c.AbortWithStatusJSON(
 					http.StatusBadRequest,
 					gin.H{
-						"error": "database error",
+						"data": nil,
+						"errors": []map[string]interface{}{
+							{
+								"message": "database query error",
+							},
+						},
 					},
 				)
 				return
@@ -101,7 +112,7 @@ func Check() gin.HandlerFunc {
 						"data": nil,
 						"errors": []map[string]interface{}{
 							{
-								"message": "token expire or parse error",
+								"message": "can't create new user",
 							},
 						},
 					},
