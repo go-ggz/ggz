@@ -31,6 +31,7 @@ type server struct {
 	ShortenAddr   string
 	ShortenHost   string
 	ShortenSize   int
+	Cache         string
 }
 
 type storage struct {
@@ -41,6 +42,10 @@ type storage struct {
 type admin struct {
 	Users  []string
 	Create bool
+}
+
+type cache struct {
+	Driver string
 }
 
 type session struct {
@@ -60,7 +65,6 @@ type s3 struct {
 	Bucket    string
 	Region    string
 }
-
 type auth0 struct {
 	Key     string
 	PemPath string
@@ -104,4 +108,7 @@ var (
 
 	// ContextKeyUser for user
 	ContextKeyUser = ContextKey("user")
+
+	// Cache for redis, lur or memory cache
+	Cache = &cache{}
 )

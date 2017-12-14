@@ -289,6 +289,13 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_AUTH0_Key"},
 				Destination: &config.Auth0.Key,
 			},
+			&cli.StringFlag{
+				Name:        "cache-driver",
+				Value:       "default",
+				Usage:       "Cache driver selection",
+				EnvVars:     []string{"GGZ_CACHE_DRIVER"},
+				Destination: &config.Cache.Driver,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {
