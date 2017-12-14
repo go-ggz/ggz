@@ -5,10 +5,7 @@ import (
 	"time"
 
 	"github.com/go-ggz/ggz/module/base"
-	"github.com/sirupsen/logrus"
 )
-
-var count int
 
 // User represents the object of individual and member of organization.
 type User struct {
@@ -27,8 +24,6 @@ type User struct {
 }
 
 func getUserByID(e Engine, id int64) (*User, error) {
-	count++
-	logrus.Warnf("execute count %i", count)
 	u := new(User)
 	has, err := e.ID(id).Get(u)
 	if err != nil {
