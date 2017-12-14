@@ -105,7 +105,7 @@ func Check() gin.HandlerFunc {
 			err := model.CreateUser(user)
 
 			if err != nil {
-				logrus.Error(err)
+				logrus.Errorf("Database Error: %s", err.Error())
 				c.AbortWithStatusJSON(
 					http.StatusOK,
 					gin.H{
