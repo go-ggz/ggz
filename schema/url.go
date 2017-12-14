@@ -30,11 +30,9 @@ var shortenType = graphql.NewObject(graphql.ObjectConfig{
 						return o.User, nil
 					}
 
-					if err := o.GetUser(); err != nil {
-						return nil, err
-					}
+					result, err := userLoader.Load(p.Context, o.UserID)()
 
-					return o.User, nil
+					return result, err
 				}
 
 				return nil, fmt.Errorf("source is empty")
