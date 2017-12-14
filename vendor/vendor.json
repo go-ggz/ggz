@@ -375,10 +375,6 @@
 			"revisionTime": "2017-10-02T19:34:27Z"
 		},
 		{
-			"path": "github.com/nicksrandall/dataloader",
-			"revision": ""
-		},
-		{
 			"checksumSHA1": "hpXnjCM/a0edhWUb2+and0mnPyY=",
 			"path": "github.com/opentracing/opentracing-go",
 			"revision": "1361b9cd60be79c4c3a7fa9841b3c132e40066a7",
