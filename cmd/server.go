@@ -296,6 +296,13 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_CACHE_DRIVER"},
 				Destination: &config.Cache.Driver,
 			},
+			&cli.IntFlag{
+				Name:        "cache-expire-time",
+				Value:       15,
+				Usage:       "cache expire time (minutes)",
+				EnvVars:     []string{"GGZ_CACHE_EXPIRE"},
+				Destination: &config.Cache.Expire,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {

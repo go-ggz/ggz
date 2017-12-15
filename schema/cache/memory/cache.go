@@ -42,8 +42,9 @@ func (c *Cache) Clear() {
 }
 
 // NewEngine for memory engine
-func NewEngine() *Cache {
-	c := cache.New(15*time.Minute, 15*time.Minute)
+func NewEngine(s int) *Cache {
+	expire := time.Duration(s)
+	c := cache.New(expire*time.Minute, expire*time.Minute)
 
 	return &Cache{c}
 }

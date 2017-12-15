@@ -32,7 +32,7 @@ func init() {
 	case "lru":
 		cache = lru.NewEngine()
 	case "memory":
-		cache = memory.NewEngine()
+		cache = memory.NewEngine(config.Cache.Expire)
 	default:
 		cache = dataloader.NewCache()
 	}
