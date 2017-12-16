@@ -5,7 +5,6 @@ import (
 	"crypto/rsa"
 	"errors"
 	"net/http"
-	"time"
 
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
@@ -95,12 +94,9 @@ func Check() gin.HandlerFunc {
 
 			// create new user
 			user = &model.User{
-				Email:     userClaim["email"].(string),
-				FullName:  userClaim["name"].(string),
-				IsActive:  userClaim["email_verified"].(bool),
-				CreatedAt: time.Now(),
-				UpdatedAt: time.Now(),
-				LastLogin: time.Now(),
+				Email:    userClaim["email"].(string),
+				FullName: userClaim["name"].(string),
+				IsActive: userClaim["email_verified"].(bool),
 			}
 			err := model.CreateUser(user)
 

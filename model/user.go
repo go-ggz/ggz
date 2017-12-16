@@ -23,6 +23,13 @@ type User struct {
 	LastLogin   time.Time `json:"lastlogin,omitempty"`
 }
 
+// BeforeInsert will be invoked by XORM before inserting a record
+func (u *User) BeforeInsert() {
+	u.CreatedAt = time.Now()
+	u.UpdatedAt = time.Now()
+	u.LastLogin = time.Now()
+}
+
 func getUserByID(e Engine, id int64) (*User, error) {
 	u := new(User)
 	has, err := e.ID(id).Get(u)
