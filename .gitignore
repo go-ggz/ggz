@@ -18,6 +18,7 @@ bin
 rev
 data
 storage
+!module/storage
 .cover
 dist
 !assets/dist

@@ -2,14 +2,13 @@ package router
 
 import (
 	"net/http"
-	"os"
 	"path"
 
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/model"
-	"github.com/go-ggz/ggz/module/minio"
 	"github.com/go-ggz/ggz/module/socket"
+	"github.com/go-ggz/ggz/module/storage"
 	"github.com/go-ggz/ggz/router/middleware/auth0"
 	"github.com/go-ggz/ggz/router/middleware/graphql"
 	"github.com/go-ggz/ggz/router/middleware/header"
@@ -34,22 +33,14 @@ func GlobalInit() {
 		logrus.Fatalf("Failed to initialize Socket IO engine: %v", err)
 	}
 
-	if config.QRCode.Enable && config.Storage.Driver == "disk" {
-		storage := path.Join(config.Storage.Path, config.QRCode.Bucket)
-		if err := os.MkdirAll(storage, os.ModePerm); err != nil {
-			logrus.Fatalf("Failed to create storage folder: %v", err)
+	if config.QRCode.Enable {
+		var err error
+		storage.S3, err = storage.NewEngine()
+		if err != nil {
+			logrus.Fatalf("Failed to create s3 interface: %v", err)
 		}
-	}
 
-	if config.QRCode.Enable && config.Storage.Driver == "s3" {
-		minio.NewEngine(
-			config.Minio.EndPoint,
-			config.Minio.AccessID,
-			config.Minio.SecretKey,
-			config.Minio.SSL,
-		)
-
-		if err := minio.S3.MakeBucket(config.Minio.Bucket, config.Minio.Region); err != nil {
+		if err := storage.S3.CreateBucket(config.Minio.Bucket, config.Minio.Region); err != nil {
 			logrus.Fatalf("Failed to create s3 bucket: %v", err)
 		}
 	}
