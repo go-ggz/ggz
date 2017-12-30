@@ -1,6 +1,7 @@
 package web
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 	"os"
@@ -168,19 +169,25 @@ func QRCodeGenerator(slug string) error {
 		filePath = fmt.Sprintf("%s/%s", os.TempDir(), objectName)
 	}
 
-	if err := qrcode.WriteFile(
-		host+"/"+slug,
-		qrcode.Medium, 256, filePath); err != nil {
-		return err
+	if config.Storage.Driver == "disk" {
+		if err := qrcode.WriteFile(
+			host+"/"+slug,
+			qrcode.Medium, 256, filePath); err != nil {
+			return err
+		}
 	}
 
 	if config.Storage.Driver == "s3" {
-		contentType := "image/png"
+		png, err := qrcode.Encode(host+"/"+slug, qrcode.Medium, 256)
+		if err != nil {
+			return err
+		}
 		if err := minio.S3.Upload(
 			config.Minio.Bucket,
 			objectName,
-			filePath,
-			contentType,
+			bytes.NewReader(png),
+			int64(len(png)),
+			"image/png",
 		); err != nil {
 			return err
 		}

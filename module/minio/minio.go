@@ -2,6 +2,7 @@ package minio
 
 import (
 	"errors"
+	"io"
 
 	"github.com/minio/minio-go"
 	"github.com/sirupsen/logrus"
@@ -34,9 +35,9 @@ func NewEngine(endpoint, accessID, secretKey string, ssl bool) error {
 }
 
 // Upload file to s3
-func (m *Minio) Upload(bucketName, objectName, filePath, contentType string) error {
+func (m *Minio) Upload(bucketName, objectName string, file io.Reader, size int64, contentType string) error {
 	// Upload the zip file with FPutObject
-	_, err := m.client.FPutObject(bucketName, objectName, filePath, minio.PutObjectOptions{ContentType: contentType})
+	_, err := m.client.PutObject(bucketName, objectName, file, size, minio.PutObjectOptions{ContentType: contentType})
 	if err != nil {
 		return err
 	}
