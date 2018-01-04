@@ -15,6 +15,8 @@ LDFLAGS ?= -X 'main.Version=$(VERSION)'
 TMPDIR := $(shell mktemp -d 2>/dev/null || mktemp -d -t 'tempdir')
 STYLESHEETS := $(wildcard assets/dist/less/innhp.less  assets/dist/less/_*.less)
 
+GOVENDOR := $(GOPATH)/bin/govendor
+
 ifneq ($(shell uname), Darwin)
 	EXTLDFLAGS = -extldflags "-static" $(null)
 else
@@ -153,18 +155,18 @@ upx:
 test:
 	for PKG in $(PACKAGES); do go test -v $$PKG || exit 1; done;
 
+$(GOVENDOR):
+	go get -u github.com/kardianos/govendor
+
 .PHONY: test-vendor
-test-vendor:
-	@hash govendor > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/kardianos/govendor; \
-	fi
-	govendor list +unused | tee "$(TMPDIR)/wc-gitea-unused"
+test-vendor: $(GOVENDOR)
+	$(GOVENDOR) list +unused | tee "$(TMPDIR)/wc-gitea-unused"
 	[ $$(cat "$(TMPDIR)/wc-gitea-unused" | wc -l) -eq 0 ] || echo "Warning: /!\\ Some vendor are not used /!\\"
 
-	govendor list +outside | tee "$(TMPDIR)/wc-gitea-outside"
+	$(GOVENDOR) list +outside | tee "$(TMPDIR)/wc-gitea-outside"
 	[ $$(cat "$(TMPDIR)/wc-gitea-outside" | wc -l) -eq 0 ] || exit 1
 
-	govendor status || exit 1
+	$(GOVENDOR) status || exit 1
 
 release: release-dirs release-build release-copy release-check
 
