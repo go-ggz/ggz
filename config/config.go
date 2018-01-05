@@ -47,6 +47,7 @@ type admin struct {
 type cache struct {
 	Driver string
 	Expire int
+	Prefix string
 }
 
 type session struct {

@@ -30,9 +30,9 @@ func init() {
 	var cache dataloader.Cache
 	switch config.Cache.Driver {
 	case "lru":
-		cache = lru.NewEngine()
+		cache = lru.NewEngine(config.Cache.Prefix)
 	case "memory":
-		cache = memory.NewEngine(config.Cache.Expire)
+		cache = memory.NewEngine(config.Cache.Prefix, config.Cache.Expire)
 	default:
 		cache = dataloader.NewCache()
 	}

@@ -2,7 +2,6 @@ package lru
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/hashicorp/golang-lru"
 	"gopkg.in/nicksrandall/dataloader.v4"
@@ -11,12 +10,12 @@ import (
 // Cache implements the dataloader.Cache interface
 type Cache struct {
 	*lru.ARCCache
+	Prefix string
 }
 
 // Get gets an item from the cache
 func (c *Cache) Get(_ context.Context, key interface{}) (dataloader.Thunk, bool) {
-	fmt.Println("Get key:", key)
-	v, ok := c.ARCCache.Get(key)
+	v, ok := c.ARCCache.Get(c.Prefix + "::" + key.(string))
 	if ok {
 		return v.(dataloader.Thunk), ok
 	}
@@ -25,14 +24,13 @@ func (c *Cache) Get(_ context.Context, key interface{}) (dataloader.Thunk, bool)
 
 // Set sets an item in the cache
 func (c *Cache) Set(_ context.Context, key interface{}, value dataloader.Thunk) {
-	fmt.Println("Set key:", key)
-	c.ARCCache.Add(key, value)
+	c.ARCCache.Add(c.Prefix+"::"+key.(string), value)
 }
 
 // Delete deletes an item in the cache
 func (c *Cache) Delete(_ context.Context, key interface{}) bool {
-	if c.ARCCache.Contains(key) {
-		c.ARCCache.Remove(key)
+	if c.ARCCache.Contains(c.Prefix + "::" + key.(string)) {
+		c.ARCCache.Remove(c.Prefix + "::" + key.(string))
 		return true
 	}
 	return false
@@ -44,8 +42,11 @@ func (c *Cache) Clear() {
 }
 
 // NewEngine for lru engine
-func NewEngine() *Cache {
+func NewEngine(prefix string) *Cache {
 	c, _ := lru.NewARC(100)
 
-	return &Cache{c}
+	return &Cache{
+		ARCCache: c,
+		Prefix:   prefix,
+	}
 }

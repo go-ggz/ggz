@@ -303,6 +303,13 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_CACHE_EXPIRE"},
 				Destination: &config.Cache.Expire,
 			},
+			&cli.StringFlag{
+				Name:        "cache-prefix-name",
+				Value:       "ggz",
+				Usage:       "prefix name of key",
+				EnvVars:     []string{"GGZ_CACHE_PREFIX_NAME"},
+				Destination: &config.Cache.Prefix,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {

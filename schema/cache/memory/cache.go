@@ -10,12 +10,13 @@ import (
 
 // Cache implements the dataloader.Cache interface
 type Cache struct {
-	c *cache.Cache
+	c      *cache.Cache
+	Prefix string
 }
 
 // Get gets a value from the cache
 func (c *Cache) Get(_ context.Context, key interface{}) (dataloader.Thunk, bool) {
-	v, ok := c.c.Get(key.(string))
+	v, ok := c.c.Get(c.Prefix + "::" + key.(string))
 	if ok {
 		return v.(dataloader.Thunk), ok
 	}
@@ -24,13 +25,13 @@ func (c *Cache) Get(_ context.Context, key interface{}) (dataloader.Thunk, bool)
 
 // Set sets a value in the cache
 func (c *Cache) Set(_ context.Context, key interface{}, value dataloader.Thunk) {
-	c.c.Set(key.(string), value, 0)
+	c.c.Set(c.Prefix+"::"+key.(string), value, 0)
 }
 
 // Delete deletes and item in the cache
 func (c *Cache) Delete(_ context.Context, key interface{}) bool {
-	if _, found := c.c.Get(key.(string)); found {
-		c.c.Delete(key.(string))
+	if _, found := c.c.Get(c.Prefix + "::" + key.(string)); found {
+		c.c.Delete(c.Prefix + "::" + key.(string))
 		return true
 	}
 	return false
@@ -42,9 +43,12 @@ func (c *Cache) Clear() {
 }
 
 // NewEngine for memory engine
-func NewEngine(s int) *Cache {
+func NewEngine(prefix string, s int) *Cache {
 	expire := time.Duration(s)
 	c := cache.New(expire*time.Minute, expire*time.Minute)
 
-	return &Cache{c}
+	return &Cache{
+		c:      c,
+		Prefix: prefix,
+	}
 }
