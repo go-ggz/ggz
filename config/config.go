@@ -67,6 +67,7 @@ type s3 struct {
 	Bucket    string
 	Region    string
 }
+
 type auth0 struct {
 	Key     string
 	PemPath string
