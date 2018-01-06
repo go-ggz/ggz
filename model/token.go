@@ -8,6 +8,7 @@ import (
 	"github.com/satori/go.uuid"
 )
 
+// AccessToken represents a personal access token.
 type AccessToken struct {
 	ID     int64 `xorm:"pk autoincr"`
 	UserID int64 `xorm:"INDEX"`
