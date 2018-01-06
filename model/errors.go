@@ -81,3 +81,32 @@ func IsErrEmailAlreadyUsed(err error) bool {
 func (err ErrEmailAlreadyUsed) Error() string {
 	return fmt.Sprintf("e-mail has been used [email: %s]", err.Email)
 }
+
+// ErrAccessTokenNotExist represents a "AccessTokenNotExist" kind of error.
+type ErrAccessTokenNotExist struct {
+	SHA string
+}
+
+// IsErrAccessTokenNotExist checks if an error is a ErrAccessTokenNotExist.
+func IsErrAccessTokenNotExist(err error) bool {
+	_, ok := err.(ErrAccessTokenNotExist)
+	return ok
+}
+
+func (err ErrAccessTokenNotExist) Error() string {
+	return fmt.Sprintf("access token does not exist [sha: %s]", err.SHA)
+}
+
+// ErrAccessTokenEmpty represents a "AccessTokenEmpty" kind of error.
+type ErrAccessTokenEmpty struct {
+}
+
+// IsErrAccessTokenEmpty checks if an error is a ErrAccessTokenEmpty.
+func IsErrAccessTokenEmpty(err error) bool {
+	_, ok := err.(ErrAccessTokenEmpty)
+	return ok
+}
+
+func (err ErrAccessTokenEmpty) Error() string {
+	return fmt.Sprintf("access token is empty")
+}
