@@ -23,9 +23,7 @@ func GetCacheKey(module string, id interface{}) string {
 func GetCacheID(key string) (interface{}, error) {
 	strs := strings.Split(key, sep)
 	switch strs[0] {
-	case "user":
-		return strconv.ParseInt(strs[1], 10, 64)
 	default:
-		return nil, nil
+		return strconv.ParseInt(strs[1], 10, 64)
 	}
 }

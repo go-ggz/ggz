@@ -59,14 +59,6 @@ func TestGetCacheID(t *testing.T) {
 			want:    int64(100),
 			wantErr: false,
 		},
-		{
-			name: "unknown module",
-			args: args{
-				key: "test:100",
-			},
-			want:    nil,
-			wantErr: false,
-		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
