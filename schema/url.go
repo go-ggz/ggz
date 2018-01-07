@@ -30,7 +30,8 @@ var shortenType = graphql.NewObject(graphql.ObjectConfig{
 						return o.User, nil
 					}
 
-					result, err := userLoader.Load(p.Context, o.UserID)()
+					key := helper.GetCacheKey("user", o.UserID)
+					result, err := userLoader.Load(p.Context, key)()
 
 					return result, err
 				}

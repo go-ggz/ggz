@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/schema/cache/lru"
 	"github.com/go-ggz/ggz/schema/cache/memory"
@@ -15,8 +16,9 @@ var userLoader *dataloader.Loader
 
 func userBatch(ctx context.Context, keys []interface{}) []*dataloader.Result {
 	var results []*dataloader.Result
-	id := keys[0].(int64)
-	user, err := model.GetUserByID(id)
+	id, _ := helper.GetCacheID(keys[0].(string))
+
+	user, err := model.GetUserByID(id.(int64))
 
 	results = append(results, &dataloader.Result{
 		Data:  user,
