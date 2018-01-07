@@ -20,7 +20,8 @@ var Server *socketio.Server
 var err error
 var key = "user"
 
-type A struct {
+// Test for testing websocket
+type Test struct {
 	A int    `json:"abc"`
 	B string `json:"def"`
 }
@@ -76,7 +77,7 @@ func NewEngine() error {
 
 		so.On("chat message", func(msg string) {
 			logrus.Debugln("emit:", so.Emit("chat message", msg))
-			so.BroadcastTo(room, "chat message", A{
+			so.BroadcastTo(room, "chat message", Test{
 				A: 1,
 				B: "100",
 			})
