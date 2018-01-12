@@ -30,6 +30,18 @@ func (u *User) BeforeInsert() {
 	u.LastLogin = time.Now()
 }
 
+// BeforeUpdate is invoked from XORM before updating this object.
+func (u *User) BeforeUpdate() {
+	// Organization does not need email
+	u.Email = strings.ToLower(u.Email)
+	if len(u.AvatarEmail) == 0 {
+		u.AvatarEmail = u.Email
+	}
+	if len(u.AvatarEmail) > 0 {
+		u.Avatar = base.HashEmail(u.AvatarEmail)
+	}
+}
+
 func getUserByID(e Engine, id int64) (*User, error) {
 	u := new(User)
 	has, err := e.ID(id).Get(u)
@@ -109,4 +121,25 @@ func CreateUser(u *User) (err error) {
 	}
 
 	return sess.Commit()
+}
+
+func updateUserCols(e Engine, u *User, cols ...string) error {
+	cols = append(cols, "updated_at")
+	_, err := e.ID(u.ID).Cols(cols...).Update(u)
+	return err
+}
+
+func updateUser(e Engine, u *User) error {
+	_, err := e.ID(u.ID).AllCols().Update(u)
+	return err
+}
+
+// UpdateUser updates user's information.
+func UpdateUser(u *User) error {
+	return updateUser(x, u)
+}
+
+// UpdateUserCols update user according special columns
+func UpdateUserCols(u *User, cols ...string) error {
+	return updateUserCols(x, u, cols...)
 }
