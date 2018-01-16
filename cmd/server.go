@@ -376,7 +376,7 @@ func Server() *cli.Command {
 					g.Go(func() error {
 						return http.ListenAndServe(
 							fmt.Sprintf("%s:80", splitAddr[0]),
-							http.HandlerFunc(redirect),
+							certManager.HTTPHandler(http.HandlerFunc(redirect)),
 						)
 					})
 
