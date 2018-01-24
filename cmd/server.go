@@ -354,7 +354,7 @@ func Server() *cli.Command {
 						logrus.Fatalf("Failed to parse host name. %s", err)
 					}
 
-					certManager := autocert.Manager{
+					certManager := &autocert.Manager{
 						Prompt:     autocert.AcceptTOS,
 						HostPolicy: autocert.HostWhitelist(parsed.Host),
 						Cache:      autocert.DirCache(path.Join(config.Server.Storage, "certs")),
