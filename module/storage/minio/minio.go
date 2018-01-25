@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/minio/minio-go"
+	"github.com/minio/minio-go/pkg/credentials"
 	"github.com/sirupsen/logrus"
 )
 
@@ -18,13 +19,21 @@ type Minio struct {
 
 // NewEngine struct
 func NewEngine(endpoint, accessID, secretKey string, ssl bool) (*Minio, error) {
-
-	if endpoint == "" || accessID == "" || secretKey == "" {
+	var client *minio.Client
+	var err error
+	if endpoint == "" {
 		return nil, errors.New("endpoint, accessID and secretKey can't be empty")
 	}
 
-	// Initialize minio client object.
-	client, err := minio.New(endpoint, accessID, secretKey, ssl)
+	// Fetching from IAM roles assigned to an EC2 instance.
+	if accessID == "" && secretKey == "" {
+		iam := credentials.NewIAM("")
+		client, err = minio.NewWithCredentials(endpoint, iam, ssl, "")
+	} else {
+		// Initialize minio client object.
+		client, err = minio.New(endpoint, accessID, secretKey, ssl)
+	}
+
 	if err != nil {
 		return nil, err
 	}

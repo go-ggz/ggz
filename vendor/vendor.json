@@ -351,10 +351,10 @@
 			"revisionTime": "2017-10-02T19:34:27Z"
 		},
 		{
-			"checksumSHA1": "qPt3l9ZUjG0J4oZNTSrKy17rts0=",
+			"checksumSHA1": "/Ly8Mgi802nx7zZiBq+H6p+ct8M=",
 			"path": "github.com/minio/minio-go/pkg/credentials",
-			"revision": "9690dc6c40e6ef271727848c04f974e801212ac1",
-			"revisionTime": "2017-10-02T19:34:27Z"
+			"revision": "d218e4cb1bfc13dcef0eb5c3e74507a35be0dd3a",
+			"revisionTime": "2018-01-13T00:13:38Z"
 		},
 		{
 			"checksumSHA1": "pggIpSePizRBQ7ybhB0CuaSQydw=",
@@ -385,6 +385,12 @@
 			"path": "github.com/minio/minio-go/pkg/set",
 			"revision": "9690dc6c40e6ef271727848c04f974e801212ac1",
 			"revisionTime": "2017-10-02T19:34:27Z"
+		},
+		{
+			"checksumSHA1": "V/quM7+em2ByJbWBLOsEwnY3j/Q=",
+			"path": "github.com/mitchellh/go-homedir",
+			"revision": "b8bc1bf767474819792c23f32d8286a45736f1c6",
+			"revisionTime": "2016-12-03T19:45:07Z"
 		},
 		{
 			"checksumSHA1": "hpXnjCM/a0edhWUb2+and0mnPyY=",
