@@ -22,7 +22,7 @@ func NewEngine(endpoint, accessID, secretKey string, ssl bool) (*Minio, error) {
 	var client *minio.Client
 	var err error
 	if endpoint == "" {
-		return nil, errors.New("endpoint, accessID and secretKey can't be empty")
+		return nil, errors.New("endpoint can't be empty")
 	}
 
 	// Fetching from IAM roles assigned to an EC2 instance.
