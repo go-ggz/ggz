@@ -15,7 +15,7 @@ type AccessToken struct {
 	Name   string
 	Sha1   string `xorm:"UNIQUE VARCHAR(40)"`
 
-	CreatedAt         time.Time `json:"created_at,omitempty"`
+	CreatedAt         time.Time `xorm:"created" json:"created_at,omitempty"`
 	UpdatedAt         time.Time `xorm:"updated" json:"updated_at,omitempty"`
 	HasRecentActivity bool      `xorm:"-"`
 	HasUsed           bool      `xorm:"-"`

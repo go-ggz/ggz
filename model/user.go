@@ -18,14 +18,13 @@ type User struct {
 	IsActive    bool      `xorm:"INDEX"` // Activate primary email
 	Avatar      string    `xorm:"VARCHAR(2048) NOT NULL" json:"avatar,omitempty"`
 	AvatarEmail string    `xorm:"NOT NULL" json:"avatar_email,omitempty"`
-	CreatedAt   time.Time `json:"created_at,omitempty"`
+	CreatedAt   time.Time `xorm:"created" json:"created_at,omitempty"`
 	UpdatedAt   time.Time `xorm:"updated" json:"updated_at,omitempty"`
 	LastLogin   time.Time `json:"lastlogin,omitempty"`
 }
 
 // BeforeInsert will be invoked by XORM before inserting a record
 func (u *User) BeforeInsert() {
-	u.CreatedAt = time.Now()
 	u.LastLogin = time.Now()
 }
 
