@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/hashicorp/golang-lru"
-	"gopkg.in/nicksrandall/dataloader.v4"
+	"gopkg.in/nicksrandall/dataloader.v5"
 )
 
 // Cache implements the dataloader.Cache interface
@@ -14,8 +14,8 @@ type Cache struct {
 }
 
 // Get gets an item from the cache
-func (c *Cache) Get(_ context.Context, key interface{}) (dataloader.Thunk, bool) {
-	v, ok := c.ARCCache.Get(c.Prefix + "::" + key.(string))
+func (c *Cache) Get(_ context.Context, key dataloader.Key) (dataloader.Thunk, bool) {
+	v, ok := c.ARCCache.Get(c.Prefix + "::" + key.String())
 	if ok {
 		return v.(dataloader.Thunk), ok
 	}
@@ -23,14 +23,14 @@ func (c *Cache) Get(_ context.Context, key interface{}) (dataloader.Thunk, bool)
 }
 
 // Set sets an item in the cache
-func (c *Cache) Set(_ context.Context, key interface{}, value dataloader.Thunk) {
-	c.ARCCache.Add(c.Prefix+"::"+key.(string), value)
+func (c *Cache) Set(_ context.Context, key dataloader.Key, value dataloader.Thunk) {
+	c.ARCCache.Add(c.Prefix+"::"+key.String(), value)
 }
 
 // Delete deletes an item in the cache
-func (c *Cache) Delete(_ context.Context, key interface{}) bool {
-	if c.ARCCache.Contains(c.Prefix + "::" + key.(string)) {
-		c.ARCCache.Remove(c.Prefix + "::" + key.(string))
+func (c *Cache) Delete(_ context.Context, key dataloader.Key) bool {
+	if c.ARCCache.Contains(c.Prefix + "::" + key.String()) {
+		c.ARCCache.Remove(c.Prefix + "::" + key.String())
 		return true
 	}
 	return false
