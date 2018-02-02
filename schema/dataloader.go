@@ -7,12 +7,12 @@ import (
 	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/module/loader"
 
-	"gopkg.in/nicksrandall/dataloader.v4"
+	"gopkg.in/nicksrandall/dataloader.v5"
 )
 
-func userBatch(ctx context.Context, keys []interface{}) []*dataloader.Result {
+func userBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	var results []*dataloader.Result
-	id, _ := helper.GetCacheID(keys[0].(string))
+	id, _ := helper.GetCacheID(keys[0].String())
 
 	user, err := model.GetUserByID(id.(int64))
 

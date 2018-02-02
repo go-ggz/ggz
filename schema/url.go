@@ -11,6 +11,7 @@ import (
 
 	"github.com/graphql-go/graphql"
 	"github.com/sirupsen/logrus"
+	"gopkg.in/nicksrandall/dataloader.v5"
 )
 
 var shortenType = graphql.NewObject(graphql.ObjectConfig{
@@ -31,7 +32,7 @@ var shortenType = graphql.NewObject(graphql.ObjectConfig{
 					}
 
 					key := helper.GetCacheKey("user", o.UserID)
-					result, err := userLoader.Load(p.Context, key)()
+					result, err := userLoader.Load(p.Context, dataloader.StringKey(key))()
 
 					return result, err
 				}

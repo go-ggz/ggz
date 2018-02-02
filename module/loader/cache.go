@@ -4,7 +4,7 @@ import (
 	"github.com/go-ggz/ggz/module/loader/lru"
 	"github.com/go-ggz/ggz/module/loader/memory"
 
-	"gopkg.in/nicksrandall/dataloader.v4"
+	"gopkg.in/nicksrandall/dataloader.v5"
 )
 
 // Cache for dataloader

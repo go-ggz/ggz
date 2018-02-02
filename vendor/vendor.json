@@ -579,10 +579,10 @@
 			"revisionTime": "2017-07-30T05:02:35Z"
 		},
 		{
-			"checksumSHA1": "nOYc5lO2pltokKUOaZgOAvoXkaU=",
-			"path": "gopkg.in/nicksrandall/dataloader.v4",
-			"revision": "02614916d80019649f6461b3216d575b0b6ced0d",
-			"revisionTime": "2017-12-05T23:57:15Z"
+			"checksumSHA1": "tPIb4iaHF0OAWb6O3iCI5rP3Em0=",
+			"path": "gopkg.in/nicksrandall/dataloader.v5",
+			"revision": "78139374585c29dcb97b8f33089ed11959e4be59",
+			"revisionTime": "2018-01-03T13:24:43Z"
 		},
 		{
 			"checksumSHA1": "QTBycToPw2wCmLKKXIVDTx11qCw=",

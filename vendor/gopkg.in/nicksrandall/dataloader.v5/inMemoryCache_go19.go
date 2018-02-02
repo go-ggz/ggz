@@ -1,4 +1,4 @@
-// +build !go1.9
+// +build go1.9
 
 package dataloader
 
@@ -13,45 +13,36 @@ import (
 // for the life of an http request) but it not well suited
 // for long lived cached items.
 type InMemoryCache struct {
-	items map[interface{}]Thunk
-	mu    sync.RWMutex
+	items *sync.Map
 }
 
 // NewCache constructs a new InMemoryCache
 func NewCache() *InMemoryCache {
-	items := make(map[interface{}]Thunk)
 	return &InMemoryCache{
-		items: items,
+		items: &sync.Map{},
 	}
 }
 
 // Set sets the `value` at `key` in the cache
-func (c *InMemoryCache) Set(_ context.Context, key interface{}, value Thunk) {
-	c.mu.Lock()
-	c.items[key] = value
-	c.mu.Unlock()
+func (c *InMemoryCache) Set(_ context.Context, key Key, value Thunk) {
+	c.items.Store(key.String(), value)
 }
 
 // Get gets the value at `key` if it exsits, returns value (or nil) and bool
 // indicating of value was found
-func (c *InMemoryCache) Get(_ context.Context, key interface{}) (Thunk, bool) {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
-
-	item, found := c.items[key]
+func (c *InMemoryCache) Get(_ context.Context, key Key) (Thunk, bool) {
+	item, found := c.items.Load(key.String())
 	if !found {
 		return nil, false
 	}
 
-	return item, true
+	return item.(Thunk), true
 }
 
 // Delete deletes item at `key` from cache
-func (c *InMemoryCache) Delete(_ context.Context, key interface{}) bool {
-	if _, found := c.Get(key); found {
-		c.mu.Lock()
-		defer c.mu.Unlock()
-		delete(c.items, key)
+func (c *InMemoryCache) Delete(_ context.Context, key Key) bool {
+	if _, found := c.items.Load(key.String()); found {
+		c.items.Delete(key.String())
 		return true
 	}
 	return false
@@ -59,7 +50,8 @@ func (c *InMemoryCache) Delete(_ context.Context, key interface{}) bool {
 
 // Clear clears the entire cache
 func (c *InMemoryCache) Clear() {
-	c.mu.Lock()
-	c.items = map[interface{}]Thunk{}
-	c.mu.Unlock()
+	c.items.Range(func(key, _ interface{}) bool {
+		c.items.Delete(key)
+		return true
+	})
 }
