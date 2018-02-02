@@ -45,3 +45,7 @@ GGZ_MINIO_SSL=true
 GGZ_AUTH0_PEM_PATH=pem/dev.pem
 GGZ_AUTH0_DEBUG=true
 ```
+
+## Stargazers over time
+
+[![Stargazers over time](https://starcharts.herokuapp.com/go-ggz/ggz.svg)](https://starcharts.herokuapp.com/go-ggz/ggz)
