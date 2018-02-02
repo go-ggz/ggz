@@ -7,6 +7,7 @@ import (
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/module/loader"
 	"github.com/go-ggz/ggz/module/socket"
 	"github.com/go-ggz/ggz/module/storage"
 	"github.com/go-ggz/ggz/router/middleware/auth0"
@@ -43,6 +44,11 @@ func GlobalInit() {
 		if err := storage.S3.CreateBucket(config.Minio.Bucket, config.Minio.Region); err != nil {
 			logrus.Fatalf("Failed to create s3 bucket: %v", err)
 		}
+	}
+
+	// initial dataloader cache
+	if err := loader.NewEngine(config.Cache.Driver, config.Cache.Prefix, config.Cache.Expire); err != nil {
+		logrus.Fatalf("Failed to initial dataloader: %v", err)
 	}
 }
 

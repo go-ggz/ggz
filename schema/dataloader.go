@@ -3,16 +3,12 @@ package schema
 import (
 	"context"
 
-	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
-	"github.com/go-ggz/ggz/schema/cache/lru"
-	"github.com/go-ggz/ggz/schema/cache/memory"
+	"github.com/go-ggz/ggz/module/loader"
 
 	"gopkg.in/nicksrandall/dataloader.v4"
 )
-
-var userLoader *dataloader.Loader
 
 func userBatch(ctx context.Context, keys []interface{}) []*dataloader.Result {
 	var results []*dataloader.Result
@@ -28,16 +24,6 @@ func userBatch(ctx context.Context, keys []interface{}) []*dataloader.Result {
 	return results
 }
 
-func init() {
-	var cache dataloader.Cache
-	switch config.Cache.Driver {
-	case "lru":
-		cache = lru.NewEngine(config.Cache.Prefix)
-	case "memory":
-		cache = memory.NewEngine(config.Cache.Prefix, config.Cache.Expire)
-	default:
-		cache = dataloader.NewCache()
-	}
-
-	userLoader = dataloader.NewBatchedLoader(userBatch, dataloader.WithCache(cache))
-}
+var (
+	userLoader = dataloader.NewBatchedLoader(userBatch, dataloader.WithCache(loader.Cache))
+)
