@@ -13,7 +13,6 @@ import (
 type Shorten struct {
 	Slug        string    `xorm:"pk VARCHAR(14)" json:"slug"`
 	UserID      int64     `xorm:"INDEX" json:"-"`
-	User        *User     `xorm:"-" json:"user"`
 	URL         string    `xorm:"NOT NULL VARCHAR(620)" json:"url"`
 	Date        time.Time `json:"date"`
 	Hits        int64     `xorm:"NOT NULL DEFAULT 0" json:"hits"`
@@ -21,6 +20,11 @@ type Shorten struct {
 	Description string    `xorm:"TEXT" json:"description"`
 	Type        string    `json:"type"`
 	Image       string    `json:"image"`
+	CreatedAt   time.Time `xorm:"created" json:"created_at,omitempty"`
+	UpdatedAt   time.Time `xorm:"updated" json:"updated_at,omitempty"`
+
+	// reference
+	User *User `xorm:"-" json:"user"`
 }
 
 func getShortenBySlug(e Engine, slug string) (*Shorten, error) {
