@@ -70,6 +70,20 @@ func Check() gin.HandlerFunc {
 		}
 
 		userClaim := helper.GetUserDataFromToken(c.Request.Context())
+		if _, ok := userClaim["email"]; !ok {
+			c.AbortWithStatusJSON(
+				http.StatusOK,
+				gin.H{
+					"data": nil,
+					"errors": []map[string]interface{}{
+						{
+							"message": "email not found.",
+						},
+					},
+				},
+			)
+			return
+		}
 
 		// check user exist
 		user := new(model.User)
