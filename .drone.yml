@@ -10,7 +10,7 @@ clone:
 
 pipeline:
   backend:
-    image: appleboy/golang-testing:1.9.2
+    image: appleboy/golang-testing:1.10.0
     group: testing
     commands:
       - cp .env.example .env
@@ -20,19 +20,19 @@ pipeline:
       # - make stylesheets-check
 
   vendor:
-    image: appleboy/golang-testing:1.9.2
+    image: appleboy/golang-testing:1.10.0
     group: testing
     commands:
       - make test-vendor
 
   test:
-    image: appleboy/golang-testing:1.9.2
+    image: appleboy/golang-testing:1.10.0
     group: testing
     commands:
       - coverage all
 
   build:
-    image: appleboy/golang-testing:1.9.2
+    image: appleboy/golang-testing:1.10.0
     group: build
     commands:
       - make docker_build
@@ -49,7 +49,7 @@ pipeline:
       event: [ push, pull_request ]
 
   release:
-    image: appleboy/golang-testing:1.9.2
+    image: appleboy/golang-testing:1.10.0
     pull: true
     commands:
       - make release
