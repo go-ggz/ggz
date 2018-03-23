@@ -1,8 +1,6 @@
 package schema
 
 import (
-	"fmt"
-
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
@@ -26,7 +24,7 @@ var shortenType = graphql.NewObject(graphql.ObjectConfig{
 				o, ok := p.Source.(*model.Shorten)
 
 				if !ok {
-					return nil, fmt.Errorf("source is empty")
+					return nil, errMissingSource
 				}
 
 				if o.User != nil {

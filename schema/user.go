@@ -1,8 +1,6 @@
 package schema
 
 import (
-	"fmt"
-
 	"github.com/go-ggz/ggz/model"
 
 	"github.com/graphql-go/graphql"
@@ -43,13 +41,13 @@ func init() {
 	userType.AddFieldConfig("urls", &graphql.Field{
 		Type: graphql.NewList(shortenType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			source := p.Source
+			o, ok := p.Source.(*model.User)
 
-			if o, ok := source.(*model.User); ok {
-				return model.GetShortenURLs(o.ID, 0, 10, "")
+			if !ok {
+				return nil, errMissingSource
 			}
 
-			return nil, fmt.Errorf("source is empty")
+			return model.GetShortenURLs(o.ID, 0, 10, "")
 		},
 	})
 }
