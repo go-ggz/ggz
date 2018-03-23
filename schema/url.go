@@ -23,17 +23,17 @@ var shortenType = graphql.NewObject(graphql.ObjectConfig{
 		"user": &graphql.Field{
 			Type: userType,
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				source := p.Source
+				o, ok := p.Source.(*model.Shorten)
 
-				if o, ok := source.(*model.Shorten); ok {
-					if o.User != nil {
-						return o.User, nil
-					}
-
-					return getUserFromLoader(p.Context, o.UserID)
+				if !ok {
+					return nil, fmt.Errorf("source is empty")
 				}
 
-				return nil, fmt.Errorf("source is empty")
+				if o.User != nil {
+					return o.User, nil
+				}
+
+				return getUserFromLoader(p.Context, o.UserID)
 			},
 		},
 		"url": &graphql.Field{
