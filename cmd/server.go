@@ -311,9 +311,10 @@ func Server() *cli.Command {
 				Destination: &config.Cache.Prefix,
 			},
 			&cli.StringFlag{
-				Name:    "prometheus-auth-token",
-				EnvVars: []string{"GGZ_PROMETHEUS_AUTH_TOKEN"},
-				Usage:   "token to secure prometheus metrics endpoint",
+				Name:        "prometheus-auth-token",
+				EnvVars:     []string{"GGZ_PROMETHEUS_AUTH_TOKEN"},
+				Usage:       "token to secure prometheus metrics endpoint",
+				Destination: &config.Prometheus.AuthToken,
 			},
 		},
 		Before: func(c *cli.Context) error {
