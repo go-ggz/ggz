@@ -74,6 +74,10 @@ type auth0 struct {
 	Debug   bool
 }
 
+type prometheus struct {
+	AuthToken string
+}
+
 // ContextKey for context package
 type ContextKey string
 
@@ -114,4 +118,7 @@ var (
 
 	// Cache for redis, lur or memory cache
 	Cache = &cache{}
+
+	// Prometheus config
+	Prometheus = &prometheus{}
 )

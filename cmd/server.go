@@ -310,6 +310,11 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_CACHE_PREFIX_NAME"},
 				Destination: &config.Cache.Prefix,
 			},
+			&cli.StringFlag{
+				Name:    "prometheus-auth-token",
+				EnvVars: []string{"GGZ_PROMETHEUS_AUTH_TOKEN"},
+				Usage:   "token to secure prometheus metrics endpoint",
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {
