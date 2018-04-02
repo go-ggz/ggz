@@ -31,13 +31,33 @@ pipeline:
     commands:
       - coverage all
 
-  build:
+  build_linux_amd64:
     image: appleboy/golang-testing:1.10.0
+    pull: true
     group: build
     commands:
-      - make docker_build
-      - make upx
-      - make tar
+      - make build_linux_amd64
+
+  build_linux_i386:
+    image: appleboy/golang-testing:1.10.0
+    pull: true
+    group: build
+    commands:
+      - make build_linux_i386
+
+  build_linux_arm64:
+    image: appleboy/golang-testing:1.10.0
+    pull: true
+    group: build
+    commands:
+      - make build_linux_arm64
+
+  build_linux_arm:
+    image: appleboy/golang-testing:1.10.0
+    pull: true
+    group: build
+    commands:
+      - make build_linux_arm
 
   codecov:
     image: robertstettner/drone-codecov
@@ -67,7 +87,7 @@ pipeline:
       event: [ tag ]
       local: false
 
-  publish_server:
+  publish_linux_amd64:
     image: plugins/docker
     group: release
     pull: true
@@ -87,6 +107,45 @@ pipeline:
     secrets: [ docker_username, docker_password ]
     default_tags: true
     default_suffix: alpine
+    when:
+      event: [ push, tag ]
+      local: false
+
+  publish_linux_i386:
+    image: plugins/docker:17.05
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    group: release
+    repo: goggz/ggz
+    auto_tag: true
+    auto_tag_suffix: i386
+    dockerfile: Dockerfile.i386
+    when:
+      event: [ push, tag ]
+      local: false
+
+  publish_linux_arm64:
+    image: plugins/docker:17.05
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    group: release
+    repo: goggz/ggz
+    auto_tag: true
+    auto_tag_suffix: arm64
+    dockerfile: Dockerfile.arm64
+    when:
+      event: [ push, tag ]
+      local: false
+
+  publish_linux_arm:
+    image: plugins/docker:17.05
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    group: release
+    repo: goggz/ggz
+    auto_tag: true
+    auto_tag_suffix: arm
+    dockerfile: Dockerfile.arm
     when:
       event: [ push, tag ]
       local: false
