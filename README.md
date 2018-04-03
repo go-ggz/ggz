@@ -21,6 +21,7 @@ An URL shortener service written in Golang.
 * Support install TLS certificates from [Let's Encrypt](https://letsencrypt.org/) automatically.
 * Support [QR Code](https://en.wikipedia.org/wiki/QR_code) Generator from shorten URL.
 * Support local disk storage or [Minio Object Storage](https://minio.io/).
+* Support linux and windows container, see [Docker Hub](https://hub.docker.com/r/goggz/ggz/tags/).
 
 ## Server Config
 
