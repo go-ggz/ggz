@@ -26,10 +26,10 @@ install:
 build_script:
   - ps: |
       if ( $env:APPVEYOR_REPO_TAG -eq 'false' ) {
-        go build -ldflags "-X main.Version=$env:APPVEYOR_REPO_COMMIT -X main.BuildNum=$env:APPVEYOR_BUILD_VERSION" -a -o release/ggz.exe
+        go build -ldflags "-X main.Version=$env:APPVEYOR_REPO_COMMIT -X main.BuildNum=$env:APPVEYOR_BUILD_VERSION" -a -o release/ggz.exe ./cmd
       } else {
         $version = $env:APPVEYOR_REPO_TAG_NAME
-        go build -ldflags "-X main.Version=$version -X main.BuildNum=$env:APPVEYOR_BUILD_VERSION" -a -o release/ggz.exe
+        go build -ldflags "-X main.Version=$version -X main.BuildNum=$env:APPVEYOR_BUILD_VERSION" -a -o release/ggz.exe ./cmd
       }
       docker pull microsoft/nanoserver:10.0.14393.1884
       docker build -f Dockerfile.windows -t goggz/ggz:windows-amd64 .
@@ -48,13 +48,13 @@ deploy_script:
           $major,$minor,$patch = $env:APPVEYOR_REPO_TAG_NAME.split('.')
           docker push goggz/ggz:windows-amd64
 
-          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major.$minor.$patch-windows
+          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major.$minor.$patch-windows-amd64
           docker push goggz/ggz:$major.$minor.$patch-windows-amd64
 
-          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major.$minor-windows
+          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major.$minor-windows-amd64
           docker push goggz/ggz:$major.$minor-windows-amd64
 
-          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major-windows
+          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major-windows-amd64
           docker push goggz/ggz:$major-windows-amd64
         } else {
           if ( $env:APPVEYOR_REPO_BRANCH -eq 'master' ) {
