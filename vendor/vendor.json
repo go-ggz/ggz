@@ -585,6 +585,12 @@
 			"revisionTime": "2018-01-03T13:24:43Z"
 		},
 		{
+			"checksumSHA1": "ob4ZeUbmT7SgWIStHaqq0+vjLdI=",
+			"path": "gopkg.in/testfixtures.v2",
+			"revision": "f79bf941e2785516a66bcf4de9a21b0b827ed716",
+			"revisionTime": "2017-10-30T10:15:45Z"
+		},
+		{
 			"checksumSHA1": "QTBycToPw2wCmLKKXIVDTx11qCw=",
 			"path": "gopkg.in/urfave/cli.v2",
 			"revision": "50a0fdeea6330854c7b05371cce1fac8c7e636d2",

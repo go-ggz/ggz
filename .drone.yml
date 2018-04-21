@@ -10,7 +10,7 @@ clone:
 
 pipeline:
   backend:
-    image: appleboy/golang-testing:1.10.0
+    image: golang:1.10.1
     group: testing
     commands:
       - cp .env.example .env
@@ -20,40 +20,53 @@ pipeline:
       # - make stylesheets-check
 
   vendor:
-    image: appleboy/golang-testing:1.10.0
+    image: golang:1.10.1
     group: testing
     commands:
       - make test-vendor
 
   test:
-    image: appleboy/golang-testing:1.10.0
+    image: golang:1.10.1
     group: testing
+    environment:
+      TAGS: bindata sqlite
     commands:
-      - coverage all
+      - make unit-test-coverage
+
+  generate-coverage:
+    image: webhippie/golang:edge
+    pull: true
+    environment:
+      TAGS: bindata
+      GOPATH: /srv/app
+    commands:
+      - make coverage
+    when:
+      event: [ push, pull_request ]
 
   build_linux_amd64:
-    image: appleboy/golang-testing:1.10.0
+    image: golang:1.10.1
     pull: true
     group: build
     commands:
       - make build_linux_amd64
 
   build_linux_i386:
-    image: appleboy/golang-testing:1.10.0
+    image: golang:1.10.1
     pull: true
     group: build
     commands:
       - make build_linux_i386
 
   build_linux_arm64:
-    image: appleboy/golang-testing:1.10.0
+    image: golang:1.10.1
     pull: true
     group: build
     commands:
       - make build_linux_arm64
 
   build_linux_arm:
-    image: appleboy/golang-testing:1.10.0
+    image: golang:1.10.1
     pull: true
     group: build
     commands:
@@ -64,12 +77,12 @@ pipeline:
     group: build
     secrets: [ codecov_token ]
     files:
-      - .cover/coverage.txt
+      - coverage.all
     when:
       event: [ push, pull_request ]
 
   release:
-    image: appleboy/golang-testing:1.10.0
+    image: golang:1.10.1
     pull: true
     commands:
       - make release

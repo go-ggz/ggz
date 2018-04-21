@@ -1,0 +1,13 @@
+-
+  id: 1
+  email: test@gmail.com
+  full_name: test
+  avatar: http://example.com
+  avatar_email: test@gmail.com
+
+-
+  id: 2
+  email: test1234@gmail.com
+  full_name: test1234
+  avatar: http://example.com
+  avatar_email: test1234@gmail.com
