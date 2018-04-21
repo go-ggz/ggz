@@ -4,10 +4,10 @@ EXECUTABLE := ggz
 DEPLOY_ACCOUNT := goggz
 DEPLOY_IMAGE := $(EXECUTABLE)
 GOFMT ?= gofmt "-s"
-
+GO ?= go
 TARGETS ?= linux darwin windows
 ARCHS ?= amd64 386
-PACKAGES ?= $(shell go list ./... | grep -v /vendor/)
+PACKAGES ?= $(shell $(GO) list ./... | grep -v /vendor/)
 GOFILES := $(shell find . -name "*.go" -type f -not -path "./vendor/*")
 SOURCES ?= $(shell find . -name "*.go" -type f)
 TAGS ?=
@@ -52,9 +52,9 @@ prod: build_image check_image
 .PHONY: generate
 generate:
 	@which fileb0x > /dev/null; if [ $$? -ne 0 ]; then \
-		go get -u github.com/UnnoTed/fileb0x; \
+		$(GO) get -u github.com/UnnoTed/fileb0x; \
 	fi
-	go generate $(PACKAGES)
+	$(GO) generate $(PACKAGES)
 
 .PHONY: stylesheets-check
 stylesheets-check: stylesheets
@@ -71,7 +71,7 @@ stylesheets: assets/dist/css/innhp.css
 .IGNORE:assets/dist/css/innhp.css
 assets/dist/css/innhp.css: $(STYLESHEETS)
 	@which lessc > /dev/null; if [ $$? -ne 0 ]; then \
-		go get -u github.com/kib357/less-go/lessc; \
+		$(GO) get -u github.com/kib357/less-go/lessc; \
 	fi
 	lessc -i $< -o $@
 
@@ -81,7 +81,6 @@ fmt:
 
 .PHONY: fmt-check
 fmt-check:
-	# get all go files and run go fmt on them
 	@diff=$$($(GOFMT) -d $(GOFILES)); \
 	if [ -n "$$diff" ]; then \
 		echo "Please run 'make fmt' and commit the result:"; \
@@ -91,56 +90,56 @@ fmt-check:
 
 embedmd:
 	@hash embedmd > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/campoy/embedmd; \
+		$(GO) get -u github.com/campoy/embedmd; \
 	fi
 	embedmd -d *.md
 
 vet:
-	go vet $(PACKAGES)
+	$(GO) vet $(PACKAGES)
 
 	errcheck:
 	@hash errcheck > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/kisielk/errcheck; \
+		$(GO) get -u github.com/kisielk/errcheck; \
 	fi
 	errcheck $(PACKAGES)
 
 lint:
 	@hash golint > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/golang/lint/golint; \
+		$(GO) get -u github.com/golang/lint/golint; \
 	fi
 	for PKG in $(PACKAGES); do golint -set_exit_status $$PKG || exit 1; done;
 
 unconvert:
 	@hash unconvert > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/mdempsky/unconvert; \
+		$(GO) get -u github.com/mdempsky/unconvert; \
 	fi
 	for PKG in $(PACKAGES); do unconvert -v $$PKG || exit 1; done;
 
 install: $(SOURCES)
-	go install -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)'
+	$(GO) install -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)'
 
 build: $(EXECUTABLE)
 
 $(EXECUTABLE): $(SOURCES)
-	go build -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o bin/$@ ./cmd
+	$(GO) build -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o bin/$@ ./cmd
 
 .PHONY: misspell-check
 misspell-check:
 	@hash misspell > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/client9/misspell/cmd/misspell; \
+		$(GO) get -u github.com/client9/misspell/cmd/misspell; \
 	fi
 	misspell -error $(GOFILES)
 
 .PHONY: misspell
 misspell:
 	@hash misspell > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/client9/misspell/cmd/misspell; \
+		$(GO) get -u github.com/client9/misspell/cmd/misspell; \
 	fi
 	misspell -w $(GOFILES)
 
 unused-check:
 	@hash unused > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u honnef.co/go/tools/cmd/unused; \
+		$(GO) get -u honnef.co/go/tools/cmd/unused; \
 	fi
 	for PKG in $(PACKAGES); do unused $$PKG || exit 1; done;
 
@@ -155,19 +154,19 @@ upx:
 .PHONY: coverage
 coverage:
 	@hash gocovmerge > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/wadey/gocovmerge; \
+		$(GO) get -u github.com/wadey/gocovmerge; \
 	fi
 	gocovmerge $(shell find . -type f -name "coverage.out") > coverage.all;\
 
 .PHONY: unit-test-coverage
 unit-test-coverage:
-	for PKG in $(PACKAGES); do go test -tags=sqlite -cover -coverprofile $$GOPATH/src/$$PKG/coverage.out $$PKG || exit 1; done;
+	for PKG in $(PACKAGES); do $(GO) test -tags=sqlite -cover -coverprofile $$GOPATH/src/$$PKG/coverage.out $$PKG || exit 1; done;
 
 test:
-	for PKG in $(PACKAGES); do go test -tags=sqlite -v $$PKG || exit 1; done;
+	for PKG in $(PACKAGES); do $(GO) test -tags=sqlite -v $$PKG || exit 1; done;
 
 $(GOVENDOR):
-	go get -u github.com/kardianos/govendor
+	$(GO) get -u github.com/kardianos/govendor
 
 .PHONY: test-vendor
 test-vendor: $(GOVENDOR)
@@ -186,7 +185,7 @@ release-dirs:
 
 release-build:
 	@hash gox > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/mitchellh/gox; \
+		$(GO) get -u github.com/mitchellh/gox; \
 	fi
 	gox -os="$(TARGETS)" -arch="$(ARCHS)" -tags="$(TAGS)" -ldflags="$(EXTLDFLAGS)-s -w $(LDFLAGS)" -output="$(DIST)/binaries/$(EXECUTABLE)-$(VERSION)-{{.OS}}-{{.Arch}}" ./cmd/...
 
@@ -197,16 +196,16 @@ release-check:
 	cd $(DIST)/release; $(foreach file,$(wildcard $(DIST)/release/$(EXECUTABLE)-*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
 
 build_linux_amd64:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/amd64/$(DEPLOY_IMAGE) ./cmd
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/amd64/$(DEPLOY_IMAGE) ./cmd
 
 build_linux_i386:
-	CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/i386/$(DEPLOY_IMAGE) ./cmd
+	CGO_ENABLED=0 GOOS=linux GOARCH=386 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/i386/$(DEPLOY_IMAGE) ./cmd
 
 build_linux_arm64:
-	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/arm64/$(DEPLOY_IMAGE) ./cmd
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/arm64/$(DEPLOY_IMAGE) ./cmd
 
 build_linux_arm:
-	CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=7 go build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/arm/$(DEPLOY_IMAGE) ./cmd
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=7 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/arm/$(DEPLOY_IMAGE) ./cmd
 
 build_image:
 	docker build -t $(DEPLOY_ACCOUNT)/$(DEPLOY_IMAGE) -f Dockerfile .
@@ -214,5 +213,5 @@ build_image:
 docker_release: build_image
 
 clean:
-	go clean -x -i ./...
+	$(GO) clean -x -i ./...
 	rm -rf bin
