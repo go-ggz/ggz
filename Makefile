@@ -152,8 +152,19 @@ upx:
 	upx -o bin/ggz-small bin/ggz
 	mv bin/ggz-small bin/ggz
 
+.PHONY: coverage
+coverage:
+	@hash gocovmerge > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		$(GO) get -u github.com/wadey/gocovmerge; \
+	fi
+	gocovmerge integration.coverage.out $(shell find . -type f -name "coverage.out") > coverage.all;\
+
+.PHONY: unit-test-coverage
+unit-test-coverage:
+	for PKG in $(PACKAGES); do go test -tags=sqlite -cover -coverprofile $$GOPATH/src/$$PKG/coverage.out $$PKG || exit 1; done;
+
 test:
-	for PKG in $(PACKAGES); do go test -v $$PKG || exit 1; done;
+	for PKG in $(PACKAGES); do go test -tags=sqlite -v $$PKG || exit 1; done;
 
 $(GOVENDOR):
 	go get -u github.com/kardianos/govendor
