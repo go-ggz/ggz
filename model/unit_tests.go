@@ -31,8 +31,7 @@ func MainTest(m *testing.M, pathToGgzRoot string) {
 	if err = createTestEngine(fixturesDir); err != nil {
 		fatalTestError("Error creating test engine: %v\n", err)
 	}
-	exitStatus := m.Run()
-	os.Exit(exitStatus)
+	os.Exit(m.Run())
 }
 
 func createTestEngine(fixturesDir string) error {
