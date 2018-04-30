@@ -6,8 +6,6 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/go-ggz/ggz/config"
-
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 	"github.com/stretchr/testify/assert"
@@ -46,7 +44,7 @@ func createTestEngine(fixturesDir string) error {
 	}
 	switch os.Getenv("GGZ_UNIT_TESTS_VERBOSE") {
 	case "true", "1":
-		x.ShowSQL(config.Debug)
+		x.ShowSQL(true)
 	}
 
 	return InitFixtures(&testfixtures.SQLite{}, fixturesDir)
