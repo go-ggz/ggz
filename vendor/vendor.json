@@ -201,10 +201,10 @@
 			"revisionTime": "2017-10-11T16:07:11Z"
 		},
 		{
-			"checksumSHA1": "yr8RiWvqlTcW9/saKJJxmb7OevI=",
+			"checksumSHA1": "UmzoEeXAijc3kCgvKHS1bRA1cHY=",
 			"path": "github.com/graphql-go/graphql",
-			"revision": "7731016ba482d3741eea075d23dc6366b932f8f4",
-			"revisionTime": "2017-10-03T17:47:01Z"
+			"revision": "51e8a07b6f0348c492363059ce33f9a91f75f3f9",
+			"revisionTime": "2018-04-16T15:35:35Z"
 		},
 		{
 			"checksumSHA1": "/g29kXS7NodmiYAPKeIyEXYYI+g=",
@@ -273,10 +273,10 @@
 			"revisionTime": "2018-04-16T15:35:35Z"
 		},
 		{
-			"checksumSHA1": "sYv+ckzuxUntBeCBTUK9CF9loxk=",
+			"checksumSHA1": "ZVsXoXlj9ew/B6Sl+i2EcPgus50=",
 			"path": "github.com/graphql-go/handler",
-			"revision": "f0393b2c10daeebea900292b8e092e73475399d9",
-			"revisionTime": "2017-10-15T17:51:52Z"
+			"revision": "c1c8ee7b173a5f70fe039529659fbb30f1a435a0",
+			"revisionTime": "2018-04-02T14:08:09Z"
 		},
 		{
 			"checksumSHA1": "d9PxF1XQGLMJZRct2R8qVM/eYlE=",
