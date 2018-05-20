@@ -32,7 +32,7 @@ func newRows(session *Session, bean interface{}) (*Rows, error) {
 	var args []interface{}
 	var err error
 
-	if err = rows.session.statement.setRefValue(rValue(bean)); err != nil {
+	if err = rows.session.statement.setRefBean(bean); err != nil {
 		return nil, err
 	}
 
@@ -94,18 +94,22 @@ func (rows *Rows) Scan(bean interface{}) error {
 		return fmt.Errorf("scan arg is incompatible type to [%v]", rows.beanType)
 	}
 
-	dataStruct := rValue(bean)
-	if err := rows.session.statement.setRefValue(dataStruct); err != nil {
+	if err := rows.session.statement.setRefBean(bean); err != nil {
 		return err
 	}
 
-	scanResults, err := rows.session.row2Slice(rows.rows, rows.fields, len(rows.fields), bean)
+	scanResults, err := rows.session.row2Slice(rows.rows, rows.fields, bean)
 	if err != nil {
 		return err
 	}
 
-	_, err = rows.session.slice2Bean(scanResults, rows.fields, len(rows.fields), bean, &dataStruct, rows.session.statement.RefTable)
-	return err
+	dataStruct := rValue(bean)
+	_, err = rows.session.slice2Bean(scanResults, rows.fields, bean, &dataStruct, rows.session.statement.RefTable)
+	if err != nil {
+		return err
+	}
+
+	return rows.session.executeProcessors()
 }
 
 // Close session if session.IsAutoClose is true, and claimed any opened resources

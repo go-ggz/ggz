@@ -27,7 +27,7 @@ func (session *Session) cacheDelete(table *core.Table, tableName, sqlStr string,
 		return ErrCacheFailed
 	}
 
-	cacher := session.engine.getCacher2(table)
+	cacher := session.engine.getCacher(tableName)
 	pkColumns := table.PKColumns()
 	ids, err := core.GetCacheSql(cacher, tableName, newsql, args)
 	if err != nil {
@@ -79,7 +79,7 @@ func (session *Session) Delete(bean interface{}) (int64, error) {
 		defer session.Close()
 	}
 
-	if err := session.statement.setRefValue(rValue(bean)); err != nil {
+	if err := session.statement.setRefBean(bean); err != nil {
 		return 0, err
 	}
 
@@ -184,12 +184,12 @@ func (session *Session) Delete(bean interface{}) (int64, error) {
 			}
 		}
 
-		// !oinume! Insert NowTime to the head of session.statement.Params
+		// !oinume! Insert nowTime to the head of session.statement.Params
 		condArgs = append(condArgs, "")
 		paramsLen := len(condArgs)
 		copy(condArgs[1:paramsLen], condArgs[0:paramsLen-1])
 
-		val, t := session.engine.NowTime2(deletedColumn.SQLType.Name)
+		val, t := session.engine.nowTime(deletedColumn)
 		condArgs[0] = val
 
 		var colName = deletedColumn.Name
@@ -199,7 +199,7 @@ func (session *Session) Delete(bean interface{}) (int64, error) {
 		})
 	}
 
-	if cacher := session.engine.getCacher2(table); cacher != nil && session.statement.UseCache {
+	if cacher := session.engine.getCacher(tableName); cacher != nil && session.statement.UseCache {
 		session.cacheDelete(table, tableNameNoQuote, deleteSQL, argsForCache...)
 	}
 
