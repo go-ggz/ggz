@@ -7,6 +7,7 @@ import (
 	"github.com/go-ggz/ggz/module/meta"
 
 	"github.com/appleboy/com/random"
+	"github.com/sirupsen/logrus"
 )
 
 // Shorten shortener URL
@@ -83,7 +84,7 @@ func NewShortenURL(url string, size int, user *User) (_ *Shorten, err error) {
 		row.User = user
 	}
 
-	for exists == true {
+	for exists {
 		slug = random.String(size)
 		_, err = getShortenBySlug(x, slug)
 		if err != nil {
@@ -101,7 +102,11 @@ func NewShortenURL(url string, size int, user *User) (_ *Shorten, err error) {
 		return nil, err
 	}
 
-	go row.UpdateMetaData()
+	go func() {
+		if err := row.UpdateMetaData(); err != nil {
+			logrus.Warningln("update meta data err:", err)
+		}
+	}()
 
 	return row, nil
 }

@@ -40,6 +40,7 @@ func errorHandler(w http.ResponseWriter, r *http.Request, err string) {
 
 // Check initializes the auth0 middleware.
 func Check() gin.HandlerFunc {
+	var user *model.User
 	return func(c *gin.Context) {
 		jwtMiddleware := jwtmiddleware.New(jwtmiddleware.Options{
 			ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
@@ -86,7 +87,6 @@ func Check() gin.HandlerFunc {
 		}
 
 		// check user exist
-		user := new(model.User)
 		user, err = model.GetUserByEmail(userClaim["email"].(string))
 
 		if err != nil {

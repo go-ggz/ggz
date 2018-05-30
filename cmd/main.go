@@ -17,13 +17,15 @@ var Version = "v1.0.0-dev"
 
 func main() {
 	if env := os.Getenv("GGZ_ENV_FILE"); env != "" {
-		godotenv.Load(env)
+		if err := godotenv.Load(env); err != nil {
+			logrus.Fatal(err)
+		}
 	}
 
 	app := &cli.App{
 		Name:      "gzz",
 		Usage:     "shorten url service",
-		Copyright: "Copyright (c) 2017 Bo-Yi Wu",
+		Copyright: "Copyright (c) 2018 Bo-Yi Wu",
 		Version:   Version,
 		Compiled:  time.Now(),
 

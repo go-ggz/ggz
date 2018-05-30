@@ -16,16 +16,3 @@ func errorJSON(c *gin.Context, code int, err InnError) {
 		},
 	)
 }
-
-func errorHTML(c *gin.Context, code int, file string, err InnError) {
-	logrus.Errorln(err.Error())
-
-	c.HTML(
-		code,
-		file,
-		gin.H{
-			"code":  err.Code,
-			"error": err.Error(),
-		},
-	)
-}
