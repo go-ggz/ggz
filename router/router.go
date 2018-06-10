@@ -64,7 +64,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 
 	e.Use(gin.Recovery())
 	e.Use(logger.SetLogger())
-	e.Use(gzip.Gzip(gzip.DefaultCompression))
+	// e.Use(gzip.Gzip(gzip.DefaultCompression))
 	e.Use(header.Options)
 	e.Use(header.Secure)
 	e.Use(middleware...)
