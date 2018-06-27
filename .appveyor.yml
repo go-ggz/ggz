@@ -40,6 +40,7 @@ test_script:
 
 deploy_script:
   - ps: |
+      $ErrorActionPreference = 'Stop';
       if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
         Write-Host Nothing to deploy.
       } else {
