@@ -17,8 +17,10 @@ func TestQueryShortenURL(t *testing.T) {
 	t.Run("shorten url exist", func(t *testing.T) {
 		test := T{
 			Query: `
-{
-  QueryShortenURL(slug: "abcdef") {
+query QueryShortenURL (
+    $slug: String!
+) {
+  QueryShortenURL(slug: $slug) {
     url
   }
 }
@@ -36,6 +38,9 @@ func TestQueryShortenURL(t *testing.T) {
 			Schema:        test.Schema,
 			RequestString: test.Query,
 			Context:       ctx,
+			VariableValues: map[string]interface{}{
+				"slug": "abcdef",
+			},
 		}
 		testGraphql(test, params, t)
 	})
@@ -43,8 +48,10 @@ func TestQueryShortenURL(t *testing.T) {
 	t.Run("shorten url not exist", func(t *testing.T) {
 		test := T{
 			Query: `
-{
-  QueryShortenURL(slug: "1234567890") {
+query QueryShortenURL (
+    $slug: String!
+) {
+  QueryShortenURL(slug: $slug) {
     url
   }
 }
@@ -55,6 +62,9 @@ func TestQueryShortenURL(t *testing.T) {
 			Schema:        test.Schema,
 			RequestString: test.Query,
 			Context:       ctx,
+			VariableValues: map[string]interface{}{
+				"slug": "1234567890",
+			},
 		}
 		testGraphqlErr(test, params, t)
 	})
