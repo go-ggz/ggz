@@ -27,32 +27,6 @@ var (
 	tables []interface{}
 	// EnableSQLite3 for enable sqlite 3
 	EnableSQLite3 bool
-
-	// Migrations for db migrate
-	migrations = []*migrate.Migration{
-		{
-			ID: "201709201400",
-			Migrate: func(tx *xorm.Engine) error {
-				return tx.Sync2(&User{})
-			},
-			Rollback: func(tx *xorm.Engine) error {
-				return tx.DropTables(&User{})
-			},
-		},
-		{
-			ID: "201711181402",
-			Migrate: func(tx *xorm.Engine) error {
-				// drop column and ignore error.
-				tx.Exec("ALTER TABLE user DROP COLUMN passwd")
-				tx.Exec("ALTER TABLE user DROP COLUMN user_name")
-
-				return nil
-			},
-			Rollback: func(tx *xorm.Engine) error {
-				return nil
-			},
-		},
-	}
 )
 
 // Engine represents a xorm engine or session.
