@@ -5,15 +5,13 @@ import (
 	"time"
 
 	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/version"
 
 	"github.com/joho/godotenv"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/urfave/cli.v2"
 )
-
-// Version set at compile-time
-var Version = "v1.0.0-dev"
 
 func main() {
 	if env := os.Getenv("GGZ_ENV_FILE"); env != "" {
@@ -26,9 +24,8 @@ func main() {
 		Name:      "gzz",
 		Usage:     "shorten url service",
 		Copyright: "Copyright (c) 2018 Bo-Yi Wu",
-		Version:   Version,
+		Version:   version.PrintCLIVersion(),
 		Compiled:  time.Now(),
-
 		Authors: []*cli.Author{
 			{
 				Name:  "Bo-Yi Wu",
