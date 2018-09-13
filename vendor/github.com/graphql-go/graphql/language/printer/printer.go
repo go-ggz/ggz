@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"strings"
 
+	"reflect"
+
 	"github.com/graphql-go/graphql/language/ast"
 	"github.com/graphql-go/graphql/language/visitor"
-	"reflect"
 )
 
 func getMapValue(m map[string]interface{}, key string) interface{} {
@@ -534,7 +535,7 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 			str := join([]string{
 				"type",
 				name,
-				wrap("implements ", join(interfaces, ", "), ""),
+				wrap("implements ", join(interfaces, " & "), ""),
 				join(directives, " "),
 				block(fields),
 			}, " ")
@@ -550,7 +551,7 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 			str := join([]string{
 				"type",
 				name,
-				wrap("implements ", join(interfaces, ", "), ""),
+				wrap("implements ", join(interfaces, " & "), ""),
 				join(directives, " "),
 				block(fields),
 			}, " ")

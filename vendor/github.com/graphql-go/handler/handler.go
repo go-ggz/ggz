@@ -19,9 +19,11 @@ const (
 )
 
 type Handler struct {
-	Schema *graphql.Schema
-	pretty   bool
-	graphiql bool
+	Schema       *graphql.Schema
+	pretty       bool
+	graphiql     bool
+	playground   bool
+	rootObjectFn RootObjectFn
 }
 type RequestOptions struct {
 	Query         string                 `json:"query" url:"query" schema:"query"`
@@ -127,6 +129,9 @@ func (h *Handler) ContextHandler(ctx context.Context, w http.ResponseWriter, r *
 		OperationName:  opts.OperationName,
 		Context:        ctx,
 	}
+	if h.rootObjectFn != nil {
+		params.RootObject = h.rootObjectFn(ctx, r)
+	}
 	result := graphql.Do(params)
 
 	if h.graphiql {
@@ -134,6 +139,15 @@ func (h *Handler) ContextHandler(ctx context.Context, w http.ResponseWriter, r *
 		_, raw := r.URL.Query()["raw"]
 		if !raw && !strings.Contains(acceptHeader, "application/json") && strings.Contains(acceptHeader, "text/html") {
 			renderGraphiQL(w, params)
+			return
+		}
+	}
+
+	if h.playground {
+		acceptHeader := r.Header.Get("Accept")
+		_, raw := r.URL.Query()["raw"]
+		if !raw && !strings.Contains(acceptHeader, "application/json") && strings.Contains(acceptHeader, "text/html") {
+			renderPlayground(w, r)
 			return
 		}
 	}
@@ -159,17 +173,23 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.ContextHandler(r.Context(), w, r)
 }
 
+// RootObjectFn allows a user to generate a RootObject per request
+type RootObjectFn func(ctx context.Context, r *http.Request) map[string]interface{}
+
 type Config struct {
-	Schema   *graphql.Schema
-	Pretty   bool
-	GraphiQL bool
+	Schema       *graphql.Schema
+	Pretty       bool
+	GraphiQL     bool
+	Playground   bool
+	RootObjectFn RootObjectFn
 }
 
 func NewConfig() *Config {
 	return &Config{
-		Schema:   nil,
-		Pretty:   true,
-		GraphiQL: true,
+		Schema:     nil,
+		Pretty:     true,
+		GraphiQL:   true,
+		Playground: false,
 	}
 }
 
@@ -182,8 +202,10 @@ func New(p *Config) *Handler {
 	}
 
 	return &Handler{
-		Schema:   p.Schema,
-		pretty:   p.Pretty,
-		graphiql: p.GraphiQL,
+		Schema:       p.Schema,
+		pretty:       p.Pretty,
+		graphiql:     p.GraphiQL,
+		playground:   p.Playground,
+		rootObjectFn: p.RootObjectFn,
 	}
 }

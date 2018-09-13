@@ -21,24 +21,41 @@ func coerceInt(value interface{}) interface{} {
 			return 1
 		}
 		return 0
+	case *bool:
+		if value == nil {
+			return nil
+		}
+		return coerceInt(*value)
 	case int:
 		if value < int(math.MinInt32) || value > int(math.MaxInt32) {
 			return nil
 		}
 		return value
 	case *int:
+		if value == nil {
+			return nil
+		}
 		return coerceInt(*value)
 	case int8:
 		return int(value)
 	case *int8:
+		if value == nil {
+			return nil
+		}
 		return int(*value)
 	case int16:
 		return int(value)
 	case *int16:
+		if value == nil {
+			return nil
+		}
 		return int(*value)
 	case int32:
 		return int(value)
 	case *int32:
+		if value == nil {
+			return nil
+		}
 		return int(*value)
 	case int64:
 		if value < int64(math.MinInt32) || value > int64(math.MaxInt32) {
@@ -46,6 +63,9 @@ func coerceInt(value interface{}) interface{} {
 		}
 		return int(value)
 	case *int64:
+		if value == nil {
+			return nil
+		}
 		return coerceInt(*value)
 	case uint:
 		if value > math.MaxInt32 {
@@ -53,14 +73,23 @@ func coerceInt(value interface{}) interface{} {
 		}
 		return int(value)
 	case *uint:
+		if value == nil {
+			return nil
+		}
 		return coerceInt(*value)
 	case uint8:
 		return int(value)
 	case *uint8:
+		if value == nil {
+			return nil
+		}
 		return int(*value)
 	case uint16:
 		return int(value)
 	case *uint16:
+		if value == nil {
+			return nil
+		}
 		return int(*value)
 	case uint32:
 		if value > uint32(math.MaxInt32) {
@@ -68,6 +97,9 @@ func coerceInt(value interface{}) interface{} {
 		}
 		return int(value)
 	case *uint32:
+		if value == nil {
+			return nil
+		}
 		return coerceInt(*value)
 	case uint64:
 		if value > uint64(math.MaxInt32) {
@@ -75,6 +107,9 @@ func coerceInt(value interface{}) interface{} {
 		}
 		return int(value)
 	case *uint64:
+		if value == nil {
+			return nil
+		}
 		return coerceInt(*value)
 	case float32:
 		if value < float32(math.MinInt32) || value > float32(math.MaxInt32) {
@@ -82,6 +117,9 @@ func coerceInt(value interface{}) interface{} {
 		}
 		return int(value)
 	case *float32:
+		if value == nil {
+			return nil
+		}
 		return coerceInt(*value)
 	case float64:
 		if value < float64(math.MinInt32) || value > float64(math.MaxInt32) {
@@ -89,6 +127,9 @@ func coerceInt(value interface{}) interface{} {
 		}
 		return int(value)
 	case *float64:
+		if value == nil {
+			return nil
+		}
 		return coerceInt(*value)
 	case string:
 		val, err := strconv.ParseFloat(value, 0)
@@ -97,6 +138,9 @@ func coerceInt(value interface{}) interface{} {
 		}
 		return coerceInt(val)
 	case *string:
+		if value == nil {
+			return nil
+		}
 		return coerceInt(*value)
 	}
 
@@ -131,18 +175,93 @@ func coerceFloat(value interface{}) interface{} {
 		}
 		return 0.0
 	case *bool:
+		if value == nil {
+			return nil
+		}
 		return coerceFloat(*value)
 	case int:
 		return float64(value)
+	case *int:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case int8:
+		return float64(value)
+	case *int8:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case int16:
+		return float64(value)
+	case *int16:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case int32:
+		return float64(value)
 	case *int32:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case int64:
+		return float64(value)
+	case *int64:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case uint:
+		return float64(value)
+	case *uint:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case uint8:
+		return float64(value)
+	case *uint8:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case uint16:
+		return float64(value)
+	case *uint16:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case uint32:
+		return float64(value)
+	case *uint32:
+		if value == nil {
+			return nil
+		}
+		return coerceFloat(*value)
+	case uint64:
+		return float64(value)
+	case *uint64:
+		if value == nil {
+			return nil
+		}
 		return coerceFloat(*value)
 	case float32:
 		return value
 	case *float32:
+		if value == nil {
+			return nil
+		}
 		return coerceFloat(*value)
 	case float64:
 		return value
 	case *float64:
+		if value == nil {
+			return nil
+		}
 		return coerceFloat(*value)
 	case string:
 		val, err := strconv.ParseFloat(value, 0)
@@ -151,9 +270,15 @@ func coerceFloat(value interface{}) interface{} {
 		}
 		return val
 	case *string:
+		if value == nil {
+			return nil
+		}
 		return coerceFloat(*value)
 	}
-	return 0.0
+
+	// If the value cannot be transformed into an float, return nil instead of '0.0'
+	// to denote 'no float found'
+	return nil
 }
 
 // Float is the GraphQL float type definition.
@@ -167,7 +292,7 @@ var Float = NewScalar(ScalarConfig{
 	ParseLiteral: func(valueAST ast.Value) interface{} {
 		switch valueAST := valueAST.(type) {
 		case *ast.FloatValue:
-			if floatValue, err := strconv.ParseFloat(valueAST.Value, 32); err == nil {
+			if floatValue, err := strconv.ParseFloat(valueAST.Value, 64); err == nil {
 				return floatValue
 			}
 		case *ast.IntValue:
@@ -181,6 +306,9 @@ var Float = NewScalar(ScalarConfig{
 
 func coerceString(value interface{}) interface{} {
 	if v, ok := value.(*string); ok {
+		if v == nil {
+			return nil
+		}
 		return *v
 	}
 	return fmt.Sprintf("%v", value)
@@ -208,6 +336,9 @@ func coerceBool(value interface{}) interface{} {
 	case bool:
 		return value
 	case *bool:
+		if value == nil {
+			return nil
+		}
 		return *value
 	case string:
 		switch value {
@@ -216,6 +347,9 @@ func coerceBool(value interface{}) interface{} {
 		}
 		return true
 	case *string:
+		if value == nil {
+			return nil
+		}
 		return coerceBool(*value)
 	case float64:
 		if value != 0 {
@@ -223,6 +357,9 @@ func coerceBool(value interface{}) interface{} {
 		}
 		return false
 	case *float64:
+		if value == nil {
+			return nil
+		}
 		return coerceBool(*value)
 	case float32:
 		if value != 0 {
@@ -230,6 +367,9 @@ func coerceBool(value interface{}) interface{} {
 		}
 		return false
 	case *float32:
+		if value == nil {
+			return nil
+		}
 		return coerceBool(*value)
 	case int:
 		if value != 0 {
@@ -237,6 +377,99 @@ func coerceBool(value interface{}) interface{} {
 		}
 		return false
 	case *int:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case int8:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *int8:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case int16:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *int16:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case int32:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *int32:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case int64:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *int64:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case uint:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *uint:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case uint8:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *uint8:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case uint16:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *uint16:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case uint32:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *uint32:
+		if value == nil {
+			return nil
+		}
+		return coerceBool(*value)
+	case uint64:
+		if value != 0 {
+			return true
+		}
+		return false
+	case *uint64:
+		if value == nil {
+			return nil
+		}
 		return coerceBool(*value)
 	}
 	return false
@@ -288,6 +521,9 @@ func serializeDateTime(value interface{}) interface{} {
 
 		return string(buff)
 	case *time.Time:
+		if value == nil {
+			return nil
+		}
 		return serializeDateTime(*value)
 	default:
 		return nil
@@ -307,6 +543,9 @@ func unserializeDateTime(value interface{}) interface{} {
 	case string:
 		return unserializeDateTime([]byte(value))
 	case *string:
+		if value == nil {
+			return nil
+		}
 		return unserializeDateTime([]byte(*value))
 	default:
 		return nil
