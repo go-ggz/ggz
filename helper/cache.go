@@ -10,11 +10,11 @@ const sep = ":"
 // GetCacheKey get cache key for data loader
 func GetCacheKey(module string, id interface{}) string {
 	var str string
-	switch id.(type) {
-	case string:
-		str = id.(string)
+	switch v := id.(type) {
 	case int64:
-		str = strconv.FormatInt(id.(int64), 10)
+		str = strconv.FormatInt(v, 10)
+	case string:
+		str = v
 	}
 	return module + sep + str
 }
@@ -22,8 +22,6 @@ func GetCacheKey(module string, id interface{}) string {
 // GetCacheID get cache id for model id
 func GetCacheID(key string) (interface{}, error) {
 	strs := strings.Split(key, sep)
-	switch strs[0] {
-	default:
-		return strconv.ParseInt(strs[1], 10, 64)
-	}
+
+	return strconv.ParseInt(strs[1], 10, 64)
 }
