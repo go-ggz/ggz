@@ -100,21 +100,9 @@ func FetchShortenedURL(c *gin.Context) {
 
 // ShortenedURL redirect origin URL.
 func ShortenedURL(c *gin.Context) {
-	r, err := regexp.Compile(`^[a-zA-Z0-9]+$`)
-	if err != nil {
-		c.JSON(
-			http.StatusBadRequest,
-			gin.H{
-				"code":  http.StatusBadRequest,
-				"error": "regexp not correct",
-			},
-		)
-		return
-	}
-
 	slug := c.Param("slug")
 
-	if !r.MatchString(slug) {
+	if !shortenPattern.MatchString(slug) {
 		errorJSON(c, http.StatusBadRequest, errSlugNotMatch)
 		return
 	}
