@@ -10,7 +10,7 @@ clone:
 
 pipeline:
   backend:
-    image: golang:1.10.1
+    image: golang:1.11
     group: testing
     commands:
       - cp .env.example .env
@@ -19,13 +19,13 @@ pipeline:
       - make misspell-check
 
   vendor:
-    image: golang:1.10.1
+    image: golang:1.11
     group: testing
     commands:
       - make test-vendor
 
   test:
-    image: golang:1.10.1
+    image: golang:1.11
     group: testing
     environment:
       TAGS: bindata sqlite
@@ -33,7 +33,7 @@ pipeline:
       - make unit-test-coverage
 
   generate-coverage:
-    image: golang:1.10.1
+    image: golang:1.11
     pull: true
     commands:
       - make coverage
@@ -41,28 +41,28 @@ pipeline:
       event: [ push, pull_request ]
 
   build_linux_amd64:
-    image: golang:1.10.1
+    image: golang:1.11
     pull: true
     group: build
     commands:
       - make build_linux_amd64
 
   build_linux_i386:
-    image: golang:1.10.1
+    image: golang:1.11
     pull: true
     group: build
     commands:
       - make build_linux_i386
 
   build_linux_arm64:
-    image: golang:1.10.1
+    image: golang:1.11
     pull: true
     group: build
     commands:
       - make build_linux_arm64
 
   build_linux_arm:
-    image: golang:1.10.1
+    image: golang:1.11
     pull: true
     group: build
     commands:
@@ -78,7 +78,7 @@ pipeline:
       event: [ push, pull_request ]
 
   release:
-    image: golang:1.10.1
+    image: golang:1.11
     pull: true
     commands:
       - make release
