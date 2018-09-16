@@ -78,6 +78,12 @@ type prometheus struct {
 	AuthToken string
 }
 
+type logs struct {
+	Color  bool
+	Debug  bool
+	Pretty bool
+}
+
 // ContextKey for context package
 type ContextKey string
 
@@ -121,4 +127,7 @@ var (
 
 	// Prometheus config
 	Prometheus = &prometheus{}
+
+	// Logs for zerolog
+	Logs = &logs{}
 )

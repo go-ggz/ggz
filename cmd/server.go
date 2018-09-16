@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"strings"
 	"time"
@@ -12,7 +13,8 @@ import (
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/router"
 
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/acme/autocert"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/urfave/cli.v2"
@@ -22,6 +24,22 @@ var (
 	defaultHostAddr    = ":8080"
 	defaultShortenAddr = ":8081"
 )
+
+func setupLogging() {
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	if config.Debug {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	}
+
+	if config.Logs.Pretty {
+		log.Logger = log.Output(
+			zerolog.ConsoleWriter{
+				Out:     os.Stderr,
+				NoColor: !config.Logs.Color,
+			},
+		)
+	}
+}
 
 // Server provides the sub-command to start the API server.
 func Server() *cli.Command {
@@ -316,6 +334,21 @@ func Server() *cli.Command {
 				Usage:       "token to secure prometheus metrics endpoint",
 				Destination: &config.Prometheus.AuthToken,
 			},
+
+			&cli.BoolFlag{
+				Name:        "color",
+				Value:       false,
+				Usage:       "Enable pprof debugging server",
+				EnvVars:     []string{"GGZ_LOGS_COLOR"},
+				Destination: &config.Logs.Color,
+			},
+			&cli.BoolFlag{
+				Name:        "pretty",
+				Value:       false,
+				Usage:       "Enable pprof debugging server",
+				EnvVars:     []string{"GGZ_LOGS_PRETTY"},
+				Destination: &config.Logs.Pretty,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {
@@ -326,6 +359,8 @@ func Server() *cli.Command {
 			return nil
 		},
 		Action: func(c *cli.Context) error {
+			setupLogging()
+
 			if config.Server.LetsEncrypt || (config.Server.Cert != "" && config.Server.Key != "") {
 				cfg := &tls.Config{
 					PreferServerCipherSuites: true,
@@ -351,13 +386,13 @@ func Server() *cli.Command {
 
 				if config.Server.LetsEncrypt {
 					if config.Server.Addr != defaultHostAddr {
-						logrus.Infof("With Let's Encrypt bind port have been overwritten!")
+						log.Fatal().Msg("With Let's Encrypt bind port have been overwritten!")
 					}
 
 					parsed, err := url.Parse(config.Server.Host)
 
 					if err != nil {
-						logrus.Fatalf("Failed to parse host name. %s", err)
+						log.Fatal().Err(err).Msg("Failed to parse host name.")
 					}
 
 					certManager := &autocert.Manager{
@@ -373,10 +408,10 @@ func Server() *cli.Command {
 					)
 
 					splitAddr := strings.SplitN(config.Server.Addr, ":", 2)
-					logrus.Infof("Starting on %s:80 and %s:443", splitAddr[0], splitAddr[0])
+					log.Info().Msgf("Starting on %s:80 and %s:443", splitAddr[0], splitAddr[0])
 
 					// load global script
-					logrus.Info("Initial module engine.")
+					log.Info().Msg("Initial module engine.")
 					router.GlobalInit()
 
 					g.Go(func() error {
@@ -397,7 +432,7 @@ func Server() *cli.Command {
 					})
 
 					if err := g.Wait(); err != nil {
-						logrus.Fatal(err)
+						log.Fatal().Err(err)
 					}
 				} else {
 					cert, err := tls.LoadX509KeyPair(
@@ -406,7 +441,7 @@ func Server() *cli.Command {
 					)
 
 					if err != nil {
-						logrus.Fatalf("Failed to load SSL certificates. %s", err)
+						log.Fatal().Err(err).Msg("Failed to load SSL certificates.")
 					}
 
 					cfg.Certificates = []tls.Certificate{
@@ -414,7 +449,7 @@ func Server() *cli.Command {
 					}
 
 					// load global script
-					logrus.Info("Initial module engine.")
+					log.Info().Msg("Initial module engine.")
 					router.GlobalInit()
 
 					server := &http.Server{
@@ -426,7 +461,7 @@ func Server() *cli.Command {
 					}
 
 					if err := startServer(server); err != nil {
-						logrus.Fatal(err)
+						log.Fatal().Err(err)
 					}
 				}
 			} else {
@@ -435,7 +470,7 @@ func Server() *cli.Command {
 				)
 
 				// load global script
-				logrus.Info("Initial module engine.")
+				log.Info().Msg("Initial module engine.")
 				router.GlobalInit()
 
 				server01 := &http.Server{
@@ -453,17 +488,17 @@ func Server() *cli.Command {
 				}
 
 				g.Go(func() error {
-					logrus.Infof("Starting app server on %s", config.Server.Addr)
+					log.Info().Msgf("Starting app server on %s", config.Server.Addr)
 					return startServer(server01)
 				})
 
 				g.Go(func() error {
-					logrus.Infof("Starting shorten server on %s", config.Server.ShortenAddr)
+					log.Info().Msgf("Starting shorten server on %s", config.Server.ShortenAddr)
 					return startServer(server02)
 				})
 
 				if err := g.Wait(); err != nil {
-					logrus.Fatal(err)
+					log.Fatal().Err(err)
 				}
 			}
 
@@ -479,6 +514,6 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 		target += "?" + req.URL.RawQuery
 	}
 
-	logrus.Debugf("Redirecting to %s", target)
+	log.Printf("Redirecting to %s", target)
 	http.Redirect(w, req, target, http.StatusTemporaryRedirect)
 }

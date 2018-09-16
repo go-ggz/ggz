@@ -471,6 +471,30 @@
 			"revisionTime": "2017-07-03T10:12:42Z"
 		},
 		{
+			"checksumSHA1": "r8GoiWItzY3Z8KrFQq1AFCi2BnQ=",
+			"path": "github.com/rs/zerolog",
+			"revision": "b6f076edc801b110475cbf68da701e2bea52096a",
+			"revisionTime": "2018-08-31T16:46:32Z"
+		},
+		{
+			"checksumSHA1": "73NzoKIiJU6h4v6hg9eM4t7V/zw=",
+			"path": "github.com/rs/zerolog/internal/cbor",
+			"revision": "b6f076edc801b110475cbf68da701e2bea52096a",
+			"revisionTime": "2018-08-31T16:46:32Z"
+		},
+		{
+			"checksumSHA1": "e0b96rsdqg3fNtCDQOdZA4M+MNo=",
+			"path": "github.com/rs/zerolog/internal/json",
+			"revision": "b6f076edc801b110475cbf68da701e2bea52096a",
+			"revisionTime": "2018-08-31T16:46:32Z"
+		},
+		{
+			"checksumSHA1": "GrCvxT3h3vAVIwGe8bFAilXjgVA=",
+			"path": "github.com/rs/zerolog/log",
+			"revision": "b6f076edc801b110475cbf68da701e2bea52096a",
+			"revisionTime": "2018-08-31T16:46:32Z"
+		},
+		{
 			"checksumSHA1": "eDQ6f1EsNf+frcRO/9XukSEchm8=",
 			"path": "github.com/satori/go.uuid",
 			"revision": "36e9d2ebbde5e3f13ab2e25625fd453271d6522e",
