@@ -13,7 +13,7 @@ func Ping() *cli.Command {
 		Name:  "ping",
 		Usage: "server healthy check",
 		Action: func(c *cli.Context) error {
-			resp, err := http.Get("http://localhost:" + defaultHostAddr + "/healthz")
+			resp, err := http.Get("http://localhost" + defaultHostAddr + "/healthz")
 			if err != nil {
 				return err
 			}
