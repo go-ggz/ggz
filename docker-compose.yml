@@ -4,56 +4,39 @@ services:
   ggz:
     image: goggz/ggz
     restart: always
-    depends_on:
-      - minio
-      - db
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - 8080:8080
+      - 8081:8081
     environment:
-      - GGZ_DB_DRIVER=mysql
-      - GGZ_DB_USERNAME=ggz
-      - GGZ_DB_PASSWORD=example
-      - GGZ_DB_NAME=ggz
-      - GGZ_DB_HOST=db:3306
-      - GGZ_SERVER_ADDR=:8080
-      - GGZ_SHORTEN_SERVER_ADDR=:8081
+      - GGZ_DB_DRIVER=sqlite3
       - GGZ_DEBUG=true
       - GGZ_SERVER_HOST=http://localhost:8080
       - GGZ_SERVER_SHORTEN_HOST=http://localhost:8081
-      - GGZ_QRCODE_ENABLE=true
-      - GGZ_STORAGE_DRIVER=s3
-      - GGZ_MINIO_ACCESS_ID=minio123456
-      - GGZ_MINIO_SECRET_KEY=minio1234567890
-      - GGZ_MINIO_ENDPOINT=minio:9000
-      - GGZ_MINIO_BUCKET=ggz
-      - GGZ_MINIO_SSL=false
+      - GGZ_STORAGE_DRIVER=disk
       - GGZ_AUTH0_PEM_PATH=test.pem
-      - GGZ_AUTH0_DEBUG=false
-      - GGZ_CACHE_DRIVER=memory
 
-  db:
-    image: mysql
-    restart: always
-    volumes:
-      - mysql-data:/var/lib/mysql
-    environment:
-      MYSQL_USER: ggz
-      MYSQL_PASSWORD: example
-      MYSQL_DATABASE: ggz
-      MYSQL_ROOT_PASSWORD: example
+  # db:
+  #   image: mysql
+  #   restart: always
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #   environment:
+  #     MYSQL_USER: ggz
+  #     MYSQL_PASSWORD: example
+  #     MYSQL_DATABASE: ggz
+  #     MYSQL_ROOT_PASSWORD: example
 
-  minio:
-    image: minio/minio
-    restart: always
-    ports:
-      - "9000:9000"
-    volumes:
-      - minio-data:/data
-    environment:
-      MINIO_ACCESS_KEY: minio123456
-      MINIO_SECRET_KEY: minio1234567890
-    command: server /data
+  # minio:
+  #   image: minio/minio
+  #   restart: always
+  #   ports:
+  #     - "9000:9000"
+  #   volumes:
+  #     - minio-data:/data
+  #   environment:
+  #     MINIO_ACCESS_KEY: minio123456
+  #     MINIO_SECRET_KEY: minio1234567890
+  #   command: server /data
 
 volumes:
   minio-data:
