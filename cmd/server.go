@@ -90,6 +90,13 @@ func Server() *cli.Command {
 				Destination: &config.Database.Host,
 			},
 			&cli.StringFlag{
+				Name:        "path",
+				Value:       "data/ggz.db",
+				Usage:       "sqlite path",
+				EnvVars:     []string{"GGZ_SQLITE_PATH"},
+				Destination: &config.Database.Path,
+			},
+			&cli.StringFlag{
 				Name:        "host",
 				Value:       "http://localhost:8080",
 				Usage:       "External access to server",
@@ -185,13 +192,6 @@ func Server() *cli.Command {
 				Usage:       "Header token",
 				EnvVars:     []string{"GGZ_TOKEN"},
 				Destination: &config.Server.Token,
-			},
-			&cli.StringFlag{
-				Name:        "path",
-				Value:       "data/ggz.db",
-				Usage:       "sqlite path",
-				EnvVars:     []string{"GGZ_SQLITE_PATH"},
-				Destination: &config.Database.Path,
 			},
 			&cli.IntFlag{
 				Name:        "timeout",
