@@ -20,35 +20,35 @@ import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 // GlobalInit is for global configuration reload-able.
 func GlobalInit() {
 	if err := model.NewEngine(); err != nil {
-		logrus.Fatalf("Failed to initialize ORM engine: %v", err)
+		log.Fatal().Err(err).Msg("Failed to initialize ORM engine.")
 	}
 
 	// initial socket module
 	if err := socket.NewEngine(); err != nil {
-		logrus.Fatalf("Failed to initialize Socket IO engine: %v", err)
+		log.Fatal().Err(err).Msg("Failed to initialize Socket IO engine")
 	}
 
 	if config.QRCode.Enable {
 		var err error
 		storage.S3, err = storage.NewEngine()
 		if err != nil {
-			logrus.Fatalf("Failed to create s3 interface: %v", err)
+			log.Fatal().Err(err).Msg("Failed to create s3 interface")
 		}
 
 		if err := storage.S3.CreateBucket(config.Minio.Bucket, config.Minio.Region); err != nil {
-			logrus.Fatalf("Failed to create s3 bucket: %v", err)
+			log.Fatal().Err(err).Msg("Failed to create s3 bucket")
 		}
 	}
 
 	// initial dataloader cache
 	if err := loader.NewEngine(config.Cache.Driver, config.Cache.Prefix, config.Cache.Expire); err != nil {
-		logrus.Fatalf("Failed to initial dataloader: %v", err)
+		log.Fatal().Err(err).Msg("Failed to initial dataloader.")
 	}
 }
 
