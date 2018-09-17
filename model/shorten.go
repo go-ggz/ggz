@@ -7,7 +7,7 @@ import (
 	"github.com/go-ggz/ggz/module/meta"
 
 	"github.com/appleboy/com/random"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 // Shorten shortener URL
@@ -104,7 +104,7 @@ func NewShortenURL(url string, size int, user *User) (_ *Shorten, err error) {
 
 	go func() {
 		if err := row.UpdateMetaData(); err != nil {
-			logrus.Warningln("update meta data err:", err)
+			log.Warn().Err(err).Msg("fail to update url metadata")
 		}
 	}()
 

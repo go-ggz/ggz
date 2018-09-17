@@ -8,7 +8,7 @@ import (
 
 	"github.com/minio/minio-go"
 	"github.com/minio/minio-go/pkg/credentials"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 // Minio client
@@ -73,14 +73,14 @@ func (m *Minio) CreateBucket(bucketName, region string) error {
 	}
 
 	if exists {
-		logrus.Infof("We already own %s bucket", bucketName)
+		log.Info().Msgf("We already own %s bucket", bucketName)
 		return nil
 	}
 
 	if err := m.client.MakeBucket(bucketName, region); err != nil {
 		return err
 	}
-	logrus.Infof("Successfully created s3 bucket: %s", bucketName)
+	log.Info().Msgf("Successfully created s3 bucket: %s", bucketName)
 
 	return nil
 }

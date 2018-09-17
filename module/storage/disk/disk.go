@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 // Disk client
@@ -35,7 +35,7 @@ func (d *Disk) CreateBucket(bucketName, region string) error {
 	if err := os.MkdirAll(storage, os.ModePerm); err != nil {
 		return nil
 	}
-	logrus.Infof("Successfully created s3 path: %s", storage)
+	log.Info().Msgf("Successfully created disk path: %s", storage)
 
 	return nil
 }
