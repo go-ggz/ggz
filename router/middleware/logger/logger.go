@@ -27,37 +27,28 @@ func SetLogger() gin.HandlerFunc {
 			msg = c.Errors.String()
 		}
 
+		sublogger := log.With().
+			Int("status", c.Writer.Status()).
+			Str("method", c.Request.Method).
+			Str("path", path).
+			Str("ip", c.ClientIP()).
+			Dur("latency", latency).
+			Str("user-agent", c.Request.UserAgent()).
+			Logger()
+
 		switch {
 		case c.Writer.Status() >= 400 && c.Writer.Status() < 500:
 			{
-				log.Warn().
-					Int("status", c.Writer.Status()).
-					Str("method", c.Request.Method).
-					Str("path", path).
-					Str("ip", c.ClientIP()).
-					Dur("latency", latency).
-					Str("user-agent", c.Request.UserAgent()).
+				sublogger.Warn().
 					Msg(msg)
 			}
 		case c.Writer.Status() >= 500:
 			{
-				log.Error().
-					Int("status", c.Writer.Status()).
-					Str("method", c.Request.Method).
-					Str("path", path).
-					Str("ip", c.ClientIP()).
-					Dur("latency", latency).
-					Str("user-agent", c.Request.UserAgent()).
+				sublogger.Error().
 					Msg(msg)
 			}
 		default:
-			log.Info().
-				Int("status", c.Writer.Status()).
-				Str("method", c.Request.Method).
-				Str("path", path).
-				Str("ip", c.ClientIP()).
-				Dur("latency", latency).
-				Str("user-agent", c.Request.UserAgent()).
+			sublogger.Info().
 				Msg(msg)
 		}
 	}
