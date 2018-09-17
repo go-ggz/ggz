@@ -9,7 +9,7 @@ import (
 	"github.com/go-ggz/ggz/config"
 
 	"github.com/appleboy/com/file"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 //go:generate fileb0x ab0x.yaml
@@ -39,7 +39,7 @@ func (c ChainedFS) Open(origPath string) (http.File, error) {
 				return f, nil
 			}
 		} else {
-			logrus.Warnf("Custom assets directory doesn't exist")
+			log.Warn().Msg("Custom assets directory doesn't exist")
 		}
 	}
 
@@ -57,7 +57,7 @@ func ReadSource(origPath string) (content []byte, err error) {
 	content, err = ReadFile(origPath)
 
 	if err != nil {
-		logrus.Warnf("Failed to read builtin %s file. %s", origPath, err)
+		log.Warn().Err(err).Msgf("Failed to read builtin %s file.", origPath)
 	}
 
 	if config.Server.Assets != "" && file.IsDir(config.Server.Assets) {
@@ -70,7 +70,7 @@ func ReadSource(origPath string) (content []byte, err error) {
 			content, err = ioutil.ReadFile(origPath)
 
 			if err != nil {
-				logrus.Warnf("Failed to read custom %s file. %s", origPath, err)
+				log.Warn().Err(err).Msgf("Failed to read custom %s file", origPath)
 			}
 		}
 	}
