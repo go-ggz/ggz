@@ -12,7 +12,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/googollee/go-socket.io"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 // Server for socket server
@@ -30,7 +30,7 @@ type Test struct {
 func NewEngine() error {
 	Server, err = socketio.NewServer(nil)
 	if err != nil {
-		logrus.Debugf("create socker server error: %s", err.Error())
+		log.Error().Err(err).Msg("can't create socker server.")
 		return err
 	}
 
@@ -72,11 +72,9 @@ func NewEngine() error {
 	Server.On("connection", func(so socketio.Socket) {
 		user := helper.GetUserDataFromToken(so.Request().Context())
 		room := user["email"].(string)
-		logrus.Debugf("room is %s", room)
 		so.Join(room)
 
 		so.On("chat message", func(msg string) {
-			logrus.Debugln("emit:", so.Emit("chat message", msg))
 			so.BroadcastTo(room, "chat message", Test{
 				A: 1,
 				B: "100",
@@ -88,12 +86,11 @@ func NewEngine() error {
 		})
 
 		so.On("disconnection", func() {
-			logrus.Debugln("client disconnection")
 		})
 	})
 
 	Server.On("error", func(so socketio.Socket, err error) {
-		logrus.Debugf("socker server error: %s", err.Error())
+		log.Error().Err(err).Msg("socker server error.")
 	})
 
 	return nil

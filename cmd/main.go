@@ -9,14 +9,31 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"gopkg.in/urfave/cli.v2"
 )
+
+func setupLogging() {
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	if config.Debug {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	}
+
+	if config.Logs.Pretty {
+		log.Logger = log.Output(
+			zerolog.ConsoleWriter{
+				Out:     os.Stderr,
+				NoColor: !config.Logs.Color,
+			},
+		)
+	}
+}
 
 func main() {
 	if env := os.Getenv("GGZ_ENV_FILE"); env != "" {
 		if err := godotenv.Load(env); err != nil {
-			logrus.Fatal(err)
+			log.Fatal().Err(err).Msgf("Cannot start load config from env")
 		}
 	}
 
@@ -42,16 +59,24 @@ func main() {
 				Destination: &config.Debug,
 				Hidden:      true,
 			},
+			&cli.BoolFlag{
+				Name:        "color",
+				Value:       false,
+				Usage:       "Enable pprof debugging server",
+				EnvVars:     []string{"GGZ_LOGS_COLOR"},
+				Destination: &config.Logs.Color,
+			},
+			&cli.BoolFlag{
+				Name:        "pretty",
+				Value:       false,
+				Usage:       "Enable pprof debugging server",
+				EnvVars:     []string{"GGZ_LOGS_PRETTY"},
+				Destination: &config.Logs.Pretty,
+			},
 		},
 
 		Before: func(c *cli.Context) error {
-			logrus.SetOutput(os.Stdout)
-
-			if config.Debug {
-				logrus.SetLevel(logrus.DebugLevel)
-			} else {
-				logrus.SetLevel(logrus.InfoLevel)
-			}
+			setupLogging()
 
 			return nil
 		},

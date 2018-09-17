@@ -8,7 +8,7 @@ import (
 	"github.com/go-ggz/ggz/web"
 
 	"github.com/graphql-go/graphql"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 var shortenType = graphql.NewObject(graphql.ObjectConfig{
@@ -171,7 +171,7 @@ var createShortenURL = graphql.Field{
 		// upload QRCode image.
 		go func(slug string) {
 			if err := web.QRCodeGenerator(slug); err != nil {
-				logrus.Errorln(err)
+				log.Error().Err(err).Msg("QRCode Generator fail")
 			}
 		}(row.Slug)
 

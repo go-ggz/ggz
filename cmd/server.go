@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"path"
 	"strings"
 	"time"
@@ -13,7 +12,6 @@ import (
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/router"
 
-	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/acme/autocert"
 	"golang.org/x/sync/errgroup"
@@ -24,22 +22,6 @@ var (
 	defaultHostAddr    = ":8080"
 	defaultShortenAddr = ":8081"
 )
-
-func setupLogging() {
-	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	if config.Debug {
-		zerolog.SetGlobalLevel(zerolog.DebugLevel)
-	}
-
-	if config.Logs.Pretty {
-		log.Logger = log.Output(
-			zerolog.ConsoleWriter{
-				Out:     os.Stderr,
-				NoColor: !config.Logs.Color,
-			},
-		)
-	}
-}
 
 // Server provides the sub-command to start the API server.
 func Server() *cli.Command {
@@ -334,21 +316,6 @@ func Server() *cli.Command {
 				Usage:       "token to secure prometheus metrics endpoint",
 				Destination: &config.Prometheus.AuthToken,
 			},
-
-			&cli.BoolFlag{
-				Name:        "color",
-				Value:       false,
-				Usage:       "Enable pprof debugging server",
-				EnvVars:     []string{"GGZ_LOGS_COLOR"},
-				Destination: &config.Logs.Color,
-			},
-			&cli.BoolFlag{
-				Name:        "pretty",
-				Value:       false,
-				Usage:       "Enable pprof debugging server",
-				EnvVars:     []string{"GGZ_LOGS_PRETTY"},
-				Destination: &config.Logs.Pretty,
-			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {
@@ -359,8 +326,6 @@ func Server() *cli.Command {
 			return nil
 		},
 		Action: func(c *cli.Context) error {
-			setupLogging()
-
 			if config.Server.LetsEncrypt || (config.Server.Cert != "" && config.Server.Key != "") {
 				cfg := &tls.Config{
 					PreferServerCipherSuites: true,
