@@ -14,7 +14,7 @@ import (
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 // ParseRSAPublicKeyFromPEM Parse PEM encoded PKCS1 or PKCS8 public key
@@ -27,7 +27,7 @@ func ParseRSAPublicKeyFromPEM() (*rsa.PublicKey, error) {
 	} else {
 		reader, err = assets.ReadSource(config.Auth0.PemPath)
 		if err != nil {
-			logrus.Warnf("Failed to read builtin %s template. %s", reader, err)
+			log.Warn().Err(err).Msgf("Failed to read builtin %s template.", reader)
 			return nil, errors.New("Failed to read builtin auth0 pem file")
 		}
 	}
@@ -55,7 +55,7 @@ func Check() gin.HandlerFunc {
 
 		// If there was an error, do not continue.
 		if err != nil {
-			logrus.Errorf("JWT Error: %s", err.Error())
+			log.Error().Err(err).Msg("verify jwt token error.")
 			c.AbortWithStatusJSON(
 				http.StatusOK,
 				gin.H{
@@ -91,7 +91,7 @@ func Check() gin.HandlerFunc {
 
 		if err != nil {
 			if !model.IsErrUserNotExist(err) {
-				logrus.Errorf("Database Error: %s", err.Error())
+				log.Error().Err(err).Msg("database error.")
 				c.AbortWithStatusJSON(
 					http.StatusBadRequest,
 					gin.H{
@@ -115,7 +115,7 @@ func Check() gin.HandlerFunc {
 			err := model.CreateUser(user)
 
 			if err != nil {
-				logrus.Errorf("Database Error: %s", err.Error())
+				log.Error().Err(err).Msg("database error.")
 				c.AbortWithStatusJSON(
 					http.StatusOK,
 					gin.H{

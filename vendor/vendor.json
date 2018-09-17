@@ -501,12 +501,6 @@
 			"revisionTime": "2018-01-03T17:44:51Z"
 		},
 		{
-			"checksumSHA1": "BYvROBsiyAXK4sq6yhDe8RgT4LM=",
-			"path": "github.com/sirupsen/logrus",
-			"revision": "89742aefa4b206dcf400792f3bd35b542998eb3b",
-			"revisionTime": "2017-08-22T13:27:46Z"
-		},
-		{
 			"checksumSHA1": "aJxz9CCOtl+0E3+Babt60uG1UIE=",
 			"path": "github.com/skip2/go-qrcode",
 			"revision": "695fc75a09738f9be56aaa3aecfd7dac28e66b63",
