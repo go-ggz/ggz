@@ -6,7 +6,7 @@ import (
 	"github.com/go-ggz/ggz/module/meta"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 // URLMeta for fetch metadata from URL
@@ -18,7 +18,7 @@ func URLMeta(c *gin.Context) {
 	}
 
 	metaData, err := meta.FetchData(data.URL)
-	logrus.Debugf("%#v", metaData)
+	log.Info().Msgf("%#v", metaData)
 
 	if err != nil {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)

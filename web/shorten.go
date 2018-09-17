@@ -12,7 +12,7 @@ import (
 	"github.com/go-ggz/ggz/module/storage"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 	"github.com/skip2/go-qrcode"
 )
 
@@ -62,7 +62,7 @@ func CreateShortenURL(c *gin.Context) {
 	// upload QRCode image.
 	go func(slug string) {
 		if err := QRCodeGenerator(slug); err != nil {
-			logrus.Errorln(err)
+			log.Error().Err(err).Msg("QRCode Generator fail")
 		}
 	}(row.Slug)
 

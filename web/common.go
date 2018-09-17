@@ -2,11 +2,11 @@ package web
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 func errorJSON(c *gin.Context, code int, err InnError) {
-	logrus.Errorln(err.Error())
+	log.Error().Err(err).Msg("json error")
 
 	c.AbortWithStatusJSON(
 		code,
