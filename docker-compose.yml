@@ -9,10 +9,8 @@ services:
       - 8081:8081
     environment:
       - GGZ_DB_DRIVER=sqlite3
-      - GGZ_DEBUG=true
       - GGZ_SERVER_HOST=http://localhost:8080
       - GGZ_SERVER_SHORTEN_HOST=http://localhost:8081
-      - GGZ_STORAGE_DRIVER=disk
       - GGZ_AUTH0_PEM_PATH=test.pem
 
   # db:
@@ -38,6 +36,6 @@ services:
   #     MINIO_SECRET_KEY: minio1234567890
   #   command: server /data
 
-volumes:
-  minio-data:
-  mysql-data:
+# volumes:
+#   minio-data:
+#   mysql-data:

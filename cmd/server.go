@@ -191,7 +191,7 @@ func Server() *cli.Command {
 			},
 			&cli.StringFlag{
 				Name:        "shorten-host",
-				Value:       "",
+				Value:       "http://localhost:8081",
 				Usage:       "shorten-host",
 				EnvVars:     []string{"GGZ_SERVER_SHORTEN_HOST"},
 				Destination: &config.Server.ShortenHost,

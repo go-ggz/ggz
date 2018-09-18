@@ -23,29 +23,25 @@ An URL shortener service written in Golang.
 * Support local disk storage or [Minio Object Storage](https://minio.io/).
 * Support linux and windows container, see [Docker Hub](https://hub.docker.com/r/goggz/ggz/tags/).
 
-## Server Config
+## Start app using docker-compose
 
-See the `.env.example`
+See the `docker-compose.yml`
 
-```ini
-GGZ_DB_DRIVER=mysql
-GGZ_DB_USERNAME=root
-GGZ_DB_PASSWORD=123456
-GGZ_DB_NAME=ggz
-GGZ_DB_HOST=127.0.0.1:3307
-GGZ_SERVER_ADDR=:8080
-GGZ_SHORTEN_SERVER_ADDR=:8081
-GGZ_DEBUG=true
-GGZ_SERVER_HOST=http://localhost:8080
-GGZ_SERVER_SHORTEN_HOST=http://localhost:8081
-GGZ_STORAGE_DRIVER=disk
-GGZ_MINIO_ACCESS_ID=xxxxxxxx
-GGZ_MINIO_SECRET_KEY=xxxxxxxx
-GGZ_MINIO_ENDPOINT=s3.example.com
-GGZ_MINIO_BUCKET=qrcode
-GGZ_MINIO_SSL=true
-GGZ_AUTH0_PEM_PATH=pem/dev.pem
-GGZ_AUTH0_DEBUG=true
+```yml
+version: '3'
+
+services:
+  ggz:
+    image: goggz/ggz
+    restart: always
+    ports:
+      - 8080:8080
+      - 8081:8081
+    environment:
+      - GGZ_DB_DRIVER=sqlite3
+      - GGZ_SERVER_HOST=http://localhost:8080
+      - GGZ_SERVER_SHORTEN_HOST=http://localhost:8081
+      - GGZ_AUTH0_PEM_PATH=test.pem
 ```
 
 ## Stargazers over time
