@@ -33,7 +33,7 @@ func setupLogging() {
 func main() {
 	if env := os.Getenv("GGZ_ENV_FILE"); env != "" {
 		if err := godotenv.Load(env); err != nil {
-			log.Fatal().Err(err).Msgf("Cannot start load config from env")
+			log.Fatal().Err(err).Msg("Cannot start load config from env")
 		}
 	}
 
