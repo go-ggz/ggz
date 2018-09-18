@@ -38,7 +38,7 @@ func Server() *cli.Command {
 			},
 			&cli.StringFlag{
 				Name:        "db-driver",
-				Value:       "sqlite",
+				Value:       "sqlite3",
 				Usage:       "Database driver selection",
 				EnvVars:     []string{"GGZ_DB_DRIVER"},
 				Destination: &config.Database.Driver,
