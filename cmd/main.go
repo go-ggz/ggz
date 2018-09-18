@@ -53,22 +53,21 @@ func main() {
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
 				Name:        "debug",
-				Value:       false,
+				Value:       true,
 				Usage:       "Activate debug information",
 				EnvVars:     []string{"GGZ_DEBUG"},
 				Destination: &config.Debug,
-				Hidden:      true,
 			},
 			&cli.BoolFlag{
 				Name:        "color",
-				Value:       false,
+				Value:       true,
 				Usage:       "Enable pprof debugging server",
 				EnvVars:     []string{"GGZ_LOGS_COLOR"},
 				Destination: &config.Logs.Color,
 			},
 			&cli.BoolFlag{
 				Name:        "pretty",
-				Value:       false,
+				Value:       true,
 				Usage:       "Enable pprof debugging server",
 				EnvVars:     []string{"GGZ_LOGS_PRETTY"},
 				Destination: &config.Logs.Pretty,
