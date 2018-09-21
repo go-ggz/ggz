@@ -12,8 +12,8 @@ import (
 	"gopkg.in/testfixtures.v2"
 )
 
-// ggzRoot a path to the ggz root
-var ggzRoot string
+// Root a path to the ggz root
+var Root string
 
 func fatalTestError(fmtStr string, args ...interface{}) {
 	fmt.Fprintf(os.Stderr, fmtStr, args...)
@@ -24,7 +24,7 @@ func fatalTestError(fmtStr string, args ...interface{}) {
 // test database. Creates the test database, and sets necessary settings.
 func MainTest(m *testing.M, pathToGgzRoot string) {
 	var err error
-	ggzRoot = pathToGgzRoot
+	Root = pathToGgzRoot
 	fixturesDir := filepath.Join(pathToGgzRoot, "model", "fixtures")
 	if err = createTestEngine(fixturesDir); err != nil {
 		fatalTestError("Error creating test engine: %v\n", err)
