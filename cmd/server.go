@@ -73,7 +73,7 @@ func Server() *cli.Command {
 			},
 			&cli.StringFlag{
 				Name:        "path",
-				Value:       "data/ggz.db",
+				Value:       "data/db/ggz.db",
 				Usage:       "sqlite path",
 				EnvVars:     []string{"GGZ_SQLITE_PATH"},
 				Destination: &config.Database.Path,
