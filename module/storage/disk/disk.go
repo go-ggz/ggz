@@ -2,6 +2,7 @@ package disk
 
 import (
 	"io/ioutil"
+	"net/url"
 	"os"
 	"path"
 
@@ -10,9 +11,8 @@ import (
 
 // Disk client
 type Disk struct {
-	Host   string
-	Path   string
-	Bucket string
+	Host string
+	Path string
 }
 
 // NewEngine struct
@@ -40,21 +40,26 @@ func (d *Disk) CreateBucket(bucketName, region string) error {
 }
 
 // FilePath for store path + file name
-func (d *Disk) FilePath(fileName string) string {
+func (d *Disk) FilePath(bucketName, fileName string) string {
 	return path.Join(
 		d.Path,
-		d.Bucket,
+		bucketName,
 		fileName,
 	)
 }
 
 // DeleteFile delete file
 func (d *Disk) DeleteFile(bucketName, fileName string) error {
-	filePath := d.FilePath(fileName)
-	return os.Remove(filePath)
+	return os.Remove(d.FilePath(bucketName, fileName))
 }
 
 // GetFile for storage host + bucket + filename
 func (d *Disk) GetFile(bucketName, fileName string) string {
-	return d.Host + "/" + d.Path + "/" + bucketName + "/" + fileName
+	if d.Host != "" {
+		if u, err := url.Parse(d.Host); err == nil {
+			u.Path = path.Join(u.Path, d.Path, bucketName, fileName)
+			return u.String()
+		}
+	}
+	return path.Join(d.Path, bucketName, fileName)
 }
