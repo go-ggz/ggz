@@ -37,7 +37,6 @@ func NewEngine() (Storage, error) {
 		return disk.NewEngine(
 			config.Server.Host,
 			config.Storage.Path,
-			config.Minio.Bucket,
 		), nil
 	}
 

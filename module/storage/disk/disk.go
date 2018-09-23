@@ -16,11 +16,10 @@ type Disk struct {
 }
 
 // NewEngine struct
-func NewEngine(host, path, bucket string) *Disk {
+func NewEngine(host, path string) *Disk {
 	return &Disk{
-		Host:   host,
-		Path:   path,
-		Bucket: bucket,
+		Host: host,
+		Path: path,
 	}
 }
 
