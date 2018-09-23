@@ -131,7 +131,7 @@ func ShortenedURL(c *gin.Context) {
 func QRCodeGenerator(slug string) error {
 	objectName := fmt.Sprintf("%s.png", slug)
 	host := strings.TrimRight(config.Server.ShortenHost, "/")
-	filePath := storage.S3.FilePath(objectName)
+	filePath := storage.S3.FilePath("", objectName)
 	png, err := qrcode.Encode(host+"/"+slug, qrcode.Medium, 256)
 	if err != nil {
 		return nil

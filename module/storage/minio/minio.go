@@ -86,7 +86,7 @@ func (m *Minio) CreateBucket(bucketName, region string) error {
 }
 
 // FilePath for store path + file name
-func (m *Minio) FilePath(fileName string) string {
+func (m *Minio) FilePath(_, fileName string) string {
 	return fmt.Sprintf("%s/%s", os.TempDir(), fileName)
 }
 
