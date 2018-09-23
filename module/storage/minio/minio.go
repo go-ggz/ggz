@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/minio/minio-go"
@@ -52,14 +53,14 @@ func NewEngine(endpoint, accessID, secretKey string, ssl bool) (*Minio, error) {
 }
 
 // UploadFile to s3 server
-func (m *Minio) UploadFile(bucketName, objectName, filePath string, content []byte, contentType string) error {
+func (m *Minio) UploadFile(bucketName, objectName string, content []byte) error {
 	// Upload the zip file with FPutObject
 	_, err := m.client.PutObject(
 		bucketName,
 		objectName,
 		bytes.NewReader(content),
 		int64(len(content)),
-		minio.PutObjectOptions{ContentType: contentType},
+		minio.PutObjectOptions{ContentType: http.DetectContentType(content)},
 	)
 
 	return err

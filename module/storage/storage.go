@@ -11,10 +11,10 @@ type Storage interface {
 	// CreateBucket for create new folder
 	CreateBucket(string, string) error
 	// UploadFile for upload single file
-	UploadFile(string, string, string, []byte, string) error
+	UploadFile(string, string, []byte) error
 	// DeleteFile for delete single file
 	DeleteFile(string, string) error
-	// FilePath for store path + bucket name + file name
+	// FilePath for store path + file name
 	FilePath(string, string) string
 	// GetFile for storage host + bucket + filename
 	GetFile(string, string) string

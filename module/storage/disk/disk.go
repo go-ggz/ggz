@@ -24,8 +24,8 @@ func NewEngine(host, path string) *Disk {
 }
 
 // UploadFile to s3 server
-func (d *Disk) UploadFile(_, _, filePath string, content []byte, _ string) error {
-	return ioutil.WriteFile(filePath, content, os.FileMode(0644))
+func (d *Disk) UploadFile(bucketName, fileName string, content []byte) error {
+	return ioutil.WriteFile(d.FilePath(bucketName, fileName), content, os.FileMode(0644))
 }
 
 // CreateBucket create bucket
