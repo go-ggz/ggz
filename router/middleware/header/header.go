@@ -1,6 +1,8 @@
 package header
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +18,7 @@ func Options(c *gin.Context) {
 		c.Header("Access-Control-Allow-Headers", "authorization, origin, content-type, accept")
 		c.Header("Allow", "HEAD,GET,POST,PUT,PATCH,DELETE,OPTIONS")
 		c.Header("Content-Type", "application/json")
-		c.AbortWithStatus(200)
+		c.AbortWithStatus(http.StatusNoContent)
 	}
 }
 
