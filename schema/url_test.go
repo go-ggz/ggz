@@ -7,6 +7,7 @@ import (
 	"github.com/go-ggz/ggz/model"
 
 	"github.com/graphql-go/graphql"
+	"github.com/graphql-go/graphql/gqlerrors"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,19 +15,24 @@ func TestQueryURLMeta(t *testing.T) {
 	t.Run("invaild url", func(t *testing.T) {
 		test := T{
 			Query: `
-query queryURLMeta (
+query queryURLMetadata (
     $url: String!
 ) {
-  queryURLMeta(url: $url) {
-    url
+  queryURLMetadata(url: $url) {
+    title
   }
 }
 	  `,
 			Schema: Schema,
 			Expected: &graphql.Result{
 				Data: map[string]interface{}{
-					"queryURLMeta": map[string]interface{}{
-						"url": "http://example.com",
+					"queryURLMetadata": map[string]interface{}{
+						"title": "http://example.com",
+					},
+				},
+				Errors: []gqlerrors.FormattedError{
+					{
+						Message: `Get example.com: unsupported protocol scheme ""`,
 					},
 				},
 			},
@@ -40,6 +46,37 @@ query queryURLMeta (
 			},
 		}
 		testGraphqlErr(test, params, t)
+	})
+
+	t.Run("vaild url", func(t *testing.T) {
+		test := T{
+			Query: `
+query queryURLMetadata (
+    $url: String!
+) {
+  queryURLMetadata(url: $url) {
+    title
+  }
+}
+	  `,
+			Schema: Schema,
+			Expected: &graphql.Result{
+				Data: map[string]interface{}{
+					"queryURLMetadata": map[string]interface{}{
+						"title": "小惡魔 - 電腦技術 - 工作筆記 - AppleBOY",
+					},
+				},
+			},
+		}
+		params := graphql.Params{
+			Schema:        test.Schema,
+			RequestString: test.Query,
+			Context:       newContextWithUser(context.TODO(), nil),
+			VariableValues: map[string]interface{}{
+				"url": "https://blog.wu-boy.com",
+			},
+		}
+		testGraphql(test, params, t)
 	})
 }
 
@@ -91,6 +128,16 @@ query queryShortenURL (
 }
 `,
 			Schema: Schema,
+			Expected: &graphql.Result{
+				Data: map[string]interface{}{
+					"queryShortenURL": nil,
+				},
+				Errors: []gqlerrors.FormattedError{
+					{
+						Message: `shorten slug does not exist [slug: 1234567890]`,
+					},
+				},
+			},
 		}
 		params := graphql.Params{
 			Schema:        test.Schema,
@@ -102,5 +149,4 @@ query queryShortenURL (
 		}
 		testGraphqlErr(test, params, t)
 	})
-
 }

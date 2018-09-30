@@ -16,7 +16,7 @@ import (
 type T struct {
 	Query    string
 	Schema   graphql.Schema
-	Expected interface{}
+	Expected *graphql.Result
 }
 
 func testGraphql(test T, p graphql.Params, t *testing.T) {
@@ -31,8 +31,13 @@ func testGraphql(test T, p graphql.Params, t *testing.T) {
 
 func testGraphqlErr(test T, p graphql.Params, t *testing.T) {
 	result := graphql.Do(p)
-	if len(result.Errors) == 0 {
-		t.Fatalf("missing errors, expected errors: %v", result.Errors)
+	if len(result.Errors) != len(test.Expected.Errors) {
+		t.Fatalf("Unexpected errors, Diff: %v", testutil.Diff(test.Expected.Errors, result.Errors))
+	}
+
+	if len(test.Expected.Errors) > 0 &&
+		result.Errors[0].Message != test.Expected.Errors[0].Message {
+		t.Fatalf("Unexpected error message, Diff: %v", testutil.Diff(test.Expected.Errors, result.Errors))
 	}
 }
 
