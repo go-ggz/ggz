@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"errors"
+
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
@@ -133,7 +135,11 @@ var queryURLMeta = graphql.Field{
 		},
 	},
 	Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
-		url, _ := p.Args["url"].(string)
+		url := p.Args["url"].(string)
+
+		if !helper.IsURL(url) {
+			return nil, errors.New("invaild URL")
+		}
 
 		return meta.FetchData(url)
 	},
