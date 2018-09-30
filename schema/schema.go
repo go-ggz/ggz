@@ -9,9 +9,9 @@ var rootQuery = graphql.NewObject(
 		Name:        "RootQuery",
 		Description: "Root Query",
 		Fields: graphql.Fields{
-			"QueryURLMetadata":   &queryURLMeta,
-			"QueryShortenURL":    &queryShortenURL,
-			"QueryAllShortenURL": &queryAllShortenURL,
+			"queryURLMetadata":   &queryURLMeta,
+			"queryShortenURL":    &queryShortenURL,
+			"queryAllShortenURL": &queryAllShortenURL,
 		},
 	})
 
@@ -20,7 +20,7 @@ var rootMutation = graphql.NewObject(
 		Name:        "RootMutation",
 		Description: "Root Mutation",
 		Fields: graphql.Fields{
-			"CreateShortenURL": &createShortenURL,
+			"createShortenURL": &createShortenURL,
 		},
 	})
 
