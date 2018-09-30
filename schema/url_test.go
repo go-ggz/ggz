@@ -12,8 +12,9 @@ import (
 
 func TestQueryShortenURL(t *testing.T) {
 	assert.NoError(t, model.PrepareTestDatabase())
-	user, _ := model.GetUserByID(1)
+	user := model.AssertExistsAndLoadBean(t, &model.User{ID: 1}).(*model.User)
 	ctx := newContextWithUser(context.TODO(), user)
+
 	t.Run("shorten url exist", func(t *testing.T) {
 		test := T{
 			Query: `
