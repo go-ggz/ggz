@@ -87,10 +87,10 @@
 			"revisionTime": "2017-01-09T09:34:21Z"
 		},
 		{
-			"checksumSHA1": "j7t5A4hkzgwZz/N2tuGPltDQR40=",
+			"checksumSHA1": "3R5Nt+zUhoicojv9pyy2KCXfa1w=",
 			"path": "github.com/gin-gonic/gin",
-			"revision": "85221af84cf6ee99dc900bc41912abc09acfc1b5",
-			"revisionTime": "2018-07-03T09:17:08Z"
+			"revision": "6ab50f944ca52bdd4d982d0bec454d94bf7b802a",
+			"revisionTime": "2018-10-11T23:31:31Z"
 		},
 		{
 			"checksumSHA1": "BjShmaQTKI8+411rCb7LFqJkLA0=",
@@ -99,16 +99,22 @@
 			"revisionTime": "2018-07-03T09:17:08Z"
 		},
 		{
+			"checksumSHA1": "Y8Vu2NT4c2ve963fedBxoJyiU6s=",
+			"path": "github.com/gin-gonic/gin/internal/json",
+			"revision": "6ab50f944ca52bdd4d982d0bec454d94bf7b802a",
+			"revisionTime": "2018-10-11T23:31:31Z"
+		},
+		{
 			"checksumSHA1": "woO1qIxIeQ1bcbPSiMfAKk3r4xg=",
 			"path": "github.com/gin-gonic/gin/json",
 			"revision": "85221af84cf6ee99dc900bc41912abc09acfc1b5",
 			"revisionTime": "2018-07-03T09:17:08Z"
 		},
 		{
-			"checksumSHA1": "UofNu0l/AwtCBsjPzhtHBBwGv8Q=",
+			"checksumSHA1": "afLqBfX9SeIP6eeTZb3WwdTFaOo=",
 			"path": "github.com/gin-gonic/gin/render",
-			"revision": "85221af84cf6ee99dc900bc41912abc09acfc1b5",
-			"revisionTime": "2018-07-03T09:17:08Z"
+			"revision": "6ab50f944ca52bdd4d982d0bec454d94bf7b802a",
+			"revisionTime": "2018-10-11T23:31:31Z"
 		},
 		{
 			"checksumSHA1": "87LEfpY9cOk9CP7pWyIbmQ/6enU=",

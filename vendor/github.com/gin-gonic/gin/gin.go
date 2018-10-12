@@ -14,11 +14,7 @@ import (
 	"github.com/gin-gonic/gin/render"
 )
 
-const (
-	// Version is Framework's version.
-	Version                = "v1.2"
-	defaultMultipartMemory = 32 << 20 // 32 MB
-)
+const defaultMultipartMemory = 32 << 20 // 32 MB
 
 var (
 	default404Body   = []byte("404 page not found")
@@ -26,7 +22,10 @@ var (
 	defaultAppEngine bool
 )
 
+// HandlerFunc defines the handler used by gin middleware as return value.
 type HandlerFunc func(*Context)
+
+// HandlersChain defines a HandlerFunc array.
 type HandlersChain []HandlerFunc
 
 // Last returns the last handler in the chain. ie. the last handler is the main own.
@@ -37,12 +36,14 @@ func (c HandlersChain) Last() HandlerFunc {
 	return nil
 }
 
+// RouteInfo represents a request route's specification which contains method and path and its handler.
 type RouteInfo struct {
 	Method  string
 	Path    string
 	Handler string
 }
 
+// RoutesInfo defines a RouteInfo array.
 type RoutesInfo []RouteInfo
 
 // Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
@@ -155,6 +156,7 @@ func (engine *Engine) allocateContext() *Context {
 	return &Context{engine: engine}
 }
 
+// Delims sets template left and right delims and returns a Engine instance.
 func (engine *Engine) Delims(left, right string) *Engine {
 	engine.delims = render.Delims{Left: left, Right: right}
 	return engine
@@ -334,7 +336,6 @@ func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 func (engine *Engine) HandleContext(c *Context) {
 	c.reset()
 	engine.handleHTTPRequest(c)
-	engine.pool.Put(c)
 }
 
 func (engine *Engine) handleHTTPRequest(c *Context) {
@@ -349,38 +350,40 @@ func (engine *Engine) handleHTTPRequest(c *Context) {
 	// Find root of the tree for the given HTTP method
 	t := engine.trees
 	for i, tl := 0, len(t); i < tl; i++ {
-		if t[i].method == httpMethod {
-			root := t[i].root
-			// Find route in tree
-			handlers, params, tsr := root.getValue(path, c.Params, unescape)
-			if handlers != nil {
-				c.handlers = handlers
-				c.Params = params
-				c.Next()
-				c.writermem.WriteHeaderNow()
+		if t[i].method != httpMethod {
+			continue
+		}
+		root := t[i].root
+		// Find route in tree
+		handlers, params, tsr := root.getValue(path, c.Params, unescape)
+		if handlers != nil {
+			c.handlers = handlers
+			c.Params = params
+			c.Next()
+			c.writermem.WriteHeaderNow()
+			return
+		}
+		if httpMethod != "CONNECT" && path != "/" {
+			if tsr && engine.RedirectTrailingSlash {
+				redirectTrailingSlash(c)
 				return
 			}
-			if httpMethod != "CONNECT" && path != "/" {
-				if tsr && engine.RedirectTrailingSlash {
-					redirectTrailingSlash(c)
-					return
-				}
-				if engine.RedirectFixedPath && redirectFixedPath(c, root, engine.RedirectFixedPath) {
-					return
-				}
+			if engine.RedirectFixedPath && redirectFixedPath(c, root, engine.RedirectFixedPath) {
+				return
 			}
-			break
 		}
+		break
 	}
 
 	if engine.HandleMethodNotAllowed {
 		for _, tree := range engine.trees {
-			if tree.method != httpMethod {
-				if handlers, _, _ := tree.root.getValue(path, nil, unescape); handlers != nil {
-					c.handlers = engine.allNoMethod
-					serveError(c, http.StatusMethodNotAllowed, default405Body)
-					return
-				}
+			if tree.method == httpMethod {
+				continue
+			}
+			if handlers, _, _ := tree.root.getValue(path, nil, unescape); handlers != nil {
+				c.handlers = engine.allNoMethod
+				serveError(c, http.StatusMethodNotAllowed, default405Body)
+				return
 			}
 		}
 	}
@@ -393,14 +396,16 @@ var mimePlain = []string{MIMEPlain}
 func serveError(c *Context, code int, defaultMessage []byte) {
 	c.writermem.status = code
 	c.Next()
-	if !c.writermem.Written() {
-		if c.writermem.Status() == code {
-			c.writermem.Header()["Content-Type"] = mimePlain
-			c.Writer.Write(defaultMessage)
-		} else {
-			c.writermem.WriteHeaderNow()
-		}
+	if c.writermem.Written() {
+		return
 	}
+	if c.writermem.Status() == code {
+		c.writermem.Header()["Content-Type"] = mimePlain
+		c.Writer.Write(defaultMessage)
+		return
+	}
+	c.writermem.WriteHeaderNow()
+	return
 }
 
 func redirectTrailingSlash(c *Context) {
@@ -411,10 +416,9 @@ func redirectTrailingSlash(c *Context) {
 		code = http.StatusTemporaryRedirect
 	}
 
+	req.URL.Path = path + "/"
 	if length := len(path); length > 1 && path[length-1] == '/' {
 		req.URL.Path = path[:length-1]
-	} else {
-		req.URL.Path = path + "/"
 	}
 	debugPrint("redirecting request %d: %s --> %s", code, path, req.URL.String())
 	http.Redirect(c.Writer, req, req.URL.String(), code)
