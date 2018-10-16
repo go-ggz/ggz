@@ -32,6 +32,10 @@ endif
 
 all: build
 
+.PHONY: install-module
+install-module:
+	$(GO) mod download
+
 .PHONY: tar
 tar:
 	tar -zcvf release.tar.gz bin Dockerfile Makefile
@@ -214,5 +218,5 @@ build_image:
 docker_release: build_image
 
 clean:
-	$(GO) clean -x -i ./...
+	$(GO) clean -modcache -cache -x -i ./...
 	rm -rf bin
