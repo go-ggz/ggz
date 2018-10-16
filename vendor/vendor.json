@@ -351,16 +351,18 @@
 			"revisionTime": "2016-04-24T11:30:07Z"
 		},
 		{
-			"checksumSHA1": "q8VfSvQ6fZY+QwtlMPtQsJrNews=",
-			"path": "github.com/minio/go-homedir",
-			"revision": "21304a94172ae3a09dee2cd86a12fb6f842138c7",
-			"revisionTime": "2016-02-15T11:55:11Z"
+			"checksumSHA1": "xu22pbh4DSDJVyO66yDugIdn+CY=",
+			"path": "github.com/minio/minio-go",
+			"revision": "76305dad725fda18a9abcfc6cfc5797f251ea271",
+			"revisionTime": "2018-10-09T00:28:26Z",
+			"version": "v6.0.8",
+			"versionExact": "v6.0.8"
 		},
 		{
-			"checksumSHA1": "NN2YPQ0QKWuKO9bA7UCQ17EyjkY=",
-			"path": "github.com/minio/minio-go",
-			"revision": "9690dc6c40e6ef271727848c04f974e801212ac1",
-			"revisionTime": "2017-10-02T19:34:27Z"
+			"checksumSHA1": "S5/6dr3645sZqQViBdRRbT6+lIQ=",
+			"path": "github.com/minio/minio-go/pkg",
+			"revision": "31e3bbc8590bf72d763be83a191836f02eb61437",
+			"revisionTime": "2018-10-15T19:03:24Z"
 		},
 		{
 			"checksumSHA1": "/Ly8Mgi802nx7zZiBq+H6p+ct8M=",
@@ -369,10 +371,10 @@
 			"revisionTime": "2018-01-13T00:13:38Z"
 		},
 		{
-			"checksumSHA1": "pggIpSePizRBQ7ybhB0CuaSQydw=",
+			"checksumSHA1": "Md5pOKYfoKtrG7xNvs2FtiDPfDc=",
 			"path": "github.com/minio/minio-go/pkg/encrypt",
-			"revision": "9690dc6c40e6ef271727848c04f974e801212ac1",
-			"revisionTime": "2017-10-02T19:34:27Z"
+			"revision": "31e3bbc8590bf72d763be83a191836f02eb61437",
+			"revisionTime": "2018-10-15T19:03:24Z"
 		},
 		{
 			"checksumSHA1": "3tl2ehmod/EzXE9o9WJ5HM2AQPE=",
@@ -381,16 +383,16 @@
 			"revisionTime": "2017-10-02T19:34:27Z"
 		},
 		{
-			"checksumSHA1": "XQ8eecf1JIlTDk0T6YAV5zvMyAM=",
+			"checksumSHA1": "bbWjcrOQsV57qK+BSsrNAsI+Q/o=",
 			"path": "github.com/minio/minio-go/pkg/s3signer",
-			"revision": "9690dc6c40e6ef271727848c04f974e801212ac1",
-			"revisionTime": "2017-10-02T19:34:27Z"
+			"revision": "31e3bbc8590bf72d763be83a191836f02eb61437",
+			"revisionTime": "2018-10-15T19:03:24Z"
 		},
 		{
-			"checksumSHA1": "P9p0KiZWh9shIFSqTaIeY4/KYXo=",
+			"checksumSHA1": "7iUaZkEJdhkyAu3F07vrX8pyavI=",
 			"path": "github.com/minio/minio-go/pkg/s3utils",
-			"revision": "9690dc6c40e6ef271727848c04f974e801212ac1",
-			"revisionTime": "2017-10-02T19:34:27Z"
+			"revision": "31e3bbc8590bf72d763be83a191836f02eb61437",
+			"revisionTime": "2018-10-15T19:03:24Z"
 		},
 		{
 			"checksumSHA1": "maUy+dbN6VfTTnfErrAW2lLit1w=",
@@ -549,6 +551,18 @@
 			"revisionTime": "2018-01-11T11:10:38Z"
 		},
 		{
+			"checksumSHA1": "FwW3Vv4jW0Nv7V2SZC7x/Huj5M4=",
+			"path": "golang.org/x/crypto/argon2",
+			"revision": "0c41d7ab0a0ee717d4590a44bcb987dfd9e183eb",
+			"revisionTime": "2018-10-15T00:23:17Z"
+		},
+		{
+			"checksumSHA1": "ejjxT0+wDWWncfh0Rt3lSH4IbXQ=",
+			"path": "golang.org/x/crypto/blake2b",
+			"revision": "0c41d7ab0a0ee717d4590a44bcb987dfd9e183eb",
+			"revisionTime": "2018-10-15T00:23:17Z"
+		},
+		{
 			"checksumSHA1": "nqWNlnMmVpt628zzvyo6Yv2CX5Q=",
 			"path": "golang.org/x/crypto/ssh/terminal",
 			"revision": "847319b7fc94cab682988f93da778204da164588",
@@ -573,6 +587,18 @@
 			"revisionTime": "2017-10-03T05:09:24Z"
 		},
 		{
+			"checksumSHA1": "pCY4YtdNKVBYRbNvODjx8hj0hIs=",
+			"path": "golang.org/x/net/http/httpguts",
+			"revision": "49bb7cea24b1df9410e1712aa6433dae904ff66a",
+			"revisionTime": "2018-10-11T05:27:23Z"
+		},
+		{
+			"checksumSHA1": "RcrB7tgYS/GMW4QrwVdMOTNqIU8=",
+			"path": "golang.org/x/net/idna",
+			"revision": "49bb7cea24b1df9410e1712aa6433dae904ff66a",
+			"revisionTime": "2018-10-11T05:27:23Z"
+		},
+		{
 			"checksumSHA1": "TBlnCuZUOzJHLu5DNY7XEj8TvbU=",
 			"path": "golang.org/x/net/webdav",
 			"revision": "0a9397675ba34b2845f758fe3cd68828369c6517",
@@ -591,6 +617,12 @@
 			"revisionTime": "2017-05-17T20:25:26Z"
 		},
 		{
+			"checksumSHA1": "REkmyB368pIiip76LiqMLspgCRk=",
+			"path": "golang.org/x/sys/cpu",
+			"revision": "fa43e7bc11baaae89f3f902b2b4d832b68234844",
+			"revisionTime": "2018-10-11T14:35:51Z"
+		},
+		{
 			"checksumSHA1": "uggjqMBFNJd11oNco2kbkAT641w=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "429f518978ab01db8bb6f44b66785088e7fba58b",
@@ -601,6 +633,30 @@
 			"path": "golang.org/x/sys/windows",
 			"revision": "429f518978ab01db8bb6f44b66785088e7fba58b",
 			"revisionTime": "2017-09-20T21:38:28Z"
+		},
+		{
+			"checksumSHA1": "CbpjEkkOeh0fdM/V8xKDdI0AA88=",
+			"path": "golang.org/x/text/secure/bidirule",
+			"revision": "4d1c5fb19474adfe9562c9847ba425e7da817e81",
+			"revisionTime": "2018-09-21T09:56:34Z"
+		},
+		{
+			"checksumSHA1": "ziMb9+ANGRJSSIuxYdRbA+cDRBQ=",
+			"path": "golang.org/x/text/transform",
+			"revision": "4d1c5fb19474adfe9562c9847ba425e7da817e81",
+			"revisionTime": "2018-09-21T09:56:34Z"
+		},
+		{
+			"checksumSHA1": "Qw4qdlZHCnBurAPPrSt+EKPIngM=",
+			"path": "golang.org/x/text/unicode/bidi",
+			"revision": "4d1c5fb19474adfe9562c9847ba425e7da817e81",
+			"revisionTime": "2018-09-21T09:56:34Z"
+		},
+		{
+			"checksumSHA1": "XJr6+rzzxASewSbC/SCStyGlmuw=",
+			"path": "golang.org/x/text/unicode/norm",
+			"revision": "4d1c5fb19474adfe9562c9847ba425e7da817e81",
+			"revisionTime": "2018-09-21T09:56:34Z"
 		},
 		{
 			"checksumSHA1": "P/k5ZGf0lEBgpKgkwy++F7K1PSg=",
