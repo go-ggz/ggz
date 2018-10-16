@@ -11,6 +11,7 @@ clone:
 pipeline:
   backend:
     image: golang:1.11
+    pull: true
     group: testing
     commands:
       - cp .env.example .env
@@ -20,6 +21,7 @@ pipeline:
 
   vendor:
     image: golang:1.11
+    pull: true
     group: testing
     commands:
       - make test-vendor
@@ -27,6 +29,7 @@ pipeline:
   test:
     image: golang:1.11
     group: testing
+    pull: true
     environment:
       TAGS: bindata sqlite
     commands:
@@ -39,6 +42,17 @@ pipeline:
       - make coverage
     when:
       event: [ push, pull_request ]
+
+  build_linux_amd64_with_go_module:
+    image: golang:1.11
+    pull: true
+    environment:
+      TAGS: sqlite
+      GO111MODULE: "on"
+    commands:
+      - make clean
+      - make install-module
+      - make build_linux_amd64
 
   build_linux_amd64:
     image: golang:1.11
