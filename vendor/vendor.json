@@ -359,12 +359,6 @@
 			"versionExact": "v6.0.8"
 		},
 		{
-			"checksumSHA1": "S5/6dr3645sZqQViBdRRbT6+lIQ=",
-			"path": "github.com/minio/minio-go/pkg",
-			"revision": "31e3bbc8590bf72d763be83a191836f02eb61437",
-			"revisionTime": "2018-10-15T19:03:24Z"
-		},
-		{
 			"checksumSHA1": "/Ly8Mgi802nx7zZiBq+H6p+ct8M=",
 			"path": "github.com/minio/minio-go/pkg/credentials",
 			"revision": "d218e4cb1bfc13dcef0eb5c3e74507a35be0dd3a",
