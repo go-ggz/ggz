@@ -8,8 +8,8 @@ import (
 	m "github.com/keighl/metabolize"
 )
 
-// MetaData struct
-type MetaData struct {
+// URLMetaData struct
+type URLMetaData struct {
 	Title       string    `meta:"og:title,title" json:"title"`
 	Description string    `meta:"og:description,description" json:"description"`
 	Type        string    `meta:"og:type" json:"type"`
@@ -21,10 +21,10 @@ type MetaData struct {
 }
 
 // FetchData for fetch metadata from header of body
-func FetchData(url string) (*MetaData, error) {
+func FetchData(url string) (*URLMetaData, error) {
 	var res *http.Response
 	var err error
-	meta := new(MetaData)
+	meta := new(URLMetaData)
 
 	if res, err = http.Get(url); err != nil {
 		return nil, err
