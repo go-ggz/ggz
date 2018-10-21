@@ -13,28 +13,28 @@ services:
       - GGZ_SERVER_SHORTEN_HOST=http://localhost:8081
       - GGZ_AUTH0_PEM_PATH=test.pem
 
-  # db:
-  #   image: mysql
-  #   restart: always
-  #   volumes:
-  #     - mysql-data:/var/lib/mysql
-  #   environment:
-  #     MYSQL_USER: ggz
-  #     MYSQL_PASSWORD: example
-  #     MYSQL_DATABASE: ggz
-  #     MYSQL_ROOT_PASSWORD: example
+  db:
+    image: mysql
+    restart: always
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: ggz
+      MYSQL_PASSWORD: example
+      MYSQL_DATABASE: ggz
+      MYSQL_ROOT_PASSWORD: example
 
-  # minio:
-  #   image: minio/minio
-  #   restart: always
-  #   ports:
-  #     - "9000:9000"
-  #   volumes:
-  #     - minio-data:/data
-  #   environment:
-  #     MINIO_ACCESS_KEY: minio123456
-  #     MINIO_SECRET_KEY: minio1234567890
-  #   command: server /data
+  minio:
+    image: minio/minio
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ACCESS_KEY: minio123456
+      MINIO_SECRET_KEY: minio1234567890
+    command: server /data
 
 # volumes:
 #   minio-data:
