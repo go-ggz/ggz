@@ -98,8 +98,8 @@ func FetchShortenedURL(c *gin.Context) {
 	)
 }
 
-// ShortenedURL redirect origin URL.
-func ShortenedURL(c *gin.Context) {
+// RedirectURL redirect shorten text to origin URL.
+func RedirectURL(c *gin.Context) {
 	slug := c.Param("slug")
 
 	if !shortenPattern.MatchString(slug) {

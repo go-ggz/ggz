@@ -160,7 +160,7 @@ func LoadRedirct(middleware ...gin.HandlerFunc) http.Handler {
 	root := e.Group(config.Server.Root)
 	{
 		root.GET("", web.Index)
-		root.GET("/:slug", web.ShortenedURL)
+		root.GET("/:slug", web.RedirectURL)
 	}
 
 	return e
