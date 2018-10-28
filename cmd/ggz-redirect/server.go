@@ -431,7 +431,7 @@ func Server() *cli.Command {
 				router.GlobalInit()
 
 				server := &http.Server{
-					Addr:         config.Server.ShortenAddr,
+					Addr:         config.Server.Addr,
 					Handler:      router.LoadRedirct(),
 					ReadTimeout:  5 * time.Second,
 					WriteTimeout: 10 * time.Second,

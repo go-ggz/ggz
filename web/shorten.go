@@ -10,6 +10,7 @@ import (
 	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/module/storage"
+	"github.com/go-ggz/ggz/router/middleware/prometheus"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -104,6 +105,14 @@ func RedirectURL(c *gin.Context) {
 
 	if !shortenPattern.MatchString(slug) {
 		errorJSON(c, http.StatusBadRequest, errSlugNotMatch)
+		return
+	}
+
+	if slug == "healthz" {
+		Heartbeat(c)
+		return
+	} else if slug == "metrics" {
+		prometheus.Handler()
 		return
 	}
 

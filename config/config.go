@@ -28,7 +28,6 @@ type server struct {
 	StrictCiphers bool
 	Pprof         bool
 	Token         string
-	ShortenAddr   string
 	ShortenHost   string
 	ShortenSize   int
 	Cache         string
