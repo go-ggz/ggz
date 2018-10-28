@@ -5,7 +5,7 @@ LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
-ADD ../release/linux/i386/ggz-server /bin/
+ADD release/linux/i386/ggz-server /bin/
 
 EXPOSE 8080
 
