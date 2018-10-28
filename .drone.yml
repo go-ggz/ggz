@@ -54,81 +54,45 @@ pipeline:
       - make install-module
       - make build_linux_amd64
 
-  build_linux_amd64_server:
+  build_linux_amd64:
     image: golang:1.11
     pull: true
     group: build
     environment:
       TAGS: sqlite
     commands:
-      - make build_linux_amd64
+      - SERVICE=ggz-server make build_linux_amd64
+      - SERVICE=ggz-redirect make build_linux_amd64
 
-  build_linux_amd64_redirect:
+  build_linux_i386:
     image: golang:1.11
     pull: true
     group: build
     environment:
       TAGS: sqlite
-      SERVICE: ggz-redirect
     commands:
-      - make build_linux_amd64
+      - SERVICE=ggz-server make build_linux_i386
+      - SERVICE=ggz-redirect make build_linux_i386
 
-  build_linux_i386_server:
+  build_linux_arm64:
     image: golang:1.11
     pull: true
     group: build
     environment:
       TAGS: sqlite
     commands:
-      - make build_linux_i386
+      - SERVICE=ggz-server make build_linux_arm64
+      - SERVICE=ggz-redirect make build_linux_arm64
 
-  build_linux_i386_redirect:
-    image: golang:1.11
-    pull: true
-    group: build
-    environment:
-      TAGS: sqlite
-      SERVICE: ggz-redirect
-    commands:
-      - make build_linux_i386
-
-  build_linux_arm64_server:
+  build_linux_arm:
     image: golang:1.11
     pull: true
     group: build
     environment:
       TAGS: sqlite
     commands:
-      - make build_linux_arm64
-
-  build_linux_arm64_redirect:
-    image: golang:1.11
-    pull: true
-    group: build
-    environment:
-      TAGS: sqlite
-      SERVICE: ggz-redirect
-    commands:
-      - make build_linux_arm64
-
-  build_linux_arm_server:
-    image: golang:1.11
-    pull: true
-    group: build
-    environment:
-      TAGS: sqlite
-    commands:
-      - make build_linux_arm
-
-  build_linux_arm_redirect:
-    image: golang:1.11
-    pull: true
-    group: build
-    environment:
-      TAGS: sqlite
-      SERVICE: ggz-redirect
-    commands:
-      - make build_linux_arm
+      - SERVICE=ggz-server make build_linux_arm
+      - SERVICE=ggz-redirect make build_linux_arm
 
   codecov:
     image: robertstettner/drone-codecov
