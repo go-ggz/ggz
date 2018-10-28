@@ -38,7 +38,7 @@ func main() {
 	}
 
 	app := &cli.App{
-		Name:      "gzz",
+		Name:      "gzz server",
 		Usage:     "shorten url service",
 		Copyright: "Copyright (c) 2018 Bo-Yi Wu",
 		Version:   version.PrintCLIVersion(),

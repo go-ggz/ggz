@@ -19,8 +19,7 @@ import (
 )
 
 var (
-	defaultHostAddr    = ":8080"
-	defaultShortenAddr = ":8081"
+	defaultHostAddr = ":8081"
 )
 
 // Server provides the sub-command to start the API server.
@@ -91,13 +90,6 @@ func Server() *cli.Command {
 				Usage:       "Address to bind the server",
 				EnvVars:     []string{"GGZ_SERVER_ADDR"},
 				Destination: &config.Server.Addr,
-			},
-			&cli.StringFlag{
-				Name:        "shorten-addr",
-				Value:       defaultShortenAddr,
-				Usage:       "Address to bind the shorten server",
-				EnvVars:     []string{"GGZ_SHORTEN_SERVER_ADDR"},
-				Destination: &config.Server.ShortenAddr,
 			},
 			&cli.StringFlag{
 				Name:        "root",
@@ -438,14 +430,7 @@ func Server() *cli.Command {
 				log.Info().Msg("Initial module engine.")
 				router.GlobalInit()
 
-				server01 := &http.Server{
-					Addr:         config.Server.Addr,
-					Handler:      router.Load(),
-					ReadTimeout:  5 * time.Second,
-					WriteTimeout: 10 * time.Second,
-				}
-
-				server02 := &http.Server{
+				server := &http.Server{
 					Addr:         config.Server.ShortenAddr,
 					Handler:      router.LoadRedirct(),
 					ReadTimeout:  5 * time.Second,
@@ -453,13 +438,8 @@ func Server() *cli.Command {
 				}
 
 				g.Go(func() error {
-					log.Info().Msgf("Starting app server on %s", config.Server.Addr)
-					return startServer(server01)
-				})
-
-				g.Go(func() error {
-					log.Info().Msgf("Starting shorten server on %s", config.Server.ShortenAddr)
-					return startServer(server02)
+					log.Info().Msgf("Starting redirect server on %s", config.Server.Addr)
+					return startServer(server)
 				})
 
 				if err := g.Wait(); err != nil {

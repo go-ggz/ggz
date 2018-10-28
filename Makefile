@@ -1,8 +1,8 @@
 DIST := dist
-EXECUTABLE := ggz
+SERVICE ?= ggz-server
 
-DEPLOY_ACCOUNT := goggz
-DEPLOY_IMAGE := $(EXECUTABLE)
+DOCKER_ACCOUNT := goggz
+DOCKER_IMAGE := $(SERVICE)
 GOFMT ?= gofmt "-s"
 GO ?= go
 TARGETS ?= linux darwin windows
@@ -42,17 +42,17 @@ tar:
 
 .PHONY: check_image
 check_image:
-	if [ "$(shell docker ps -aq -f name=$(EXECUTABLE))" ]; then \
-		docker rm -f $(EXECUTABLE); \
+	if [ "$(shell docker ps -aq -f name=$(SERVICE))" ]; then \
+		docker rm -f $(SERVICE); \
 	fi
 
 .PHONY: dev
 dev: build_image check_image
-	docker run -d --name $(DEPLOY_IMAGE) --env-file env/env.$@ --net host -p 3003:3003 --restart always $(DEPLOY_ACCOUNT)/$(DEPLOY_IMAGE)
+	docker run -d --name $(DOCKER_IMAGE) --env-file env/env.$@ --net host -p 3003:3003 --restart always $(DOCKER_ACCOUNT)/$(DOCKER_IMAGE)
 
 .PHONY: prod
 prod: build_image check_image
-	docker run -d --name $(DEPLOY_IMAGE) --env-file env/env.$@ --net host -p 3003:3003 --restart always $(DEPLOY_ACCOUNT)/$(DEPLOY_IMAGE)
+	docker run -d --name $(DOCKER_IMAGE) --env-file env/env.$@ --net host -p 3003:3003 --restart always $(DOCKER_ACCOUNT)/$(DOCKER_IMAGE)
 
 .PHONY: generate
 generate:
@@ -123,10 +123,10 @@ unconvert:
 install: $(SOURCES)
 	$(GO) install -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)'
 
-build: $(EXECUTABLE)
+build: $(SERVICE)
 
-$(EXECUTABLE): $(SOURCES)
-	$(GO) build -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o bin/$@ ./cmd
+$(SERVICE): $(SOURCES)
+	$(GO) build -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o bin/$@ ./cmd/$(SERVICE)
 
 .PHONY: misspell-check
 misspell-check:
@@ -192,28 +192,28 @@ release-build:
 	@hash gox > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		$(GO) get -u github.com/mitchellh/gox; \
 	fi
-	gox -os="$(TARGETS)" -arch="$(ARCHS)" -tags="$(TAGS)" -ldflags="$(EXTLDFLAGS)-s -w $(LDFLAGS)" -output="$(DIST)/binaries/$(EXECUTABLE)-$(VERSION)-{{.OS}}-{{.Arch}}" ./cmd/...
+	gox -os="$(TARGETS)" -arch="$(ARCHS)" -tags="$(TAGS)" -ldflags="$(EXTLDFLAGS)-s -w $(LDFLAGS)" -output="$(DIST)/binaries/$(SERVICE)-$(VERSION)-{{.OS}}-{{.Arch}}" ./cmd/$(SERVICE)/...
 
 release-copy:
-	$(foreach file,$(wildcard $(DIST)/binaries/$(EXECUTABLE)-*),cp $(file) $(DIST)/release/$(notdir $(file));)
+	$(foreach file,$(wildcard $(DIST)/binaries/$(SERVICE)-*),cp $(file) $(DIST)/release/$(notdir $(file));)
 
 release-check:
-	cd $(DIST)/release; $(foreach file,$(wildcard $(DIST)/release/$(EXECUTABLE)-*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
+	cd $(DIST)/release; $(foreach file,$(wildcard $(DIST)/release/$(SERVICE)-*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
 
 build_linux_amd64:
-	GOOS=linux GOARCH=amd64 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/amd64/$(DEPLOY_IMAGE) ./cmd
+	GOOS=linux GOARCH=amd64 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/amd64/$(DOCKER_IMAGE) ./cmd/$(SERVICE)
 
 build_linux_i386:
-	GOOS=linux GOARCH=386 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/i386/$(DEPLOY_IMAGE) ./cmd
+	GOOS=linux GOARCH=386 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/i386/$(DOCKER_IMAGE) ./cmd/$(SERVICE)
 
 build_linux_arm64:
-	GOOS=linux GOARCH=arm64 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/arm64/$(DEPLOY_IMAGE) ./cmd
+	GOOS=linux GOARCH=arm64 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/arm64/$(DOCKER_IMAGE) ./cmd/$(SERVICE)
 
 build_linux_arm:
-	GOOS=linux GOARCH=arm GOARM=7 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/arm/$(DEPLOY_IMAGE) ./cmd
+	GOOS=linux GOARCH=arm GOARM=7 $(GO) build -a -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o release/linux/arm/$(DOCKER_IMAGE) ./cmd/$(SERVICE)
 
 build_image:
-	docker build -t $(DEPLOY_ACCOUNT)/$(DEPLOY_IMAGE) -f Dockerfile .
+	docker build -t $(DOCKER_ACCOUNT)/$(DOCKER_IMAGE) -f Dockerfile .
 
 docker_release: build_image
 
