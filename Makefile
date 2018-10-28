@@ -217,6 +217,8 @@ build_image:
 
 docker_release: build_image
 
-clean:
+clean_dist:
+	rm -rf bin server release
+
+clean: clean_dist
 	$(GO) clean -modcache -cache -x -i ./...
-	rm -rf bin
