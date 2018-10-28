@@ -186,6 +186,70 @@ pipeline:
       event: [ push, tag ]
       local: false
 
+  publish_linux_amd64:
+    image: plugins/docker
+    group: release
+    pull: true
+    repo: goggz/ggz-redirect
+    dockerfile: dockerfile/redirect/Dockerfile
+    secrets: [ docker_username, docker_password ]
+    default_tags: true
+    when:
+      event: [ push, tag ]
+      local: false
+
+  publish_alpine:
+    image: plugins/docker
+    group: release
+    pull: true
+    repo: goggz/ggz-redirect
+    dockerfile: dockerfile/redirect/Dockerfile.alpine
+    secrets: [ docker_username, docker_password ]
+    default_tags: true
+    default_suffix: alpine
+    when:
+      event: [ push, tag ]
+      local: false
+
+  publish_linux_i386:
+    image: plugins/docker:17.05
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    group: release
+    repo: goggz/ggz-redirect
+    auto_tag: true
+    auto_tag_suffix: i386
+    dockerfile: dockerfile/redirect/Dockerfile.i386
+    when:
+      event: [ push, tag ]
+      local: false
+
+  publish_linux_arm64:
+    image: plugins/docker:17.05
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    group: release
+    repo: goggz/ggz-redirect
+    auto_tag: true
+    auto_tag_suffix: arm64
+    dockerfile: dockerfile/redirect/Dockerfile.arm64
+    when:
+      event: [ push, tag ]
+      local: false
+
+  publish_linux_arm:
+    image: plugins/docker:17.05
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    group: release
+    repo: goggz/ggz-redirect
+    auto_tag: true
+    auto_tag_suffix: arm
+    dockerfile: dockerfile/redirect/Dockerfile.arm
+    when:
+      event: [ push, tag ]
+      local: false
+
   discord:
     image: appleboy/drone-discord
     pull: true

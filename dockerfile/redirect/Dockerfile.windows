@@ -1,0 +1,12 @@
+FROM microsoft/nanoserver:10.0.14393.1884
+
+LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
+  org.label-schema.name="ggz" \
+  org.label-schema.vendor="Bo-Yi Wu" \
+  org.label-schema.schema-version="1.0"
+
+ADD release/ggz-redirect.exe /ggz-redirect.exe
+
+EXPOSE 8080
+
+ENTRYPOINT [ "\\ggz-redirect.exe" ]
