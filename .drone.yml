@@ -186,7 +186,7 @@ pipeline:
       event: [ push, tag ]
       local: false
 
-  publish_linux_amd64:
+  publish_linux_amd64_redirect:
     image: plugins/docker
     group: release
     pull: true
@@ -198,7 +198,7 @@ pipeline:
       event: [ push, tag ]
       local: false
 
-  publish_alpine:
+  publish_alpine_redirect:
     image: plugins/docker
     group: release
     pull: true
@@ -211,7 +211,7 @@ pipeline:
       event: [ push, tag ]
       local: false
 
-  publish_linux_i386:
+  publish_linux_i386_redirect:
     image: plugins/docker:17.05
     pull: true
     secrets: [ docker_username, docker_password ]
@@ -224,7 +224,7 @@ pipeline:
       event: [ push, tag ]
       local: false
 
-  publish_linux_arm64:
+  publish_linux_arm64_redirect:
     image: plugins/docker:17.05
     pull: true
     secrets: [ docker_username, docker_password ]
@@ -237,7 +237,7 @@ pipeline:
       event: [ push, tag ]
       local: false
 
-  publish_linux_arm:
+  publish_linux_arm_redirect:
     image: plugins/docker:17.05
     pull: true
     secrets: [ docker_username, docker_password ]
