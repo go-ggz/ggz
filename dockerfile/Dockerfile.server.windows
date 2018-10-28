@@ -5,5 +5,8 @@ LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
-ADD release/ggz.exe /ggz.exe
-ENTRYPOINT [ "\\ggz.exe" ]
+ADD release/ggz-server.exe /ggz-server.exe
+
+EXPOSE 8080
+
+ENTRYPOINT [ "\\ggz-server.exe" ]

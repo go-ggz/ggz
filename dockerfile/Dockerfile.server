@@ -5,10 +5,12 @@ LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
-ADD release/linux/i386/ggz /bin/
+EXPOSE 8080
+
+ADD ../release/linux/amd64/ggz-server /bin/
 
 HEALTHCHECK --start-period=2s --interval=10s --timeout=5s \
-  CMD ["/bin/ggz", "ping"]
+  CMD ["/bin/ggz-server", "ping"]
 
-ENTRYPOINT ["/bin/ggz"]
+ENTRYPOINT ["/bin/ggz-server"]
 CMD ["server"]

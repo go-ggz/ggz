@@ -126,7 +126,8 @@ pipeline:
     image: plugins/docker
     group: release
     pull: true
-    repo: goggz/ggz
+    repo: goggz/ggz-server
+    dockerfile: dockerfile/Dockerfile.server
     secrets: [ docker_username, docker_password ]
     default_tags: true
     when:
@@ -137,8 +138,8 @@ pipeline:
     image: plugins/docker
     group: release
     pull: true
-    repo: goggz/ggz
-    dockerfile: Dockerfile.alpine
+    repo: goggz/ggz-server
+    dockerfile: dockerfile/Dockerfile.server.alpine
     secrets: [ docker_username, docker_password ]
     default_tags: true
     default_suffix: alpine
@@ -151,10 +152,10 @@ pipeline:
     pull: true
     secrets: [ docker_username, docker_password ]
     group: release
-    repo: goggz/ggz
+    repo: goggz/ggz-server
     auto_tag: true
     auto_tag_suffix: i386
-    dockerfile: Dockerfile.i386
+    dockerfile: dockerfile/Dockerfile.server.i386
     when:
       event: [ push, tag ]
       local: false
@@ -164,10 +165,10 @@ pipeline:
     pull: true
     secrets: [ docker_username, docker_password ]
     group: release
-    repo: goggz/ggz
+    repo: goggz/ggz-server
     auto_tag: true
     auto_tag_suffix: arm64
-    dockerfile: Dockerfile.arm64
+    dockerfile: dockerfile/Dockerfile.server.arm64
     when:
       event: [ push, tag ]
       local: false
@@ -177,10 +178,10 @@ pipeline:
     pull: true
     secrets: [ docker_username, docker_password ]
     group: release
-    repo: goggz/ggz
+    repo: goggz/ggz-server
     auto_tag: true
     auto_tag_suffix: arm
-    dockerfile: Dockerfile.arm
+    dockerfile: dockerfile/Dockerfile.server.arm
     when:
       event: [ push, tag ]
       local: false
