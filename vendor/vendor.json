@@ -15,6 +15,12 @@
 			"revisionTime": "2017-03-16T02:12:06Z"
 		},
 		{
+			"checksumSHA1": "ca0FTyukxX3NZzJe0TsGhVJHuIE=",
+			"path": "github.com/appleboy/gofight",
+			"revision": "ccb6a9fbbe2d17c362db944abfb85dd3259bd297",
+			"revisionTime": "2018-10-15T02:13:37Z"
+		},
+		{
 			"checksumSHA1": "n2KWrxS+GQrPiFI/RQfKSj1nZTs=",
 			"path": "github.com/auth0/go-jwt-middleware",
 			"revision": "5493cabe49f7bfa6e2ec444a09d334d90cd4e2bd",
