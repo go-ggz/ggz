@@ -2,6 +2,7 @@ module github.com/go-ggz/ggz
 
 require (
 	github.com/appleboy/com v0.0.0-20171120061752-4337b8d616c0
+	github.com/appleboy/gofight v2.0.0+incompatible
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
 	github.com/beorn7/perks v0.0.0-20160804104726-4c0e84591b9a
 	github.com/davecgh/go-spew v0.0.0-20180221232628-8991bc29aa16
