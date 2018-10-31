@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -23,7 +24,7 @@ func SetLogger() gin.HandlerFunc {
 		latency := end.Sub(start)
 
 		msg := "Request"
-		if c.Errors.String() != "" {
+		if len(c.Errors) > 0 {
 			msg = c.Errors.String()
 		}
 
@@ -37,12 +38,12 @@ func SetLogger() gin.HandlerFunc {
 			Logger()
 
 		switch {
-		case c.Writer.Status() >= 400 && c.Writer.Status() < 500:
+		case c.Writer.Status() >= http.StatusBadRequest && c.Writer.Status() < http.StatusInternalServerError:
 			{
 				logger.Warn().
 					Msg(msg)
 			}
-		case c.Writer.Status() >= 500:
+		case c.Writer.Status() >= http.StatusInternalServerError:
 			{
 				logger.Error().
 					Msg(msg)
