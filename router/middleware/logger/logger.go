@@ -5,11 +5,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
 // SetLogger initializes the logging middleware.
-func SetLogger() gin.HandlerFunc {
+func SetLogger(logger ...zerolog.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		path := c.Request.URL.Path
@@ -28,7 +29,14 @@ func SetLogger() gin.HandlerFunc {
 			msg = c.Errors.String()
 		}
 
-		logger := log.With().
+		var sublog zerolog.Logger
+		if len(logger) == 0 {
+			sublog = log.Logger
+		} else {
+			sublog = logger[0]
+		}
+
+		dumplogger := sublog.With().
 			Int("status", c.Writer.Status()).
 			Str("method", c.Request.Method).
 			Str("path", path).
@@ -40,16 +48,16 @@ func SetLogger() gin.HandlerFunc {
 		switch {
 		case c.Writer.Status() >= http.StatusBadRequest && c.Writer.Status() < http.StatusInternalServerError:
 			{
-				logger.Warn().
+				dumplogger.Warn().
 					Msg(msg)
 			}
 		case c.Writer.Status() >= http.StatusInternalServerError:
 			{
-				logger.Error().
+				dumplogger.Error().
 					Msg(msg)
 			}
 		default:
-			logger.Info().
+			dumplogger.Info().
 				Msg(msg)
 		}
 	}
