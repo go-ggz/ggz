@@ -27,7 +27,7 @@ func SetLogger() gin.HandlerFunc {
 			msg = c.Errors.String()
 		}
 
-		sublogger := log.With().
+		logger := log.With().
 			Int("status", c.Writer.Status()).
 			Str("method", c.Request.Method).
 			Str("path", path).
@@ -39,16 +39,16 @@ func SetLogger() gin.HandlerFunc {
 		switch {
 		case c.Writer.Status() >= 400 && c.Writer.Status() < 500:
 			{
-				sublogger.Warn().
+				logger.Warn().
 					Msg(msg)
 			}
 		case c.Writer.Status() >= 500:
 			{
-				sublogger.Error().
+				logger.Error().
 					Msg(msg)
 			}
 		default:
-			sublogger.Info().
+			logger.Info().
 				Msg(msg)
 		}
 	}
