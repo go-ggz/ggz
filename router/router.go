@@ -13,11 +13,11 @@ import (
 	"github.com/go-ggz/ggz/router/middleware/auth0"
 	"github.com/go-ggz/ggz/router/middleware/graphql"
 	"github.com/go-ggz/ggz/router/middleware/header"
-	"github.com/go-ggz/ggz/router/middleware/logger"
 	"github.com/go-ggz/ggz/router/middleware/prometheus"
 	"github.com/go-ggz/ggz/web"
 
 	"github.com/gin-contrib/gzip"
+	"github.com/gin-contrib/logger"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"

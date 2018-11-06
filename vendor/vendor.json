@@ -81,6 +81,12 @@
 			"revisionTime": "2017-09-17T02:18:57Z"
 		},
 		{
+			"checksumSHA1": "asqGZGgZDomPsNey/oWUt3JTq0g=",
+			"path": "github.com/gin-contrib/logger",
+			"revision": "42438f88c421d96c44175cd79de097e8a15336ab",
+			"revisionTime": "2018-10-31T07:10:54Z"
+		},
+		{
 			"checksumSHA1": "WcN6IfR2xIp07+SMWuh+teN2zhk=",
 			"path": "github.com/gin-contrib/pprof",
 			"revision": "1bed199bb871cc4ba0696177304604f1a3eff57c",
