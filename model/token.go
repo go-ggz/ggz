@@ -28,7 +28,7 @@ func (t *AccessToken) AfterLoad() {
 
 // NewAccessToken creates new access token.
 func NewAccessToken(t *AccessToken) error {
-	uuid, _ := uuid.NewV4()
+	uuid := uuid.NewV4()
 	t.Sha1 = base.EncodeSha1(uuid.String())
 	_, err := x.Insert(t)
 	return err
