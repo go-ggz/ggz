@@ -12,7 +12,6 @@ pipeline:
   backend:
     image: golang:1.11
     pull: true
-    group: testing
     commands:
       - cp .env.example .env
       - make embedmd

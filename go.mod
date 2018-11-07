@@ -1,62 +1,51 @@
 module github.com/go-ggz/ggz
 
 require (
-	github.com/appleboy/com v0.0.0-20171120061752-4337b8d616c0
-	github.com/appleboy/gofight v2.0.0+incompatible
+	github.com/appleboy/com v0.0.0-20180410030638-c0b5901f9622
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
-	github.com/beorn7/perks v0.0.0-20160804104726-4c0e84591b9a
-	github.com/davecgh/go-spew v0.0.0-20180221232628-8991bc29aa16
-	github.com/dgrijalva/jwt-go v3.1.0+incompatible
-	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
-	github.com/facebookgo/grace v0.0.0-20170218225239-4afe952a37a4
-	github.com/facebookgo/httpdown v0.0.0-20160323221027-a3b1354551a2
-	github.com/facebookgo/stats v0.0.0-20151006221625-1b76add642e4
-	github.com/gin-contrib/gzip v0.0.0-20170917021857-9b22cb967bcc
-	github.com/gin-contrib/pprof v0.0.0-20170917021725-1bed199bb871
-	github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7
-	github.com/gin-gonic/gin v0.0.0-20181011233131-6ab50f944ca5
-	github.com/go-ini/ini v0.0.0-20170813052230-c787282c39ac
-	github.com/go-sql-driver/mysql v0.0.0-20180618115901-749ddf1598b4
-	github.com/go-xorm/builder v0.2.0
+	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
+	github.com/facebookgo/grace v0.0.0-20180706040059-75cf19382434
+	github.com/facebookgo/httpdown v0.0.0-20180706035922-5979d39b15c2 // indirect
+	github.com/facebookgo/stats v0.0.0-20151006221625-1b76add642e4 // indirect
+	github.com/gin-contrib/gzip v0.0.0-20181105040055-d9117ce29a07
+	github.com/gin-contrib/logger v0.0.0-20181031071054-42438f88c421
+	github.com/gin-contrib/pprof v0.0.0-20180827024024-a27513940d36
+	github.com/gin-gonic/gin v1.3.0
+	github.com/go-ini/ini v1.39.0 // indirect
+	github.com/go-sql-driver/mysql v1.4.0
 	github.com/go-xorm/core v0.6.0
-	github.com/go-xorm/xorm v0.0.0-20180508094415-ab17aa22037b
-	github.com/golang/protobuf v1.2.0
-	github.com/googollee/go-engine.io v0.0.0-20170224222511-80ae0e43aca1
-	github.com/googollee/go-socket.io v0.0.0-20170525141029-5447e71f36d3
-	github.com/gorilla/websocket v0.0.0-20171013020858-71fa72d48423
-	github.com/graphql-go/graphql v0.0.0-20180912000844-cc8e9a91d6b8
-	github.com/graphql-go/handler v0.0.0-20180712010417-59006c0464d5
-	github.com/hashicorp/golang-lru v0.0.0-20160813221303-0a025b7e63ad
-	github.com/joho/godotenv v1.2.0
-	github.com/json-iterator/go v0.0.0-20180806060727-1624edc4454b
+	github.com/go-xorm/xorm v0.7.1
+	github.com/googollee/go-engine.io v0.0.0-20180829091931-e2f255711dcb // indirect
+	github.com/googollee/go-socket.io v0.0.0-20181101151912-c8aeb1ed9b49
+	github.com/gorilla/websocket v1.4.0 // indirect
+	github.com/graphql-go/graphql v0.7.6
+	github.com/graphql-go/handler v0.2.1
+	github.com/hashicorp/golang-lru v0.5.0
+	github.com/joho/godotenv v1.3.0
 	github.com/keighl/metabolize v0.0.0-20150915210303-97ab655d4034
-	github.com/lib/pq v0.0.0-20180523175426-90697d60dd84
-	github.com/mattn/go-isatty v0.0.3
-	github.com/mattn/go-sqlite3 v0.0.0-20180916045009-593fde6929df
-	github.com/matttproud/golang_protobuf_extensions v1.0.1
-	github.com/minio/minio-go v6.0.8+incompatible
-	github.com/mitchellh/go-homedir v0.0.0-20161203194507-b8bc1bf76747
-	github.com/opentracing/opentracing-go v0.0.0-20171003133519-1361b9cd60be
+	github.com/lib/pq v1.0.0
+	github.com/mattn/go-sqlite3 v1.10.0
+	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
+	github.com/minio/minio-go v6.0.10+incompatible
+	github.com/mitchellh/go-homedir v1.0.0 // indirect
+	github.com/opentracing/opentracing-go v1.0.2 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/pmezard/go-difflib v1.0.0
-	github.com/prometheus/client_golang v0.0.0-20180607123607-faf4ec335fe0
-	github.com/prometheus/client_model v0.0.0-20170216185247-6f3806018612
-	github.com/prometheus/common v0.0.0-20170908161822-2f17f4a9d485
-	github.com/prometheus/procfs v0.0.0-20170703101242-e645f4e5aaa8
-	github.com/rs/zerolog v0.0.0-20180831164632-b6f076edc801
-	github.com/satori/go.uuid v0.0.0-20180103174451-36e9d2ebbde5
-	github.com/skip2/go-qrcode v0.0.0-20170812161211-695fc75a0973
+	github.com/prometheus/client_golang v0.9.1
+	github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910 // indirect
+	github.com/prometheus/common v0.0.0-20181020173914-7e9e6cabbd39 // indirect
+	github.com/prometheus/procfs v0.0.0-20181005140218-185b4288413d // indirect
+	github.com/rs/zerolog v1.10.0
+	github.com/satori/go.uuid v1.2.0
+	github.com/skip2/go-qrcode v0.0.0-20171229120447-cf5f9fa2f0d8
 	github.com/stretchr/testify v1.2.2
-	github.com/ugorji/go v1.1.1
-	golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e
-	golang.org/x/net v0.0.0-20181011144130-49bb7cea24b1
+	golang.org/x/crypto v0.0.0-20181106171534-e4dc69e5b2fd
+	golang.org/x/net v0.0.0-20181107093936-a544f70c90f1
 	golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f
-	golang.org/x/sys v0.0.0-20181011152604-fa43e7bc11ba
-	golang.org/x/text v0.3.0
-	golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e // indirect
-	gopkg.in/go-playground/validator.v8 v8.18.2
+	golang.org/x/sys v0.0.0-20181107165924-66b7b1311ac8 // indirect
+	golang.org/x/text v0.3.0 // indirect
 	gopkg.in/nicksrandall/dataloader.v5 v5.0.0-20180104184831-78139374585c
-	gopkg.in/testfixtures.v2 v2.4.3
-	gopkg.in/urfave/cli.v2 v2.0.0-20170814134317-50a0fdeea633
-	gopkg.in/yaml.v2 v2.2.1
+	gopkg.in/testfixtures.v2 v2.5.1
+	gopkg.in/urfave/cli.v2 v2.0.0-20180128182452-d3ae77c26ac8
 )
