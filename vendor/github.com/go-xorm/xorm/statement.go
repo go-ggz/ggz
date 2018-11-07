@@ -5,7 +5,6 @@
 package xorm
 
 import (
-	"bytes"
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
@@ -60,6 +59,7 @@ type Statement struct {
 	exprColumns     map[string]exprParam
 	cond            builder.Cond
 	bufferSize      int
+	context         ContextCache
 }
 
 // Init reset all the statement's fields
@@ -100,6 +100,7 @@ func (statement *Statement) Init() {
 	statement.exprColumns = make(map[string]exprParam)
 	statement.cond = builder.NewCond()
 	statement.bufferSize = 0
+	statement.context = nil
 }
 
 // NoAutoCondition if you do not want convert bean's field as query condition, then use this function
@@ -258,6 +259,10 @@ func (statement *Statement) buildUpdates(bean interface{},
 			continue
 		}
 		if len(columnMap) > 0 && !columnMap.contain(col.Name) {
+			continue
+		}
+
+		if col.MapType == core.ONLYFROMDB {
 			continue
 		}
 
@@ -702,10 +707,9 @@ func (statement *Statement) OrderBy(order string) *Statement {
 
 // Desc generate `ORDER BY xx DESC`
 func (statement *Statement) Desc(colNames ...string) *Statement {
-	var buf bytes.Buffer
-	fmt.Fprintf(&buf, statement.OrderStr)
+	var buf builder.StringBuilder
 	if len(statement.OrderStr) > 0 {
-		fmt.Fprint(&buf, ", ")
+		fmt.Fprint(&buf, statement.OrderStr, ", ")
 	}
 	newColNames := statement.col2NewColsWithQuote(colNames...)
 	fmt.Fprintf(&buf, "%v DESC", strings.Join(newColNames, " DESC, "))
@@ -715,10 +719,9 @@ func (statement *Statement) Desc(colNames ...string) *Statement {
 
 // Asc provide asc order by query condition, the input parameters are columns.
 func (statement *Statement) Asc(colNames ...string) *Statement {
-	var buf bytes.Buffer
-	fmt.Fprintf(&buf, statement.OrderStr)
+	var buf builder.StringBuilder
 	if len(statement.OrderStr) > 0 {
-		fmt.Fprint(&buf, ", ")
+		fmt.Fprint(&buf, statement.OrderStr, ", ")
 	}
 	newColNames := statement.col2NewColsWithQuote(colNames...)
 	fmt.Fprintf(&buf, "%v ASC", strings.Join(newColNames, " ASC, "))
@@ -745,7 +748,7 @@ func (statement *Statement) Table(tableNameOrBean interface{}) *Statement {
 
 // Join The joinOP should be one of INNER, LEFT OUTER, CROSS etc - this will be prepended to JOIN
 func (statement *Statement) Join(joinOP string, tablename interface{}, condition string, args ...interface{}) *Statement {
-	var buf bytes.Buffer
+	var buf builder.StringBuilder
 	if len(statement.JoinStr) > 0 {
 		fmt.Fprintf(&buf, "%v %v JOIN ", statement.JoinStr, joinOP)
 	} else {
@@ -779,11 +782,11 @@ func (statement *Statement) Unscoped() *Statement {
 }
 
 func (statement *Statement) genColumnStr() string {
-	var buf bytes.Buffer
 	if statement.RefTable == nil {
 		return ""
 	}
 
+	var buf builder.StringBuilder
 	columns := statement.RefTable.Columns()
 
 	for _, col := range columns {
@@ -932,7 +935,7 @@ func (statement *Statement) genGetSQL(bean interface{}) (string, []interface{}, 
 		if len(statement.JoinStr) == 0 {
 			if len(columnStr) == 0 {
 				if len(statement.GroupByStr) > 0 {
-					columnStr = statement.Engine.Quote(strings.Replace(statement.GroupByStr, ",", statement.Engine.Quote(","), -1))
+					columnStr = statement.Engine.quoteColumns(statement.GroupByStr)
 				} else {
 					columnStr = statement.genColumnStr()
 				}
@@ -940,7 +943,7 @@ func (statement *Statement) genGetSQL(bean interface{}) (string, []interface{}, 
 		} else {
 			if len(columnStr) == 0 {
 				if len(statement.GroupByStr) > 0 {
-					columnStr = statement.Engine.Quote(strings.Replace(statement.GroupByStr, ",", statement.Engine.Quote(","), -1))
+					columnStr = statement.Engine.quoteColumns(statement.GroupByStr)
 				}
 			}
 		}
@@ -1027,23 +1030,20 @@ func (statement *Statement) genSumSQL(bean interface{}, columns ...string) (stri
 	return sqlStr, append(statement.joinArgs, condArgs...), nil
 }
 
-func (statement *Statement) genSelectSQL(columnStr, condSQL string, needLimit, needOrderBy bool) (a string, err error) {
-	var distinct string
+func (statement *Statement) genSelectSQL(columnStr, condSQL string, needLimit, needOrderBy bool) (string, error) {
+	var (
+		distinct                  string
+		dialect                   = statement.Engine.Dialect()
+		quote                     = statement.Engine.Quote
+		fromStr                   = " FROM "
+		top, mssqlCondi, whereStr string
+	)
 	if statement.IsDistinct && !strings.HasPrefix(columnStr, "count") {
 		distinct = "DISTINCT "
 	}
-
-	var dialect = statement.Engine.Dialect()
-	var quote = statement.Engine.Quote
-	var top string
-	var mssqlCondi string
-
-	var buf bytes.Buffer
 	if len(condSQL) > 0 {
-		fmt.Fprintf(&buf, " WHERE %v", condSQL)
+		whereStr = " WHERE " + condSQL
 	}
-	var whereStr = buf.String()
-	var fromStr = " FROM "
 
 	if dialect.DBType() == core.MSSQL && strings.Contains(statement.TableName(), "..") {
 		fromStr += statement.TableName()
@@ -1103,43 +1103,46 @@ func (statement *Statement) genSelectSQL(columnStr, condSQL string, needLimit, n
 		}
 	}
 
-	// !nashtsai! REVIEW Sprintf is considered slowest mean of string concatnation, better to work with builder pattern
-	a = fmt.Sprintf("SELECT %v%v%v%v%v", distinct, top, columnStr, fromStr, whereStr)
+	var buf builder.StringBuilder
+	fmt.Fprintf(&buf, "SELECT %v%v%v%v%v", distinct, top, columnStr, fromStr, whereStr)
 	if len(mssqlCondi) > 0 {
 		if len(whereStr) > 0 {
-			a += " AND " + mssqlCondi
+			fmt.Fprint(&buf, " AND ", mssqlCondi)
 		} else {
-			a += " WHERE " + mssqlCondi
+			fmt.Fprint(&buf, " WHERE ", mssqlCondi)
 		}
 	}
 
 	if statement.GroupByStr != "" {
-		a = fmt.Sprintf("%v GROUP BY %v", a, statement.GroupByStr)
+		fmt.Fprint(&buf, " GROUP BY ", statement.GroupByStr)
 	}
 	if statement.HavingStr != "" {
-		a = fmt.Sprintf("%v %v", a, statement.HavingStr)
+		fmt.Fprint(&buf, " ", statement.HavingStr)
 	}
 	if needOrderBy && statement.OrderStr != "" {
-		a = fmt.Sprintf("%v ORDER BY %v", a, statement.OrderStr)
+		fmt.Fprint(&buf, " ORDER BY ", statement.OrderStr)
 	}
 	if needLimit {
 		if dialect.DBType() != core.MSSQL && dialect.DBType() != core.ORACLE {
 			if statement.Start > 0 {
-				a = fmt.Sprintf("%v LIMIT %v OFFSET %v", a, statement.LimitN, statement.Start)
+				fmt.Fprintf(&buf, " LIMIT %v OFFSET %v", statement.LimitN, statement.Start)
 			} else if statement.LimitN > 0 {
-				a = fmt.Sprintf("%v LIMIT %v", a, statement.LimitN)
+				fmt.Fprint(&buf, " LIMIT ", statement.LimitN)
 			}
 		} else if dialect.DBType() == core.ORACLE {
 			if statement.Start != 0 || statement.LimitN != 0 {
-				a = fmt.Sprintf("SELECT %v FROM (SELECT %v,ROWNUM RN FROM (%v) at WHERE ROWNUM <= %d) aat WHERE RN > %d", columnStr, columnStr, a, statement.Start+statement.LimitN, statement.Start)
+				oldString := buf.String()
+				buf.Reset()
+				fmt.Fprintf(&buf, "SELECT %v FROM (SELECT %v,ROWNUM RN FROM (%v) at WHERE ROWNUM <= %d) aat WHERE RN > %d",
+					columnStr, columnStr, oldString, statement.Start+statement.LimitN, statement.Start)
 			}
 		}
 	}
 	if statement.IsForUpdate {
-		a = dialect.ForUpdateSql(a)
+		return dialect.ForUpdateSql(buf.String()), nil
 	}
 
-	return
+	return buf.String(), nil
 }
 
 func (statement *Statement) processIDParam() error {
