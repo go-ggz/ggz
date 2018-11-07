@@ -72,9 +72,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 	if config.Server.Pprof {
 		pprof.Register(
 			e,
-			&pprof.Options{
-				RoutePrefix: path.Join(config.Server.Root, "debug", "pprof"),
-			},
+			path.Join(config.Server.Root, "debug", "pprof"),
 		)
 	}
 
@@ -147,9 +145,7 @@ func LoadRedirct(middleware ...gin.HandlerFunc) http.Handler {
 	if config.Server.Pprof {
 		pprof.Register(
 			e,
-			&pprof.Options{
-				RoutePrefix: path.Join(config.Server.Root, "debug", "pprof"),
-			},
+			path.Join(config.Server.Root, "debug", "pprof"),
 		)
 	}
 
