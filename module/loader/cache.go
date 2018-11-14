@@ -17,7 +17,7 @@ var (
 	// Cache for dataloader
 	Cache dataloader.Cache
 	// UserIDCache for user cache from ID
-	UserIDCache *dataloader.Loader
+	UserCache *dataloader.Loader
 )
 
 // NewEngine for initialize cache engine
@@ -59,7 +59,7 @@ func GetCacheID(key string) (interface{}, error) {
 }
 
 func initLoader() {
-	UserIDCache = dataloader.NewBatchedLoader(userBatch, dataloader.WithCache(Cache))
+	UserCache = dataloader.NewBatchedLoader(userBatch, dataloader.WithCache(Cache))
 }
 
 func userBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
@@ -79,7 +79,7 @@ func userBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 // GetUserFromLoader get user cache
 func GetUserFromLoader(ctx context.Context, id interface{}) (*model.User, error) {
 	key := GetCacheKey("user", id)
-	userCache, err := UserIDCache.Load(ctx, dataloader.StringKey(key))()
+	userCache, err := UserCache.Load(ctx, dataloader.StringKey(key))()
 
 	if err != nil {
 		return nil, err
