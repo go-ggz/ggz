@@ -1,7 +1,10 @@
 package schema
 
 import (
+	"github.com/go-ggz/ggz/errors"
+	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/module/loader"
 
 	"github.com/graphql-go/graphql"
 )
@@ -37,6 +40,20 @@ var userType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
+var queryMe = graphql.Field{
+	Name:        "QueryMe",
+	Description: "Query Cureent User",
+	Type:        userType,
+	Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
+		user := helper.GetUserDataFromModel(p.Context)
+		if user == nil {
+			return nil, errors.EUnauthorized(errorYouAreNotLogin, nil)
+		}
+
+		return loader.GetUserFromLoader(p.Context, user.ID)
+	},
+}
+
 func init() {
 	userType.AddFieldConfig("urls", &graphql.Field{
 		Type: graphql.NewList(shortenType),
@@ -44,7 +61,7 @@ func init() {
 			o, ok := p.Source.(*model.User)
 
 			if !ok {
-				return nil, errMissingSource
+				return nil, errors.ENotFound(errorUserNotFound, nil)
 			}
 
 			return model.GetShortenURLs(o.ID, 0, 10, "")

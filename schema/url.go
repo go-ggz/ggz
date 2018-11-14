@@ -1,11 +1,11 @@
 package schema
 
 import (
-	"errors"
-
 	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/errors"
 	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/module/loader"
 	"github.com/go-ggz/ggz/module/meta"
 	"github.com/go-ggz/ggz/web"
 
@@ -26,14 +26,14 @@ var shortenType = graphql.NewObject(graphql.ObjectConfig{
 				o, ok := p.Source.(*model.Shorten)
 
 				if !ok {
-					return nil, errMissingSource
+					return nil, errors.ENotFound(errorShortenURLNotFound, nil)
 				}
 
 				if o.User != nil {
 					return o.User, nil
 				}
 
-				return getUserFromLoader(p.Context, o.UserID)
+				return loader.GetUserFromLoader(p.Context, o.UserID)
 			},
 		},
 		"url": &graphql.Field{
@@ -138,7 +138,7 @@ var queryURLMeta = graphql.Field{
 		url := p.Args["url"].(string)
 
 		if !helper.IsURL(url) {
-			return nil, errors.New("invaild URL")
+			return nil, errors.EBadRequest(errorInvaildFormatURL, nil)
 		}
 
 		return meta.FetchData(url)

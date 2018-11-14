@@ -2,6 +2,8 @@ package loader
 
 import (
 	"context"
+	"strconv"
+	"strings"
 
 	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
@@ -35,6 +37,27 @@ func NewEngine(driver, prefix string, expire int) error {
 	return nil
 }
 
+const sep = ":"
+
+// GetCacheKey get cache key for data loader
+func GetCacheKey(module string, id interface{}) string {
+	var str string
+	switch v := id.(type) {
+	case int64:
+		str = strconv.FormatInt(v, 10)
+	case string:
+		str = v
+	}
+	return module + sep + str
+}
+
+// GetCacheID get cache id for model id
+func GetCacheID(key string) (interface{}, error) {
+	strs := strings.Split(key, sep)
+
+	return strs[1], nil
+}
+
 func initLoader() {
 	UserIDCache = dataloader.NewBatchedLoader(userBatch, dataloader.WithCache(Cache))
 }
@@ -51,4 +74,16 @@ func userBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	})
 
 	return results
+}
+
+// GetUserFromLoader get user cache
+func GetUserFromLoader(ctx context.Context, id interface{}) (*model.User, error) {
+	key := GetCacheKey("user", id)
+	userCache, err := UserIDCache.Load(ctx, dataloader.StringKey(key))()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return userCache.(*model.User), nil
 }

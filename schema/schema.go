@@ -12,6 +12,7 @@ var rootQuery = graphql.NewObject(
 			"queryURLMetadata":   &queryURLMeta,
 			"queryShortenURL":    &queryShortenURL,
 			"queryAllShortenURL": &queryAllShortenURL,
+			"queryMe":            &queryMe,
 		},
 	})
 
