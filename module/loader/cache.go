@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/module/loader/lru"
 	"github.com/go-ggz/ggz/module/loader/memory"
@@ -64,7 +63,7 @@ func initLoader() {
 
 func userBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	var results []*dataloader.Result
-	id, _ := helper.GetCacheID(keys[0].String())
+	id, _ := GetCacheID(keys[0].String())
 
 	user, err := model.GetUserByID(id.(int64))
 
