@@ -87,7 +87,7 @@ type logs struct {
 type ContextKey string
 
 func (c ContextKey) String() string {
-	return "GGZ context key " + string(c)
+	return "user context key " + string(c)
 }
 
 var (

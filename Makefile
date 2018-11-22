@@ -153,8 +153,8 @@ upx:
 		echo "Missing upx command"; \
 		exit 1; \
 	fi
-	upx -o bin/ggz-small bin/ggz
-	mv bin/ggz-small bin/ggz
+	upx -o bin/$(SERVICE)-small bin/$(SERVICE)
+	mv bin/$(SERVICE)-small bin/$(SERVICE)
 
 .PHONY: coverage
 coverage:
