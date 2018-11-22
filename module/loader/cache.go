@@ -19,6 +19,29 @@ var (
 	UserCache *dataloader.Loader
 )
 
+const sep = ":"
+
+func initLoader() {
+	UserCache = dataloader.NewBatchedLoader(userBatch, dataloader.WithCache(Cache))
+}
+
+func getCacheKey(module string, id interface{}) string {
+	var str string
+	switch v := id.(type) {
+	case int64:
+		str = strconv.FormatInt(v, 10)
+	case string:
+		str = v
+	}
+	return module + sep + str
+}
+
+func getCacheID(key string) (interface{}, error) {
+	strs := strings.Split(key, sep)
+
+	return strs[1], nil
+}
+
 // NewEngine for initialize cache engine
 func NewEngine(driver, prefix string, expire int) error {
 	switch driver {
@@ -36,34 +59,9 @@ func NewEngine(driver, prefix string, expire int) error {
 	return nil
 }
 
-const sep = ":"
-
-// GetCacheKey get cache key for data loader
-func GetCacheKey(module string, id interface{}) string {
-	var str string
-	switch v := id.(type) {
-	case int64:
-		str = strconv.FormatInt(v, 10)
-	case string:
-		str = v
-	}
-	return module + sep + str
-}
-
-// GetCacheID get cache id for model id
-func GetCacheID(key string) (interface{}, error) {
-	strs := strings.Split(key, sep)
-
-	return strs[1], nil
-}
-
-func initLoader() {
-	UserCache = dataloader.NewBatchedLoader(userBatch, dataloader.WithCache(Cache))
-}
-
 func userBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	var results []*dataloader.Result
-	id, _ := GetCacheID(keys[0].String())
+	id, _ := getCacheID(keys[0].String())
 
 	user, err := model.GetUserByID(id.(int64))
 
@@ -77,7 +75,7 @@ func userBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 
 // GetUserFromLoader get user cache
 func GetUserFromLoader(ctx context.Context, id interface{}) (*model.User, error) {
-	key := GetCacheKey("user", id)
+	key := getCacheKey("user", id)
 	userCache, err := UserCache.Load(ctx, dataloader.StringKey(key))()
 
 	if err != nil {
