@@ -6,14 +6,13 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/go-ggz/ggz/config"
+
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/testfixtures.v2"
 )
-
-// Root a path to the ggz root
-var Root string
 
 func fatalTestError(fmtStr string, args ...interface{}) {
 	fmt.Fprintf(os.Stderr, fmtStr, args...)
@@ -22,10 +21,9 @@ func fatalTestError(fmtStr string, args ...interface{}) {
 
 // MainTest a reusable TestMain(..) function for unit tests that need to use a
 // test database. Creates the test database, and sets necessary settings.
-func MainTest(m *testing.M, pathToGgzRoot string) {
+func MainTest(m *testing.M, pathToRoot string) {
 	var err error
-	Root = pathToGgzRoot
-	fixturesDir := filepath.Join(pathToGgzRoot, "model", "fixtures")
+	fixturesDir := filepath.Join(pathToRoot, "model", "fixtures")
 	if err = createTestEngine(fixturesDir); err != nil {
 		fatalTestError("Error creating test engine: %v\n", err)
 	}
@@ -42,10 +40,7 @@ func createTestEngine(fixturesDir string) error {
 	if err = x.StoreEngine("InnoDB").Sync2(tables...); err != nil {
 		return err
 	}
-	switch os.Getenv("GGZ_UNIT_TESTS_VERBOSE") {
-	case "true", "1":
-		x.ShowSQL(true)
-	}
+	x.ShowSQL(config.Debug)
 
 	return InitFixtures(&testfixtures.SQLite{}, fixturesDir)
 }
