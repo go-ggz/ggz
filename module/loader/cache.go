@@ -15,7 +15,7 @@ import (
 var (
 	// Cache for dataloader
 	Cache dataloader.Cache
-	// UserIDCache for user cache from ID
+	// UserCache for user cache from ID
 	UserCache *dataloader.Loader
 )
 

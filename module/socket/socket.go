@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/router/middleware/auth0"
 
@@ -62,7 +63,7 @@ func NewEngine() error {
 
 		// If we get here, everything worked and we can set the
 		// user property in context.
-		newRequest := r.WithContext(context.WithValue(r.Context(), key, parsedToken))
+		newRequest := r.WithContext(context.WithValue(r.Context(), config.ContextKeyUser, parsedToken))
 		// Update the current request with the new context information.
 		*r = *newRequest
 
