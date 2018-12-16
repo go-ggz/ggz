@@ -40,7 +40,7 @@ func createTestEngine(fixturesDir string) error {
 	if err = x.StoreEngine("InnoDB").Sync2(tables...); err != nil {
 		return err
 	}
-	x.ShowSQL(config.Debug)
+	x.ShowSQL(config.Server.Debug)
 
 	return InitFixtures(&testfixtures.SQLite{}, fixturesDir)
 }

@@ -16,7 +16,7 @@ import (
 
 func setupLogging() {
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	if config.Debug {
+	if config.Server.Debug {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
 
@@ -55,8 +55,8 @@ func main() {
 				Name:        "debug",
 				Value:       true,
 				Usage:       "Activate debug information",
-				EnvVars:     []string{"GGZ_DEBUG"},
-				Destination: &config.Debug,
+				EnvVars:     []string{"GGZ_SERVER_DEBUG"},
+				Destination: &config.Server.Debug,
 			},
 			&cli.BoolFlag{
 				Name:        "color",

@@ -2,6 +2,7 @@ module github.com/go-ggz/ggz
 
 require (
 	github.com/appleboy/com v0.0.0-20180410030638-c0b5901f9622
+	github.com/appleboy/gofight v2.0.0+incompatible
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
 	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -25,6 +26,7 @@ require (
 	github.com/hashicorp/golang-lru v0.5.0
 	github.com/joho/godotenv v1.3.0
 	github.com/keighl/metabolize v0.0.0-20150915210303-97ab655d4034
+	github.com/kelseyhightower/envconfig v1.3.0
 	github.com/lib/pq v1.0.0
 	github.com/mattn/go-sqlite3 v1.10.0
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect

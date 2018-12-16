@@ -126,7 +126,7 @@ func SetEngine() (err error) {
 	// WARNING: for serv command, MUST remove the output to os.stdout,
 	// so use log file to instead print to stdout.
 	// x.SetLogger(log.XORMLogger)
-	x.ShowSQL(config.Debug)
+	x.ShowSQL(config.Server.Debug)
 	return nil
 }
 

@@ -54,7 +54,7 @@ func GlobalInit() {
 
 // Load initializes the routing of the application.
 func Load(middleware ...gin.HandlerFunc) http.Handler {
-	if config.Debug {
+	if config.Server.Debug {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)
@@ -127,7 +127,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 
 // LoadRedirct initializes the routing of the shorten URL application.
 func LoadRedirct(middleware ...gin.HandlerFunc) http.Handler {
-	if config.Debug {
+	if config.Server.Debug {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)

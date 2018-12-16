@@ -31,6 +31,7 @@ type server struct {
 	ShortenHost   string
 	ShortenSize   int
 	Cache         string
+	Debug         bool `default:"true"`
 }
 
 type storage struct {
@@ -91,9 +92,6 @@ func (c ContextKey) String() string {
 }
 
 var (
-	// Debug represents the flag to enable or disable debug logging.
-	Debug bool
-
 	// Database represents the current database connection details.
 	Database = &database{}
 
