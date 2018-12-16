@@ -140,13 +140,13 @@ func NewEngine() (err error) {
 		return err
 	}
 
+	if err = x.StoreEngine("InnoDB").Sync2(tables...); err != nil {
+		return fmt.Errorf("sync database struct error: %v", err)
+	}
+
 	m := migrate.New(x, migrate.DefaultOptions, migrations)
 	if err = m.Migrate(); err != nil {
 		return fmt.Errorf("migrate: %v", err)
-	}
-
-	if err = x.StoreEngine("InnoDB").Sync2(tables...); err != nil {
-		return fmt.Errorf("sync database struct error: %v", err)
 	}
 
 	return nil
