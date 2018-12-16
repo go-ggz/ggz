@@ -71,7 +71,7 @@ func GetShortenFromURL(url string) (*Shorten, error) {
 }
 
 // NewShortenURL create url item
-func NewShortenURL(url string, size int, user *User) (_ *Shorten, err error) {
+func CreateShorten(url string, size int, user *User) (_ *Shorten, err error) {
 	row := &Shorten{
 		Date: time.Now(),
 		URL:  url,

@@ -53,7 +53,7 @@ func CreateShortenURL(c *gin.Context) {
 	}
 
 	user := helper.GetUserDataFromModel(c.Request.Context())
-	row, err = model.NewShortenURL(data.URL, config.Server.ShortenSize, user)
+	row, err = model.CreateShorten(data.URL, config.Server.ShortenSize, user)
 
 	if err != nil {
 		errorJSON(c, http.StatusInternalServerError, errInternalServer)

@@ -168,7 +168,7 @@ var createShortenURL = graphql.Field{
 			return nil, err
 		}
 
-		row, err = model.NewShortenURL(url, config.Server.ShortenSize, user)
+		row, err = model.CreateShorten(url, config.Server.ShortenSize, user)
 
 		if err != nil {
 			return nil, err
