@@ -3,6 +3,8 @@ package errors
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/rs/zerolog/log"
 )
 
 // Error applicational
@@ -28,6 +30,10 @@ func (e *Error) Cause() string {
 
 // Extensions for graphQL extension
 func (e *Error) Extensions() map[string]interface{} {
+	if e.cause != nil {
+		log.Error().Err(e.cause).Msg("graphql error report")
+	}
+
 	return map[string]interface{}{
 		"code": e.Type.Code(),
 		"type": e.Type,
