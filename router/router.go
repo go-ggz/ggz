@@ -113,6 +113,9 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		g.Use(auth0.Check())
 		{
 			g.POST("", graphql.Handler())
+			if config.Server.GraphiQL {
+				g.GET("", graphql.Handler())
+			}
 		}
 
 		// socket connection

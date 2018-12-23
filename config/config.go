@@ -32,6 +32,7 @@ type server struct {
 	ShortenSize   int
 	Cache         string
 	Debug         bool `default:"true"`
+	GraphiQL      bool `default:"false"`
 }
 
 type storage struct {

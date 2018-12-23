@@ -105,6 +105,13 @@ func Server() *cli.Command {
 				EnvVars:     []string{"GGZ_SERVER_PPROF"},
 				Destination: &config.Server.Pprof,
 			},
+			&cli.BoolFlag{
+				Name:        "graphiql",
+				Value:       false,
+				Usage:       "Enable graphiql interface",
+				EnvVars:     []string{"GOBENTO_SERVER_GRAPHIQL"},
+				Destination: &config.Server.GraphiQL,
+			},
 			&cli.StringFlag{
 				Name:        "cert",
 				Value:       "",
