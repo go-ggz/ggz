@@ -8,15 +8,13 @@ GO ?= go
 TARGETS ?= linux darwin windows
 ARCHS ?= amd64 386
 BUILD_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
-PACKAGES ?= $(shell $(GO) list ./... | grep -v /vendor/)
-GOFILES := $(shell find . -name "*.go" -type f -not -path "./vendor/*")
+PACKAGES ?= $(shell $(GO) list ./...)
+GOFILES := $(shell find . -name "*.go" -type f)
 SOURCES ?= $(shell find . -name "*.go" -type f)
 TAGS ?= sqlite
 LDFLAGS ?= -X github.com/go-ggz/ggz/version.Version=$(VERSION) -X github.com/go-ggz/ggz/version.BuildDate=$(BUILD_DATE)
 TMPDIR := $(shell mktemp -d 2>/dev/null || mktemp -d -t 'tempdir')
 STYLESHEETS := $(wildcard assets/dist/less/innhp.less  assets/dist/less/_*.less)
-
-GOVENDOR := $(GOPATH)/bin/govendor
 
 ifneq ($(shell uname), Darwin)
 	EXTLDFLAGS = -extldflags "-static" $(null)
@@ -169,19 +167,6 @@ unit-test-coverage:
 
 test:
 	for PKG in $(PACKAGES); do $(GO) test -tags=sqlite -v $$PKG || exit 1; done;
-
-$(GOVENDOR):
-	$(GO) get -u github.com/kardianos/govendor
-
-.PHONY: test-vendor
-test-vendor: $(GOVENDOR)
-	$(GOVENDOR) list +unused | tee "$(TMPDIR)/wc-gitea-unused"
-	[ $$(cat "$(TMPDIR)/wc-gitea-unused" | wc -l) -eq 0 ] || echo "Warning: /!\\ Some vendor are not used /!\\"
-
-	$(GOVENDOR) list +outside | tee "$(TMPDIR)/wc-gitea-outside"
-	[ $$(cat "$(TMPDIR)/wc-gitea-outside" | wc -l) -eq 0 ] || exit 1
-
-	$(GOVENDOR) status || exit 1
 
 release: release-dirs release-build release-copy release-check
 
