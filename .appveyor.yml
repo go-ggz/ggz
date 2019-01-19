@@ -11,6 +11,7 @@ environment:
     secure: em/TNLUXxG19O/HvbvfJuQ==
   docker_password:
     secure: Yo9FJJqihaNz5q8T4Jz8tQ==
+  GO111MODULE: on
 
 branches:
   only:
