@@ -22,12 +22,11 @@ pipeline:
 
   test:
     image: golang:1.11
-    group: testing
     pull: true
+    group: testing
     environment:
+      - TAGS="bindata sqlite"
       - GO111MODULE=on
-    environment:
-      TAGS: bindata sqlite
     commands:
       - make unit-test-coverage
 
