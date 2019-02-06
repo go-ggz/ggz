@@ -10,7 +10,6 @@ ARCHS ?= amd64 386
 BUILD_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 PACKAGES ?= $(shell $(GO) list ./...)
 GOFILES := $(shell find . -name "*.go" -type f)
-SOURCES ?= $(shell find . -name "*.go" -type f)
 TAGS ?= sqlite
 LDFLAGS ?= -X github.com/go-ggz/ggz/version.Version=$(VERSION) -X github.com/go-ggz/ggz/version.BuildDate=$(BUILD_DATE)
 TMPDIR := $(shell mktemp -d 2>/dev/null || mktemp -d -t 'tempdir')
@@ -112,12 +111,12 @@ lint:
 	fi
 	revive -config .revive.toml ./... || exit 1
 
-install: $(SOURCES)
+install: $(GOFILES)
 	$(GO) install -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)'
 
 build: $(SERVICE)
 
-$(SERVICE): $(SOURCES)
+$(SERVICE): $(GOFILES)
 	$(GO) build -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)' -o bin/$@ ./cmd/$(SERVICE)
 
 .PHONY: misspell-check
