@@ -1,7 +1,7 @@
-FROM plugins/base:multiarch
+FROM plugins/base:arm
 
 LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
-  org.label-schema.name="ggz" \
+  org.label-schema.name="ggz-redirect" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 

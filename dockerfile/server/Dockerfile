@@ -1,7 +1,7 @@
 FROM plugins/base:multiarch
 
 LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
-  org.label-schema.name="ggz" \
+  org.label-schema.name="ggz-server" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
