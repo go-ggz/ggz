@@ -64,7 +64,7 @@ require (
 	github.com/valyala/fasttemplate v0.0.0-20170224212429-dcecefd839c4 // indirect
 	golang.org/x/crypto v0.0.0-20181106171534-e4dc69e5b2fd
 	golang.org/x/net v0.0.0-20181107093936-a544f70c90f1
-	golang.org/x/sync v0.0.0-20181108010431-42b317875d0f
+	golang.org/x/sync v0.0.0-20190209101618-37e7f081c4d4
 	golang.org/x/sys v0.0.0-20181107165924-66b7b1311ac8 // indirect
 	google.golang.org/appengine v1.4.0 // indirect
 	gopkg.in/gin-gonic/gin.v1 v1.3.0 // indirect
