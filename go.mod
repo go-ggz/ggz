@@ -54,7 +54,7 @@ require (
 	github.com/prometheus/client_model v0.0.0-20190130014553-fd36f4220a90 // indirect
 	github.com/prometheus/common v0.0.0-20181020173914-7e9e6cabbd39 // indirect
 	github.com/prometheus/procfs v0.0.0-20190130014626-316cf8ccfec5 // indirect
-	github.com/rs/zerolog v1.10.0
+	github.com/rs/zerolog v1.11.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/skip2/go-qrcode v0.0.0-20171229120447-cf5f9fa2f0d8
 	github.com/smartystreets/assertions v0.0.0-20190116191733-b6c0e53d7304 // indirect
