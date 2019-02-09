@@ -22,7 +22,7 @@ require (
 	github.com/gin-gonic/gin v1.3.0
 	github.com/go-ini/ini v1.39.0 // indirect
 	github.com/go-sql-driver/mysql v1.4.0
-	github.com/go-xorm/core v0.6.0
+	github.com/go-xorm/core v0.6.2
 	github.com/go-xorm/xorm v0.7.1
 	github.com/gogo/protobuf v1.2.0 // indirect
 	github.com/googollee/go-engine.io v0.0.0-20180829091931-e2f255711dcb // indirect
