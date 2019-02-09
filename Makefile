@@ -147,19 +147,9 @@ upx:
 	upx -o bin/$(SERVICE)-small bin/$(SERVICE)
 	mv bin/$(SERVICE)-small bin/$(SERVICE)
 
-.PHONY: coverage
-coverage:
-	@hash gocovmerge > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/wadey/gocovmerge; \
-	fi
-	gocovmerge $(shell find . -type f -name "coverage.out") > coverage.all;\
-
-.PHONY: unit-test-coverage
-unit-test-coverage:
-	for PKG in $(PACKAGES); do $(GO) test -tags=sqlite -cover -coverprofile $$GOPATH/src/$$PKG/coverage.out $$PKG || exit 1; done;
-
+.PHONY: test
 test:
-	for PKG in $(PACKAGES); do $(GO) test -tags=sqlite -v $$PKG || exit 1; done;
+	$(GO) test -v -tags=sqlite -cover -coverprofile coverage.out $(PACKAGES) || exit 1
 
 release: release-dirs release-build release-copy release-check
 
