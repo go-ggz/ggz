@@ -16,7 +16,7 @@ require (
 	github.com/facebookgo/stack v0.0.0-20160209184415-751773369052 // indirect
 	github.com/facebookgo/stats v0.0.0-20151006221625-1b76add642e4 // indirect
 	github.com/facebookgo/subset v0.0.0-20150612182917-8dac2c3c4870 // indirect
-	github.com/gin-contrib/gzip v0.0.0-20181105040055-d9117ce29a07
+	github.com/gin-contrib/gzip v0.0.0-20190209101315-0eb78e93402e
 	github.com/gin-contrib/logger v0.0.0-20181031071054-42438f88c421
 	github.com/gin-contrib/pprof v0.0.0-20180827024024-a27513940d36
 	github.com/gin-gonic/gin v1.3.0
