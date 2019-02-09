@@ -52,7 +52,7 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/prometheus/client_golang v0.9.1
 	github.com/prometheus/client_model v0.0.0-20190130014553-fd36f4220a90 // indirect
-	github.com/prometheus/common v0.0.0-20181020173914-7e9e6cabbd39 // indirect
+	github.com/prometheus/common v0.2.0 // indirect
 	github.com/prometheus/procfs v0.0.0-20190130014626-316cf8ccfec5 // indirect
 	github.com/rs/zerolog v1.10.0
 	github.com/satori/go.uuid v1.2.0
