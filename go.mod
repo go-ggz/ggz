@@ -31,7 +31,7 @@ require (
 	github.com/gorilla/mux v1.7.0 // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/graphql-go/graphql v0.7.6
-	github.com/graphql-go/handler v0.2.1
+	github.com/graphql-go/handler v0.2.3
 	github.com/hashicorp/golang-lru v0.5.0
 	github.com/joho/godotenv v1.3.0
 	github.com/json-iterator/go v1.1.5 // indirect
