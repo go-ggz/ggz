@@ -302,6 +302,7 @@ gopkg.in/ini.v1 v1.41.0 h1:Ka3ViY6gNYSKiVy71zXBEqKplnV35ImDLVG+8uoIklE=
 gopkg.in/ini.v1 v1.41.0/go.mod h1:pNLf8WUiyNEtQjuu5G5vTm06TEv9tsIgeAvK8hOrP4k=
 gopkg.in/nicksrandall/dataloader.v5 v5.0.0-20180104184831-78139374585c h1:MUpS4ADJP4p5boSKm0NXut1F9gN9elmFsAQ+sycfez4=
 gopkg.in/nicksrandall/dataloader.v5 v5.0.0-20180104184831-78139374585c/go.mod h1:2Vt3nzGvh5+ohTHzpmvzRYfKYU0IRaxGNwZIWMLR/ps=
+gopkg.in/nicksrandall/dataloader.v5 v5.0.0/go.mod h1:2Vt3nzGvh5+ohTHzpmvzRYfKYU0IRaxGNwZIWMLR/ps=
 gopkg.in/stretchr/testify.v1 v1.2.2 h1:yhQC6Uy5CqibAIlk1wlusa/MJ3iAN49/BsR/dCCKz3M=
 gopkg.in/stretchr/testify.v1 v1.2.2/go.mod h1:QI5V/q6UbPmuhtm10CaFZxED9NreB8PnFYN9JcR6TxU=
 gopkg.in/testfixtures.v2 v2.5.1 h1:A5xQzU22H7yjiyjR/8c+xoxFsgRChzk3MBf40zkIQew=

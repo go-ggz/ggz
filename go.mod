@@ -70,7 +70,7 @@ require (
 	gopkg.in/gin-gonic/gin.v1 v1.3.0 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/ini.v1 v1.41.0 // indirect
-	gopkg.in/nicksrandall/dataloader.v5 v5.0.0-20180104184831-78139374585c
+	gopkg.in/nicksrandall/dataloader.v5 v5.0.0
 	gopkg.in/testfixtures.v2 v2.5.1
 	gopkg.in/urfave/cli.v2 v2.0.0-20180128182452-d3ae77c26ac8
 )
