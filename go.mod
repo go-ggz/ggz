@@ -62,7 +62,7 @@ require (
 	github.com/stretchr/testify v1.2.2
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v0.0.0-20170224212429-dcecefd839c4 // indirect
-	golang.org/x/crypto v0.0.0-20181106171534-e4dc69e5b2fd
+	golang.org/x/crypto v0.0.0-20190211194727-74369b46fc67
 	golang.org/x/net v0.0.0-20181107093936-a544f70c90f1
 	golang.org/x/sync v0.0.0-20181108010431-42b317875d0f
 	golang.org/x/sys v0.0.0-20181107165924-66b7b1311ac8 // indirect
