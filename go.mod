@@ -26,7 +26,7 @@ require (
 	github.com/go-xorm/xorm v0.7.1
 	github.com/gogo/protobuf v1.2.0 // indirect
 	github.com/googollee/go-engine.io v0.0.0-20180829091931-e2f255711dcb // indirect
-	github.com/googollee/go-socket.io v0.0.0-20181101151912-c8aeb1ed9b49
+	github.com/googollee/go-socket.io v0.0.0-20190212104646-acaa89b622f6
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/mux v1.7.0 // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect

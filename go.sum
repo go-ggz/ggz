@@ -97,6 +97,7 @@ github.com/googollee/go-engine.io v0.0.0-20180829091931-e2f255711dcb h1:n22Aukg/
 github.com/googollee/go-engine.io v0.0.0-20180829091931-e2f255711dcb/go.mod h1:MBpz1MS3P4HtRcBpQU4HcjvWXZ9q+JWacMEh2/BFYbg=
 github.com/googollee/go-socket.io v0.0.0-20181101151912-c8aeb1ed9b49 h1:vKXGRzlhWE9TUVhLqAOcgQbfYvReAnsvQQIcnvWMfcg=
 github.com/googollee/go-socket.io v0.0.0-20181101151912-c8aeb1ed9b49/go.mod h1:ftBGBMhSYToR5oV4ImIPKvAIsNaTkLC+tTvoNafqxlQ=
+github.com/googollee/go-socket.io v0.0.0-20190212104646-acaa89b622f6/go.mod h1:ftBGBMhSYToR5oV4ImIPKvAIsNaTkLC+tTvoNafqxlQ=
 github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 h1:EGx4pi6eqNxGaHF6qqu48+N2wcFQ5qg5FXgOdqsJ5d8=
 github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1/go.mod h1:wJfORRmW1u3UXTncJ5qlYoELFm8eSnnEO6hX4iZ3EWY=
 github.com/gorilla/context v1.1.1 h1:AWwleXJkX/nhcU9bZSnZoi3h/qGYqQAGhq6zZe/aQW8=
