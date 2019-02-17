@@ -11,6 +11,7 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/anmitsu/go-shlex v0.0.0-20161002113705-648efa622239/go.mod h1:2FmKhYUyUczH0OGQWaF5ceTx0UBShxjsH6f8oGKYe2c=
 github.com/appleboy/com v0.0.0-20180410030638-c0b5901f9622 h1:ozHD8HTq7ivv8vTJRCAzjA4wEA8BMGekxMDZrFdqz5M=
 github.com/appleboy/com v0.0.0-20180410030638-c0b5901f9622/go.mod h1:rtwjPnHClMOJw4K5oW3ASx9BCPCJ1SDbFbzJjY4Ebqw=
+github.com/appleboy/com v0.0.0-20190217104056-91facb085744/go.mod h1:rtwjPnHClMOJw4K5oW3ASx9BCPCJ1SDbFbzJjY4Ebqw=
 github.com/appleboy/gofight v2.0.0+incompatible h1:ECVMVpNJFBztDbnA7ead4Ffm6mizKKb6QyR78F+j4eY=
 github.com/appleboy/gofight v2.0.0+incompatible/go.mod h1:H/tvof1oZHnZdlBd+AeODZGkk1C+D2na0NXr0iXuZHA=
 github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7 h1:irR1cO6eek3n5uquIVaRAsQmZnlsfPuHNz31cXo4eyk=

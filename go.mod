@@ -2,7 +2,7 @@ module github.com/go-ggz/ggz
 
 require (
 	cloud.google.com/go v0.36.0 // indirect
-	github.com/appleboy/com v0.0.0-20180410030638-c0b5901f9622
+	github.com/appleboy/com v0.0.0-20190217104056-91facb085744
 	github.com/appleboy/gofight v2.0.0+incompatible
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
 	github.com/buger/jsonparser v0.0.0-20181115193947-bf1c66bbce23 // indirect
