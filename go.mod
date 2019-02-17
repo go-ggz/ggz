@@ -20,7 +20,7 @@ require (
 	github.com/gin-contrib/logger v0.0.0-20181031071054-42438f88c421
 	github.com/gin-contrib/pprof v0.0.0-20180827024024-a27513940d36
 	github.com/gin-gonic/gin v1.3.0
-	github.com/go-ini/ini v1.39.0 // indirect
+	github.com/go-ini/ini v1.42.0 // indirect
 	github.com/go-sql-driver/mysql v1.4.0
 	github.com/go-xorm/core v0.6.0
 	github.com/go-xorm/xorm v0.7.1
