@@ -24,7 +24,7 @@ require (
 	github.com/go-sql-driver/mysql v1.4.0
 	github.com/go-xorm/core v0.6.0
 	github.com/go-xorm/xorm v0.7.1
-	github.com/gogo/protobuf v1.2.0 // indirect
+	github.com/gogo/protobuf v1.2.1 // indirect
 	github.com/googollee/go-engine.io v0.0.0-20180829091931-e2f255711dcb // indirect
 	github.com/googollee/go-socket.io v0.0.0-20181101151912-c8aeb1ed9b49
 	github.com/gorilla/context v1.1.1 // indirect
