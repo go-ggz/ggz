@@ -99,12 +99,6 @@ embedmd:
 vet:
 	$(GO) vet $(PACKAGES)
 
-	errcheck:
-	@hash errcheck > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/kisielk/errcheck; \
-	fi
-	errcheck $(PACKAGES)
-
 lint:
 	@hash revive > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		$(GO) get -u github.com/mgechev/revive; \
@@ -132,12 +126,6 @@ misspell:
 		$(GO) get -u github.com/client9/misspell/cmd/misspell; \
 	fi
 	misspell -w $(GOFILES)
-
-unused-check:
-	@hash unused > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u honnef.co/go/tools/cmd/unused; \
-	fi
-	for PKG in $(PACKAGES); do unused $$PKG || exit 1; done;
 
 upx:
 	@hash upx > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
