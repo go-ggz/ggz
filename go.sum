@@ -63,6 +63,12 @@ github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7/go.mod h1:VJ0WA2NB
 github.com/gin-gonic/gin v1.3.0 h1:kCmZyPklC0gVdL728E6Aj20uYBJV93nj/TkwBTKhFbs=
 github.com/gin-gonic/gin v1.3.0/go.mod h1:7cKuhb5qV2ggCFctp2fJQ+ErvciLZrIeoOSOm6mUr7Y=
 github.com/gliderlabs/ssh v0.1.1/go.mod h1:U7qILu1NlMHj9FlMhZLlkCdDnU1DBEAqr0aevW3Awn0=
+github.com/go-ggz/ui v0.0.0-20190310084915-8f4c1b516e19 h1:LtgnqKdwYqIOR6LSpLcIjrSl0ujSRjBC5Gkn2XGVNQ0=
+github.com/go-ggz/ui v0.0.0-20190310084915-8f4c1b516e19/go.mod h1:9Qbwt9MroKYHWt3xb3IPsAde4av23lPjU/fB9KrlXFU=
+github.com/go-ggz/ui v0.0.0-20190310105909-6c495fd3c66a h1:8sm0HkN3w/lrbg27daS/N1r7Ojkxf47GTPEuwTviSbE=
+github.com/go-ggz/ui v0.0.0-20190310105909-6c495fd3c66a/go.mod h1:9Qbwt9MroKYHWt3xb3IPsAde4av23lPjU/fB9KrlXFU=
+github.com/go-ggz/ui v0.0.0-20190310120505-05163d357247 h1:VVLZXRwq2DXlLwSGKZAHEoUKAceP8lTGSUraz43NSuE=
+github.com/go-ggz/ui v0.0.0-20190310120505-05163d357247/go.mod h1:9Qbwt9MroKYHWt3xb3IPsAde4av23lPjU/fB9KrlXFU=
 github.com/go-ini/ini v1.39.0 h1:/CyW/jTlZLjuzy52jc1XnhJm6IUKEuunpJFpecywNeI=
 github.com/go-ini/ini v1.39.0/go.mod h1:ByCAeIL28uOIIG0E3PJtZPDL8WnHpFKFOtgjp+3Ies8=
 github.com/go-sql-driver/mysql v1.4.0 h1:7LxgVwFb2hIQtMm87NdgAVfXjnt4OePseqT1tKx+opk=

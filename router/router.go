@@ -76,8 +76,8 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		)
 	}
 
-	// 404 not found
-	e.NoRoute(web.NotFound)
+	// redirect to vue page
+	e.NoRoute(web.Index)
 
 	// default route /
 	root := e.Group(config.Server.Root)

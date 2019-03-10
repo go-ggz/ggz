@@ -1,12 +1,14 @@
 package assets
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
 
 	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ui/dist"
 
 	"github.com/appleboy/com/file"
 	"github.com/rs/zerolog/log"
@@ -43,7 +45,11 @@ func (c ChainedFS) Open(origPath string) (http.File, error) {
 		}
 	}
 
-	f, err := FS.OpenFile(CTX, origPath, os.O_RDONLY, 0644)
+	log.Debug().Msgf("origPath is %s", origPath)
+
+	filePath := fmt.Sprintf("/assets/%s", origPath)
+
+	f, err := dist.FS.OpenFile(dist.CTX, filePath, os.O_RDONLY, 0644)
 
 	if err != nil {
 		return nil, err
@@ -54,7 +60,7 @@ func (c ChainedFS) Open(origPath string) (http.File, error) {
 
 // ReadSource is adapTed from ioutil
 func ReadSource(origPath string) (content []byte, err error) {
-	content, err = ReadFile(origPath)
+	content, err = dist.ReadFile(origPath)
 
 	if err != nil {
 		log.Warn().Err(err).Msgf("Failed to read builtin %s file.", origPath)
