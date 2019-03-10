@@ -1,7 +1,6 @@
 package assets
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -45,11 +44,7 @@ func (c ChainedFS) Open(origPath string) (http.File, error) {
 		}
 	}
 
-	log.Debug().Msgf("origPath is %s", origPath)
-
-	filePath := fmt.Sprintf("/assets/%s", origPath)
-
-	f, err := dist.FS.OpenFile(dist.CTX, filePath, os.O_RDONLY, 0644)
+	f, err := dist.FS.OpenFile(dist.CTX, origPath, os.O_RDONLY, 0644)
 
 	if err != nil {
 		return nil, err
