@@ -20,8 +20,5 @@ data
 storage
 !module/storage
 .cover
-dist
-!assets/dist
-test.pem
 release/
-coverage.out
+coverage.txt
