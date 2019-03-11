@@ -11,9 +11,12 @@ local ggzRedirect = 'ggz-redirect';
   pipeline.build(ggzRedirect, 'linux', 'arm'),
   pipeline.release,
   pipeline.notifications(depends_on=[
-    'linux-amd64',
-    'linux-arm64',
-    'linux-arm',
+    ggzServer + '-linux-amd64',
+    ggzServer + '-linux-arm64',
+    ggzServer + '-linux-arm',
+    ggzRedirect + '-linux-amd64',
+    ggzRedirect + '-linux-arm64',
+    ggzRedirect + '-linux-arm',
     'release-binary',
   ]),
 ]

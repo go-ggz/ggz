@@ -632,9 +632,12 @@ trigger:
   - "refs/tags/**"
 
 depends_on:
-- linux-amd64
-- linux-arm64
-- linux-arm
+- ggz-server-linux-amd64
+- ggz-server-linux-arm64
+- ggz-server-linux-arm
+- ggz-redirect-linux-amd64
+- ggz-redirect-linux-arm64
+- ggz-redirect-linux-arm
 - release-binary
 
 ...
