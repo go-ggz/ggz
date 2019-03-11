@@ -137,7 +137,7 @@ upx:
 
 .PHONY: test
 test:
-	$(GO) test -v -tags=sqlite -cover -coverprofile coverage.out $(PACKAGES) || exit 1
+	@$(GO) test -v -cover -coverprofile coverage.txt $(PACKAGES) && echo "\n==>\033[32m Ok\033[m\n" || exit 1
 
 release: release-dirs release-build release-copy release-check
 
