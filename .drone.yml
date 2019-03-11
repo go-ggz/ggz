@@ -58,7 +58,6 @@ steps:
   - make test
   environment:
     GO111MODULE: on
-    TAGS: bindata sqlite
   volumes:
   - name: gopath
     path: /go

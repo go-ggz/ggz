@@ -81,7 +81,6 @@
         pull: 'always',
         environment: {
           GO111MODULE: 'on',
-          TAGS: 'bindata sqlite',
         },
         commands: [
           'make test',
