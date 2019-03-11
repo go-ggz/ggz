@@ -112,7 +112,7 @@
 
   build(name, os='linux', arch='amd64'):: {
     kind: 'pipeline',
-    name: os + '-' + arch,
+    name: name + '-' + os + '-' + arch,
     platform: {
       os: os,
       arch: arch,

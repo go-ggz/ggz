@@ -76,7 +76,7 @@ volumes:
 
 ---
 kind: pipeline
-name: linux-amd64
+name: ggz-server-linux-amd64
 
 platform:
   os: linux
@@ -157,7 +157,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: linux-arm64
+name: ggz-server-linux-arm64
 
 platform:
   os: linux
@@ -238,7 +238,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: linux-arm
+name: ggz-server-linux-arm
 
 platform:
   os: linux
@@ -319,7 +319,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: linux-amd64
+name: ggz-redirect-linux-amd64
 
 platform:
   os: linux
@@ -400,7 +400,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: linux-arm64
+name: ggz-redirect-linux-arm64
 
 platform:
   os: linux
@@ -481,7 +481,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: linux-arm
+name: ggz-redirect-linux-arm
 
 platform:
   os: linux
