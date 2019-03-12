@@ -614,7 +614,48 @@ steps:
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: docker/manifest.tmpl
+    spec: docker/ggz-server/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+- name: microbadger
+  pull: always
+  image: plugins/webhook:1
+  settings:
+    url:
+      from_secret: microbadger_url
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/tags/**"
+
+depends_on:
+- ggz-server-linux-amd64
+- ggz-server-linux-arm64
+- ggz-server-linux-arm
+- ggz-redirect-linux-amd64
+- ggz-redirect-linux-arm64
+- ggz-redirect-linux-arm
+- release-binary
+
+---
+kind: pipeline
+name: notifications
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: docker/ggz-redirect/manifest.tmpl
     username:
       from_secret: docker_username
 

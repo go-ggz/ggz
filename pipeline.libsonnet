@@ -251,7 +251,7 @@
     },
   },
 
-  notifications(os='linux', arch='amd64', depends_on=[]):: {
+  notifications(name, os='linux', arch='amd64', depends_on=[]):: {
     kind: 'pipeline',
     name: 'notifications',
     platform: {
@@ -266,7 +266,7 @@
         settings: {
           username: { from_secret: 'docker_username' },
           password: { from_secret: 'docker_password' },
-          spec: 'docker/manifest.tmpl',
+          spec: 'docker/' + name + '/manifest.tmpl',
           ignore_missing: true,
         },
       },
