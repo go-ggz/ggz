@@ -126,7 +126,7 @@
           GO111MODULE: 'on',
         },
         commands: [
-          'go build -v -ldflags \'-X main.build=${DRONE_BUILD_NUMBER}\' -a -o release/' + os + '/' + arch + '/' + name,
+          'go build -v -ldflags \'-X main.build=${DRONE_BUILD_NUMBER}\' -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
         ],
         when: {
           event: {
