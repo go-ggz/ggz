@@ -118,7 +118,7 @@ steps:
   image: plugins/docker:linux-amd64
   settings:
     cache_from: goggz/ggz-server
-    dockerfile: docker/Dockerfile.linux.amd64
+    dockerfile: docker/ggz-server/Dockerfile.linux.amd64
     dry_run: true
     repo: goggz/ggz-server
     tags: linux-amd64
@@ -134,7 +134,7 @@ steps:
     auto_tag_suffix: linux-amd64
     cache_from: goggz/ggz-server
     daemon_off: false
-    dockerfile: docker/Dockerfile.linux.amd64
+    dockerfile: docker/ggz-server/Dockerfile.linux.amd64
     password:
       from_secret: docker_password
     repo: goggz/ggz-server
@@ -199,7 +199,7 @@ steps:
   image: plugins/docker:linux-arm64
   settings:
     cache_from: goggz/ggz-server
-    dockerfile: docker/Dockerfile.linux.arm64
+    dockerfile: docker/ggz-server/Dockerfile.linux.arm64
     dry_run: true
     repo: goggz/ggz-server
     tags: linux-arm64
@@ -215,7 +215,7 @@ steps:
     auto_tag_suffix: linux-arm64
     cache_from: goggz/ggz-server
     daemon_off: false
-    dockerfile: docker/Dockerfile.linux.arm64
+    dockerfile: docker/ggz-server/Dockerfile.linux.arm64
     password:
       from_secret: docker_password
     repo: goggz/ggz-server
@@ -280,7 +280,7 @@ steps:
   image: plugins/docker:linux-arm
   settings:
     cache_from: goggz/ggz-server
-    dockerfile: docker/Dockerfile.linux.arm
+    dockerfile: docker/ggz-server/Dockerfile.linux.arm
     dry_run: true
     repo: goggz/ggz-server
     tags: linux-arm
@@ -296,7 +296,7 @@ steps:
     auto_tag_suffix: linux-arm
     cache_from: goggz/ggz-server
     daemon_off: false
-    dockerfile: docker/Dockerfile.linux.arm
+    dockerfile: docker/ggz-server/Dockerfile.linux.arm
     password:
       from_secret: docker_password
     repo: goggz/ggz-server
@@ -361,7 +361,7 @@ steps:
   image: plugins/docker:linux-amd64
   settings:
     cache_from: goggz/ggz-redirect
-    dockerfile: docker/Dockerfile.linux.amd64
+    dockerfile: docker/ggz-redirect/Dockerfile.linux.amd64
     dry_run: true
     repo: goggz/ggz-redirect
     tags: linux-amd64
@@ -377,7 +377,7 @@ steps:
     auto_tag_suffix: linux-amd64
     cache_from: goggz/ggz-redirect
     daemon_off: false
-    dockerfile: docker/Dockerfile.linux.amd64
+    dockerfile: docker/ggz-redirect/Dockerfile.linux.amd64
     password:
       from_secret: docker_password
     repo: goggz/ggz-redirect
@@ -442,7 +442,7 @@ steps:
   image: plugins/docker:linux-arm64
   settings:
     cache_from: goggz/ggz-redirect
-    dockerfile: docker/Dockerfile.linux.arm64
+    dockerfile: docker/ggz-redirect/Dockerfile.linux.arm64
     dry_run: true
     repo: goggz/ggz-redirect
     tags: linux-arm64
@@ -458,7 +458,7 @@ steps:
     auto_tag_suffix: linux-arm64
     cache_from: goggz/ggz-redirect
     daemon_off: false
-    dockerfile: docker/Dockerfile.linux.arm64
+    dockerfile: docker/ggz-redirect/Dockerfile.linux.arm64
     password:
       from_secret: docker_password
     repo: goggz/ggz-redirect
@@ -523,7 +523,7 @@ steps:
   image: plugins/docker:linux-arm
   settings:
     cache_from: goggz/ggz-redirect
-    dockerfile: docker/Dockerfile.linux.arm
+    dockerfile: docker/ggz-redirect/Dockerfile.linux.arm
     dry_run: true
     repo: goggz/ggz-redirect
     tags: linux-arm
@@ -539,7 +539,7 @@ steps:
     auto_tag_suffix: linux-arm
     cache_from: goggz/ggz-redirect
     daemon_off: false
-    dockerfile: docker/Dockerfile.linux.arm
+    dockerfile: docker/ggz-redirect/Dockerfile.linux.arm
     password:
       from_secret: docker_password
     repo: goggz/ggz-redirect
