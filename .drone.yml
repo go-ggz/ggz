@@ -600,7 +600,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: notifications
+name: ggz-server-notifications
 
 platform:
   os: linux
@@ -634,7 +634,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: notifications
+name: ggz-redirect-notifications
 
 platform:
   os: linux

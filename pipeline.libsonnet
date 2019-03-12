@@ -253,7 +253,7 @@
 
   notifications(name, os='linux', arch='amd64', depends_on=[]):: {
     kind: 'pipeline',
-    name: 'notifications',
+    name: name + '-notifications',
     platform: {
       os: os,
       arch: arch,
