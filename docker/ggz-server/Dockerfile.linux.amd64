@@ -1,13 +1,13 @@
-FROM plugins/base:arm
+FROM plugins/base:linux-amd64
 
 LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
   org.label-schema.name="ggz-server" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
-ADD release/linux/arm/ggz-server /bin/
-
 EXPOSE 8080
+
+ADD release/linux/amd64/ggz-server /bin/
 
 HEALTHCHECK --start-period=2s --interval=10s --timeout=5s \
   CMD ["/bin/ggz-server", "ping"]

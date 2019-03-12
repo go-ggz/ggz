@@ -136,8 +136,8 @@ upx:
 	mv bin/$(SERVICE)-small bin/$(SERVICE)
 
 .PHONY: test
-test:
-	@$(GO) test -v -cover -coverprofile coverage.txt $(PACKAGES) && echo "\n==>\033[32m Ok\033[m\n" || exit 1
+test: fmt-check
+	@$(GO) test -v -cover -tags $(TAGS) -coverprofile coverage.txt $(PACKAGES) && echo "\n==>\033[32m Ok\033[m\n" || exit 1
 
 release: release-dirs release-build release-copy release-check
 

@@ -1,16 +1,16 @@
-FROM plugins/base:amd64
+FROM plugins/base:linux-arm64
 
 LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
-  org.label-schema.name="ggz-server" \
+  org.label-schema.name="ggz-redirect" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
+ADD release/linux/arm64/ggz-redirect /bin/
+
 EXPOSE 8080
 
-ADD release/linux/amd64/ggz-server /bin/
-
 HEALTHCHECK --start-period=2s --interval=10s --timeout=5s \
-  CMD ["/bin/ggz-server", "ping"]
+  CMD ["/bin/ggz-redirect", "ping"]
 
-ENTRYPOINT ["/bin/ggz-server"]
+ENTRYPOINT ["/bin/ggz-redirect"]
 CMD ["server"]

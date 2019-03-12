@@ -1,240 +1,642 @@
-workspace:
-  base: /go/src
-  path: github.com/go-ggz/ggz
+---
+kind: pipeline
+name: testing
 
-clone:
-  git:
-    image: plugins/git
-    depth: 50
-    tags: true
+platform:
+  os: linux
+  arch: amd64
 
-pipeline:
-  backend:
-    image: golang:1.11
-    pull: true
-    environment:
-      - GO111MODULE=on
-    commands:
-      - cp .env.example .env
-      - make embedmd
-      - make fmt-check
-      - make misspell-check
+steps:
+- name: vet
+  pull: always
+  image: golang:1.12
+  commands:
+  - make vet
+  environment:
+    GO111MODULE: on
+  volumes:
+  - name: gopath
+    path: /go
 
-  test:
-    image: golang:1.11
-    pull: true
-    group: testing
-    environment:
-      - TAGS="bindata sqlite"
-      - GO111MODULE=on
-    commands:
-      - make test
+- name: lint
+  pull: always
+  image: golang:1.12
+  commands:
+  - make lint
+  environment:
+    GO111MODULE: on
+  volumes:
+  - name: gopath
+    path: /go
 
-  build_linux_amd64:
-    image: golang:1.11
-    pull: true
-    group: build
-    environment:
-      - TAGS=sqlite
-      - GO111MODULE=on
-    commands:
-      - SERVICE=ggz-server make build_linux_amd64
-      - SERVICE=ggz-redirect make build_linux_amd64
+- name: misspell
+  pull: always
+  image: golang:1.12
+  commands:
+  - make misspell-check
+  environment:
+    GO111MODULE: on
+  volumes:
+  - name: gopath
+    path: /go
 
-  build_linux_i386:
-    image: golang:1.11
-    pull: true
-    group: build
-    environment:
-      - TAGS=sqlite
-      - GO111MODULE=on
-    commands:
-      - SERVICE=ggz-server make build_linux_i386
-      - SERVICE=ggz-redirect make build_linux_i386
+- name: embedmd
+  pull: always
+  image: golang:1.12
+  commands:
+  - make embedmd
+  environment:
+    GO111MODULE: on
+  volumes:
+  - name: gopath
+    path: /go
 
-  build_linux_arm64:
-    image: golang:1.11
-    pull: true
-    group: build
-    environment:
-      - TAGS=sqlite
-      - GO111MODULE=on
-    commands:
-      - SERVICE=ggz-server make build_linux_arm64
-      - SERVICE=ggz-redirect make build_linux_arm64
+- name: test
+  pull: always
+  image: golang:1.12
+  commands:
+  - make test
+  environment:
+    GO111MODULE: on
+  volumes:
+  - name: gopath
+    path: /go
 
-  build_linux_arm:
-    image: golang:1.11
-    pull: true
-    group: build
-    environment:
-      - TAGS=sqlite
-      - GO111MODULE=on
-    commands:
-      - SERVICE=ggz-server make build_linux_arm
-      - SERVICE=ggz-redirect make build_linux_arm
+- name: codecov
+  pull: always
+  image: robertstettner/drone-codecov
+  settings:
+    token:
+      from_secret: codecov_token
 
-  codecov:
-    image: robertstettner/drone-codecov
-    group: build
-    secrets: [ codecov_token ]
+volumes:
+- name: gopath
+  temp: {}
+
+---
+kind: pipeline
+name: ggz-server-linux-amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: build-push
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/amd64/ggz-server"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+      exclude:
+      - tag
+
+- name: build-tag
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.version=${DRONE_TAG##v} -X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/amd64/ggz-server ./cmd/ggz-server"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+    - tag
+
+- name: executable
+  pull: always
+  image: golang:1.12
+  commands:
+  - ./release/linux/amd64/ggz-server --help
+
+- name: dryrun
+  pull: always
+  image: plugins/docker:linux-amd64
+  settings:
+    cache_from: goggz/ggz-server
+    dockerfile: docker/Dockerfile.linux.amd64
+    dry_run: true
+    repo: goggz/ggz-server
+    tags: linux-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:linux-amd64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: linux-amd64
+    cache_from: goggz/ggz-server
+    daemon_off: false
+    dockerfile: docker/Dockerfile.linux.amd64
+    password:
+      from_secret: docker_password
+    repo: goggz/ggz-server
+    username:
+      from_secret: docker_username
+  when:
+    event:
+      exclude:
+      - pull_request
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+  - "refs/tags/**"
+
+depends_on:
+- testing
+
+---
+kind: pipeline
+name: ggz-server-linux-arm64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: build-push
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/arm64/ggz-server"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+      exclude:
+      - tag
+
+- name: build-tag
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.version=${DRONE_TAG##v} -X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/arm64/ggz-server ./cmd/ggz-server"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+    - tag
+
+- name: executable
+  pull: always
+  image: golang:1.12
+  commands:
+  - ./release/linux/arm64/ggz-server --help
+
+- name: dryrun
+  pull: always
+  image: plugins/docker:linux-arm64
+  settings:
+    cache_from: goggz/ggz-server
+    dockerfile: docker/Dockerfile.linux.arm64
+    dry_run: true
+    repo: goggz/ggz-server
+    tags: linux-arm64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:linux-arm64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: linux-arm64
+    cache_from: goggz/ggz-server
+    daemon_off: false
+    dockerfile: docker/Dockerfile.linux.arm64
+    password:
+      from_secret: docker_password
+    repo: goggz/ggz-server
+    username:
+      from_secret: docker_username
+  when:
+    event:
+      exclude:
+      - pull_request
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+  - "refs/tags/**"
+
+depends_on:
+- testing
+
+---
+kind: pipeline
+name: ggz-server-linux-arm
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: build-push
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/arm/ggz-server"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+      exclude:
+      - tag
+
+- name: build-tag
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.version=${DRONE_TAG##v} -X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/arm/ggz-server ./cmd/ggz-server"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+    - tag
+
+- name: executable
+  pull: always
+  image: golang:1.12
+  commands:
+  - ./release/linux/arm/ggz-server --help
+
+- name: dryrun
+  pull: always
+  image: plugins/docker:linux-arm
+  settings:
+    cache_from: goggz/ggz-server
+    dockerfile: docker/Dockerfile.linux.arm
+    dry_run: true
+    repo: goggz/ggz-server
+    tags: linux-arm
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:linux-arm
+  settings:
+    auto_tag: true
+    auto_tag_suffix: linux-arm
+    cache_from: goggz/ggz-server
+    daemon_off: false
+    dockerfile: docker/Dockerfile.linux.arm
+    password:
+      from_secret: docker_password
+    repo: goggz/ggz-server
+    username:
+      from_secret: docker_username
+  when:
+    event:
+      exclude:
+      - pull_request
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+  - "refs/tags/**"
+
+depends_on:
+- testing
+
+---
+kind: pipeline
+name: ggz-redirect-linux-amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: build-push
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/amd64/ggz-redirect"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+      exclude:
+      - tag
+
+- name: build-tag
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.version=${DRONE_TAG##v} -X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/amd64/ggz-redirect ./cmd/ggz-redirect"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+    - tag
+
+- name: executable
+  pull: always
+  image: golang:1.12
+  commands:
+  - ./release/linux/amd64/ggz-redirect --help
+
+- name: dryrun
+  pull: always
+  image: plugins/docker:linux-amd64
+  settings:
+    cache_from: goggz/ggz-redirect
+    dockerfile: docker/Dockerfile.linux.amd64
+    dry_run: true
+    repo: goggz/ggz-redirect
+    tags: linux-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:linux-amd64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: linux-amd64
+    cache_from: goggz/ggz-redirect
+    daemon_off: false
+    dockerfile: docker/Dockerfile.linux.amd64
+    password:
+      from_secret: docker_password
+    repo: goggz/ggz-redirect
+    username:
+      from_secret: docker_username
+  when:
+    event:
+      exclude:
+      - pull_request
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+  - "refs/tags/**"
+
+depends_on:
+- testing
+
+---
+kind: pipeline
+name: ggz-redirect-linux-arm64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: build-push
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/arm64/ggz-redirect"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+      exclude:
+      - tag
+
+- name: build-tag
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.version=${DRONE_TAG##v} -X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/arm64/ggz-redirect ./cmd/ggz-redirect"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+    - tag
+
+- name: executable
+  pull: always
+  image: golang:1.12
+  commands:
+  - ./release/linux/arm64/ggz-redirect --help
+
+- name: dryrun
+  pull: always
+  image: plugins/docker:linux-arm64
+  settings:
+    cache_from: goggz/ggz-redirect
+    dockerfile: docker/Dockerfile.linux.arm64
+    dry_run: true
+    repo: goggz/ggz-redirect
+    tags: linux-arm64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:linux-arm64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: linux-arm64
+    cache_from: goggz/ggz-redirect
+    daemon_off: false
+    dockerfile: docker/Dockerfile.linux.arm64
+    password:
+      from_secret: docker_password
+    repo: goggz/ggz-redirect
+    username:
+      from_secret: docker_username
+  when:
+    event:
+      exclude:
+      - pull_request
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+  - "refs/tags/**"
+
+depends_on:
+- testing
+
+---
+kind: pipeline
+name: ggz-redirect-linux-arm
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: build-push
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/arm/ggz-redirect"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+      exclude:
+      - tag
+
+- name: build-tag
+  pull: always
+  image: golang:1.12
+  commands:
+  - "go build -v -ldflags '-X main.version=${DRONE_TAG##v} -X main.build=${DRONE_BUILD_NUMBER}' -a -o release/linux/arm/ggz-redirect ./cmd/ggz-redirect"
+  environment:
+    CGO_ENABLED: 0
+    GO111MODULE: on
+  when:
+    event:
+    - tag
+
+- name: executable
+  pull: always
+  image: golang:1.12
+  commands:
+  - ./release/linux/arm/ggz-redirect --help
+
+- name: dryrun
+  pull: always
+  image: plugins/docker:linux-arm
+  settings:
+    cache_from: goggz/ggz-redirect
+    dockerfile: docker/Dockerfile.linux.arm
+    dry_run: true
+    repo: goggz/ggz-redirect
+    tags: linux-arm
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:linux-arm
+  settings:
+    auto_tag: true
+    auto_tag_suffix: linux-arm
+    cache_from: goggz/ggz-redirect
+    daemon_off: false
+    dockerfile: docker/Dockerfile.linux.arm
+    password:
+      from_secret: docker_password
+    repo: goggz/ggz-redirect
+    username:
+      from_secret: docker_username
+  when:
+    event:
+      exclude:
+      - pull_request
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+  - "refs/tags/**"
+
+depends_on:
+- testing
+
+---
+kind: pipeline
+name: release-binary
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: build-all-binary
+  pull: always
+  image: golang:1.12
+  commands:
+  - make release
+  environment:
+    GO111MODULE: on
+  when:
+    event:
+    - tag
+
+- name: deploy-all-binary
+  pull: always
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_release_api_key
     files:
-      - coverage.out
-    when:
-      event: [ push, pull_request ]
+    - "dist/release/*"
+  when:
+    event:
+    - tag
 
-  release:
-    image: golang:1.11
-    pull: true
-    environment:
-      - GO111MODULE=on
-    commands:
-      - make release
-    when:
-      event: [ tag ]
-      local: false
+trigger:
+  ref:
+  - "refs/tags/**"
 
-  release_tag:
-    image: plugins/github-release
-    secrets: [ github_release_api_key ]
-    group: release
-    files:
-      - dist/release/*
-    when:
-      event: [ tag ]
-      local: false
+depends_on:
+- testing
 
-  publish_linux_amd64:
-    image: plugins/docker
-    group: release
-    pull: true
-    repo: goggz/ggz-server
-    dockerfile: dockerfile/server/Dockerfile
-    secrets: [ docker_username, docker_password ]
-    default_tags: true
-    when:
-      event: [ push, tag ]
-      local: false
+---
+kind: pipeline
+name: notifications
 
-  publish_alpine:
-    image: plugins/docker
-    group: release
-    pull: true
-    repo: goggz/ggz-server
-    dockerfile: dockerfile/server/Dockerfile.alpine
-    secrets: [ docker_username, docker_password ]
-    default_tags: true
-    default_suffix: alpine
-    when:
-      event: [ push, tag ]
-      local: false
+platform:
+  os: linux
+  arch: amd64
 
-  publish_linux_i386:
-    image: plugins/docker:17.05
-    pull: true
-    secrets: [ docker_username, docker_password ]
-    group: release
-    repo: goggz/ggz-server
-    auto_tag: true
-    auto_tag_suffix: i386
-    dockerfile: dockerfile/server/Dockerfile.i386
-    when:
-      event: [ push, tag ]
-      local: false
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: docker/manifest.tmpl
+    username:
+      from_secret: docker_username
 
-  publish_linux_arm64:
-    image: plugins/docker:17.05
-    pull: true
-    secrets: [ docker_username, docker_password ]
-    group: release
-    repo: goggz/ggz-server
-    auto_tag: true
-    auto_tag_suffix: arm64
-    dockerfile: dockerfile/server/Dockerfile.arm64
-    when:
-      event: [ push, tag ]
-      local: false
+- name: microbadger
+  pull: always
+  image: plugins/webhook:1
+  settings:
+    url:
+      from_secret: microbadger_url
 
-  publish_linux_arm:
-    image: plugins/docker:17.05
-    pull: true
-    secrets: [ docker_username, docker_password ]
-    group: release
-    repo: goggz/ggz-server
-    auto_tag: true
-    auto_tag_suffix: arm
-    dockerfile: dockerfile/server/Dockerfile.arm
-    when:
-      event: [ push, tag ]
-      local: false
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/tags/**"
 
-  publish_linux_amd64_redirect:
-    image: plugins/docker
-    group: release
-    pull: true
-    repo: goggz/ggz-redirect
-    dockerfile: dockerfile/redirect/Dockerfile
-    secrets: [ docker_username, docker_password ]
-    default_tags: true
-    when:
-      event: [ push, tag ]
-      local: false
+depends_on:
+- ggz-server-linux-amd64
+- ggz-server-linux-arm64
+- ggz-server-linux-arm
+- ggz-redirect-linux-amd64
+- ggz-redirect-linux-arm64
+- ggz-redirect-linux-arm
+- release-binary
 
-  publish_alpine_redirect:
-    image: plugins/docker
-    group: release
-    pull: true
-    repo: goggz/ggz-redirect
-    dockerfile: dockerfile/redirect/Dockerfile.alpine
-    secrets: [ docker_username, docker_password ]
-    default_tags: true
-    default_suffix: alpine
-    when:
-      event: [ push, tag ]
-      local: false
-
-  publish_linux_i386_redirect:
-    image: plugins/docker:17.05
-    pull: true
-    secrets: [ docker_username, docker_password ]
-    group: release
-    repo: goggz/ggz-redirect
-    auto_tag: true
-    auto_tag_suffix: i386
-    dockerfile: dockerfile/redirect/Dockerfile.i386
-    when:
-      event: [ push, tag ]
-      local: false
-
-  publish_linux_arm64_redirect:
-    image: plugins/docker:17.05
-    pull: true
-    secrets: [ docker_username, docker_password ]
-    group: release
-    repo: goggz/ggz-redirect
-    auto_tag: true
-    auto_tag_suffix: arm64
-    dockerfile: dockerfile/redirect/Dockerfile.arm64
-    when:
-      event: [ push, tag ]
-      local: false
-
-  publish_linux_arm_redirect:
-    image: plugins/docker:17.05
-    pull: true
-    secrets: [ docker_username, docker_password ]
-    group: release
-    repo: goggz/ggz-redirect
-    auto_tag: true
-    auto_tag_suffix: arm
-    dockerfile: dockerfile/redirect/Dockerfile.arm
-    when:
-      event: [ push, tag ]
-      local: false
-
-  discord:
-    image: appleboy/drone-discord
-    pull: true
-    secrets: [ discord_webhook_id, discord_webhook_token ]
-    when:
-      status: [ changed, failure ]
+...

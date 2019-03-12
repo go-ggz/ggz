@@ -1,11 +1,11 @@
-FROM plugins/base:arm64
+FROM plugins/base:linux-arm
 
 LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
   org.label-schema.name="ggz-redirect" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
-ADD release/linux/arm64/ggz-redirect /bin/
+ADD release/linux/arm/ggz-redirect /bin/
 
 EXPOSE 8080
 
