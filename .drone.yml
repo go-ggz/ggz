@@ -618,13 +618,6 @@ steps:
     username:
       from_secret: docker_username
 
-- name: microbadger
-  pull: always
-  image: plugins/webhook:1
-  settings:
-    url:
-      from_secret: microbadger_url
-
 trigger:
   ref:
   - refs/heads/master
@@ -658,13 +651,6 @@ steps:
     spec: docker/ggz-redirect/manifest.tmpl
     username:
       from_secret: docker_username
-
-- name: microbadger
-  pull: always
-  image: plugins/webhook:1
-  settings:
-    url:
-      from_secret: microbadger_url
 
 trigger:
   ref:
