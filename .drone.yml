@@ -627,9 +627,6 @@ depends_on:
 - ggz-server-linux-amd64
 - ggz-server-linux-arm64
 - ggz-server-linux-arm
-- ggz-redirect-linux-amd64
-- ggz-redirect-linux-arm64
-- ggz-redirect-linux-arm
 - release-binary
 
 ---
@@ -658,9 +655,6 @@ trigger:
   - "refs/tags/**"
 
 depends_on:
-- ggz-server-linux-amd64
-- ggz-server-linux-arm64
-- ggz-server-linux-arm
 - ggz-redirect-linux-amd64
 - ggz-redirect-linux-arm64
 - ggz-redirect-linux-arm
