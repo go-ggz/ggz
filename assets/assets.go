@@ -1,10 +1,14 @@
 package assets
 
 import (
+	"crypto/md5"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
+	"strings"
+	"time"
 
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ui/dist"
@@ -84,9 +88,21 @@ func ReadSource(origPath string) (content []byte, err error) {
 
 // AssetsHandler support assets.
 func AssetsHandler() gin.HandlerFunc {
+	fileServer := http.FileServer(dist.HTTP)
+	data := []byte(time.Now().String())
+	etag := fmt.Sprintf("%x", md5.Sum(data))
 
 	return func(c *gin.Context) {
+		if match := c.GetHeader("If-None-Match"); match != "" {
+			if strings.Contains(match, etag) {
+				c.Status(http.StatusNotModified)
+				return
+			}
+		}
+
 		c.Header("Cache-Control", "public, max-age=31536000")
+		c.Header("ETag", etag)
+
 		fileServer.ServeHTTP(c.Writer, c.Request)
 	}
 }
