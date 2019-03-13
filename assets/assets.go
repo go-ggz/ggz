@@ -93,15 +93,15 @@ func AssetsHandler() gin.HandlerFunc {
 	etag := fmt.Sprintf("%x", md5.Sum(data))
 
 	return func(c *gin.Context) {
+		c.Header("Cache-Control", "public, max-age=31536000")
+		c.Header("ETag", etag)
+
 		if match := c.GetHeader("If-None-Match"); match != "" {
 			if strings.Contains(match, etag) {
 				c.Status(http.StatusNotModified)
 				return
 			}
 		}
-
-		c.Header("Cache-Control", "public, max-age=31536000")
-		c.Header("ETag", etag)
 
 		fileServer.ServeHTTP(c.Writer, c.Request)
 	}
