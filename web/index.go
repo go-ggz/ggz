@@ -16,7 +16,7 @@ func Index(c *gin.Context) {
 	file, _ := dist.ReadFile("index.html")
 	etag := fmt.Sprintf("%x", md5.Sum(file))
 	c.Header("ETag", etag)
-	c.Header("Cache-Control", "max-age=0")
+	c.Header("Cache-Control", "no-cache")
 
 	if match := c.GetHeader("If-None-Match"); match != "" {
 		if strings.Contains(match, etag) {
