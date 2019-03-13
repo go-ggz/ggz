@@ -10,10 +10,13 @@ import (
 	"github.com/go-ggz/ui/dist"
 
 	"github.com/appleboy/com/file"
+	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
 
 //go:generate fileb0x ab0x.yaml
+
+var fileServer = http.FileServer(dist.HTTP)
 
 // Load initializes the static files.
 func Load() http.FileSystem {
@@ -77,4 +80,13 @@ func ReadSource(origPath string) (content []byte, err error) {
 	}
 
 	return content, err
+}
+
+// AssetsHandler support assets.
+func AssetsHandler() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+		c.Header("Cache-Control", "public, max-age=31536000")
+		fileServer.ServeHTTP(c.Writer, c.Request)
+	}
 }

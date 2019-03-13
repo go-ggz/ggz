@@ -93,7 +93,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		}
 
 		root.StaticFS(
-			"/assets",
+			"/public",
 			assets.Load(),
 		)
 
@@ -101,6 +101,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		root.GET("/favicon.ico", web.Favicon)
 		root.GET("/metrics", prometheus.Handler())
 		root.GET("/healthz", web.Heartbeat)
+		root.GET("/assets/*name", assets.AssetsHandler())
 
 		api := e.Group("/v1")
 		api.Use(auth0.Check())
