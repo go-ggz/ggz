@@ -77,7 +77,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 	}
 
 	// redirect to vue page
-	e.NoRoute(web.Index)
+	e.NoRoute(gzip.Gzip(gzip.DefaultCompression), web.Index)
 
 	// default route /
 	root := e.Group(config.Server.Root)
@@ -97,11 +97,11 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 			assets.Load(),
 		)
 
-		root.GET("", web.Index)
+		root.GET("", gzip.Gzip(gzip.DefaultCompression), web.Index)
 		root.GET("/favicon.ico", web.Favicon)
 		root.GET("/metrics", prometheus.Handler())
 		root.GET("/healthz", web.Heartbeat)
-		root.GET("/assets/*name", assets.AssetsHandler())
+		root.GET("/assets/*name", gzip.Gzip(gzip.DefaultCompression), assets.AssetsHandler())
 
 		api := e.Group("/v1")
 		api.Use(auth0.Check())
