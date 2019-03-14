@@ -86,8 +86,8 @@ func ReadSource(origPath string) (content []byte, err error) {
 	return content, err
 }
 
-// AssetsHandler support assets.
-func AssetsHandler() gin.HandlerFunc {
+// Handler support gin heep handler.
+func Handler() gin.HandlerFunc {
 	fileServer := http.FileServer(dist.HTTP)
 	data := []byte(time.Now().String())
 	etag := fmt.Sprintf("%x", md5.Sum(data))

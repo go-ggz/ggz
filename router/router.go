@@ -101,7 +101,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		root.GET("/favicon.ico", web.Favicon)
 		root.GET("/metrics", prometheus.Handler())
 		root.GET("/healthz", web.Heartbeat)
-		root.GET("/assets/*name", gzip.Gzip(gzip.DefaultCompression), assets.AssetsHandler())
+		root.GET("/assets/*name", gzip.Gzip(gzip.DefaultCompression), assets.Handler())
 
 		api := e.Group("/v1")
 		api.Use(auth0.Check())
