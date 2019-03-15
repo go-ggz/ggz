@@ -27,17 +27,21 @@ install:
 build_script:
   - ps: |
       if ( $env:APPVEYOR_REPO_TAG -eq 'false' ) {
-        go build -ldflags "-X main.Version=$env:APPVEYOR_REPO_COMMIT -X main.BuildNum=$env:APPVEYOR_BUILD_VERSION" -a -o release/ggz.exe ./cmd
+        go build -ldflags "-X main.Version=$env:APPVEYOR_REPO_COMMIT" -a -o release/ggz-server.exe ./cmd/ggz-server
+        go build -ldflags "-X main.Version=$env:APPVEYOR_REPO_COMMIT" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
       } else {
         $version = $env:APPVEYOR_REPO_TAG_NAME
-        go build -ldflags "-X main.Version=$version -X main.BuildNum=$env:APPVEYOR_BUILD_VERSION" -a -o release/ggz.exe ./cmd
+        go build -ldflags "-X main.Version=$version" -a -o release/ggz-server.exe ./cmd/ggz-server
+        go build -ldflags "-X main.Version=$version" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
       }
       docker pull microsoft/nanoserver:10.0.14393.1884
-      docker build -f Dockerfile.windows -t goggz/ggz:windows-amd64 .
+      docker build -f docker/ggz-server/Dockerfile.windows.amd64 -t goggz/ggz-server:windows-amd64 .
+      docker build -f docker/ggz-redirect/Dockerfile.windows.amd64 -t goggz/ggz-redirect:windows-amd64 .
 
 test_script:
   - ps: |
-      docker run --rm goggz/ggz:windows-amd64 --version
+      docker run --rm goggz/ggz-server:windows-amd64 --version
+      docker run --rm goggz/ggz-redirect:windows-amd64 --version
 
 deploy_script:
   - ps: |
@@ -48,19 +52,25 @@ deploy_script:
         echo $env:DOCKER_PASSWORD | docker login --username $env:DOCKER_USERNAME --password-stdin
         if ( $env:APPVEYOR_REPO_TAG -eq 'true' ) {
           $major,$minor,$patch = $env:APPVEYOR_REPO_TAG_NAME.split('.')
-          docker push goggz/ggz:windows-amd64
 
-          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major.$minor.$patch-windows-amd64
-          docker push goggz/ggz:$major.$minor.$patch-windows-amd64
+          docker tag goggz/ggz-server:windows-amd64 goggz/ggz:$major.$minor.$patch-windows-amd64
+          docker push goggz/ggz-server:$major.$minor.$patch-windows-amd64
+          docker tag goggz/ggz-redirect:windows-amd64 goggz/ggz:$major.$minor.$patch-windows-amd64
+          docker push goggz/ggz-redirect:$major.$minor.$patch-windows-amd64
 
-          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major.$minor-windows-amd64
-          docker push goggz/ggz:$major.$minor-windows-amd64
+          docker tag goggz/ggz-server:windows-amd64 goggz/ggz:$major.$minor-windows-amd64
+          docker push goggz/ggz-server:$major.$minor-windows-amd64
+          docker tag goggz/ggz-redirect:windows-amd64 goggz/ggz:$major.$minor-windows-amd64
+          docker push goggz/ggz-redirect:$major.$minor-windows-amd64
 
-          docker tag goggz/ggz:windows-amd64 goggz/ggz:$major-windows-amd64
-          docker push goggz/ggz:$major-windows-amd64
+          docker tag goggz/ggz-server:windows-amd64 goggz/ggz:$major-windows-amd64
+          docker push goggz/ggz-server:$major-windows-amd64
+          docker tag goggz/ggz-redirect:windows-amd64 goggz/ggz:$major-windows-amd64
+          docker push goggz/ggz-redirect:$major-windows-amd64
         } else {
           if ( $env:APPVEYOR_REPO_BRANCH -eq 'master' ) {
-            docker push goggz/ggz:windows-amd64
+            docker push goggz/ggz-server:windows-amd64
+            docker push goggz/ggz-redirect:windows-amd64
           }
         }
       }
