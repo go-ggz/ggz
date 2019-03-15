@@ -5,8 +5,8 @@ LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
-ADD release/ggz-redirect.exe C:/bin/ggz-redirect.exe
-
 EXPOSE 8080
+
+COPY release/ggz-redirect.exe C:/bin/ggz-redirect.exe
 
 ENTRYPOINT [ "C:\\bin\\ggz-redirect.exe" ]
