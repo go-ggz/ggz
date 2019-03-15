@@ -27,12 +27,14 @@ install:
 build_script:
   - ps: |
       if ( $env:APPVEYOR_REPO_TAG -eq 'false' ) {
-        go build -ldflags "-X version.Version=$env:APPVEYOR_REPO_COMMIT" -a -o release/ggz-server.exe ./cmd/ggz-server
-        go build -ldflags "-X version.Version=$env:APPVEYOR_REPO_COMMIT" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
+        $buildDate = $env:APPVEYOR_REPO_COMMIT_TIMESTAMP
+        go build -ldflags "-X version.Version=$env:APPVEYOR_REPO_COMMIT -X version.BuildDate=$buildDate" -a -o release/ggz-server.exe ./cmd/ggz-server
+        go build -ldflags "-X version.Version=$env:APPVEYOR_REPO_COMMIT -X version.BuildDate=$buildDate" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
       } else {
         $version = $env:APPVEYOR_REPO_TAG_NAME
-        go build -ldflags "-X version.Version=$version" -a -o release/ggz-server.exe ./cmd/ggz-server
-        go build -ldflags "-X version.Version=$version" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
+        $buildDate = $env:APPVEYOR_REPO_COMMIT_TIMESTAMP
+        go build -ldflags "-X version.Version=$version -X version.BuildDate=$buildDate" -a -o release/ggz-server.exe ./cmd/ggz-server
+        go build -ldflags "-X version.Version=$version -X version.BuildDate=$buildDate" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
       }
       docker pull microsoft/nanoserver:10.0.14393.1884
       docker build -f docker/ggz-server/Dockerfile.windows.amd64 -t goggz/ggz-server:windows-amd64 .
