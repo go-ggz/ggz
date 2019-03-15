@@ -1,7 +1,5 @@
 module github.com/go-ggz/ggz
 
-go 1.12
-
 require (
 	cloud.google.com/go v0.36.0 // indirect
 	github.com/appleboy/com v0.0.1
