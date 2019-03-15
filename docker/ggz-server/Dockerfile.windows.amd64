@@ -9,4 +9,4 @@ ADD release/ggz-server.exe C:/bin/ggz-server.exe
 
 EXPOSE 8080
 
-ENTRYPOINT [ ""C:\\bin\\ggz-server.exe"" ]
+ENTRYPOINT [ "C:\\bin\\ggz-server.exe" ]

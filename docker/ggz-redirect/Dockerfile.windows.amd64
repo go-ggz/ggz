@@ -9,4 +9,4 @@ ADD release/ggz-redirect.exe C:/bin/ggz-redirect.exe
 
 EXPOSE 8080
 
-ENTRYPOINT [ ""C:\\bin\\ggz-redirect.exe"" ]
+ENTRYPOINT [ "C:\\bin\\ggz-redirect.exe" ]
