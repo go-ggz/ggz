@@ -13,7 +13,6 @@ GOFILES := $(shell find . -name "*.go" -type f)
 TAGS ?= sqlite
 LDFLAGS ?= -X github.com/go-ggz/ggz/version.Version=$(VERSION) -X github.com/go-ggz/ggz/version.BuildDate=$(BUILD_DATE)
 TMPDIR := $(shell mktemp -d 2>/dev/null || mktemp -d -t 'tempdir')
-STYLESHEETS := $(wildcard assets/dist/less/innhp.less  assets/dist/less/_*.less)
 
 ifneq ($(shell uname), Darwin)
 	EXTLDFLAGS = -extldflags "-static" $(null)
@@ -57,25 +56,6 @@ generate:
 		$(GO) get -u github.com/UnnoTed/fileb0x; \
 	fi
 	$(GO) generate $(PACKAGES)
-
-.PHONY: stylesheets-check
-stylesheets-check: stylesheets
-	@diff=$$(git diff assets/dist/css/innhp.css); \
-	if [ -n "$$diff" ]; then \
-		echo "Please run 'make stylesheets' and commit the result:"; \
-		echo "$${diff}"; \
-		exit 1; \
-	fi;
-
-.PHONY: stylesheets
-stylesheets: assets/dist/css/innhp.css
-
-.IGNORE:assets/dist/css/innhp.css
-assets/dist/css/innhp.css: $(STYLESHEETS)
-	@which lessc > /dev/null; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/kib357/less-go/lessc; \
-	fi
-	lessc -i $< -o $@
 
 .PHONY: fmt
 fmt:

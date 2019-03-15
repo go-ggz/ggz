@@ -126,7 +126,7 @@
           GO111MODULE: 'on',
         },
         commands: [
-          'go build -v -ldflags \'-X main.build=${DRONE_BUILD_NUMBER}\' -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
+          'go build -v -ldflags "-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
         ],
         when: {
           event: {
@@ -143,7 +143,7 @@
           GO111MODULE: 'on',
         },
         commands: [
-          'go build -v -ldflags \'-X main.version=${DRONE_TAG##v} -X main.build=${DRONE_BUILD_NUMBER}\' -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
+          'go build -v -ldflags "-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
         ],
         when: {
           event: [ 'tag' ],
