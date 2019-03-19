@@ -6,8 +6,8 @@
 [![codecov](https://codecov.io/gh/go-ggz/ggz/branch/master/graph/badge.svg)](https://codecov.io/gh/go-ggz/ggz)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-ggz/ggz)](https://goreportcard.com/report/github.com/go-ggz/ggz)
 [![codebeat badge](https://codebeat.co/badges/6fc8d61a-17c1-446d-a895-2dc6a8d1c16c)](https://codebeat.co/projects/github-com-go-ggz-ggz-master)
-[![Docker Pulls](https://img.shields.io/docker/pulls/goggz/ggz.svg)](https://hub.docker.com/r/goggz/ggz/)
-[![](https://images.microbadger.com/badges/image/goggz/ggz.svg)](https://microbadger.com/images/goggz/ggz "Get your own image badge on microbadger.com")
+[![Docker Pulls](https://img.shields.io/docker/pulls/goggz/ggz-server.svg)](https://hub.docker.com/r/goggz/ggz-server/)
+[![](https://images.microbadger.com/badges/image/goggz/ggz-server.svg)](https://microbadger.com/images/goggz/ggz-server "Get your own image badge on microbadger.com")
 
 An URL shortener service written in Golang.
 
