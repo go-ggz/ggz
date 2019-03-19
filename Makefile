@@ -11,7 +11,6 @@ BUILD_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 PACKAGES ?= $(shell $(GO) list ./...)
 GOFILES := $(shell find . -name "*.go" -type f)
 TAGS ?= sqlite
-LDFLAGS ?= -X github.com/go-ggz/ggz/version.Version=$(VERSION) -X github.com/go-ggz/ggz/version.BuildDate=$(BUILD_DATE)
 TMPDIR := $(shell mktemp -d 2>/dev/null || mktemp -d -t 'tempdir')
 
 ifneq ($(shell uname), Darwin)
@@ -21,10 +20,12 @@ else
 endif
 
 ifneq ($(DRONE_TAG),)
-	VERSION ?= $(DRONE_TAG)
+	VERSION ?= $(subst v,,$(DRONE_TAG))
 else
-	VERSION ?= $(shell git describe --tags --always || git rev-parse --short HEAD)
+	VERSION ?= $(shell git describe --tags --always | sed 's/-/+/' | sed 's/^v//')
 endif
+
+LDFLAGS ?= -X github.com/go-ggz/ggz/version.Version=$(VERSION) -X github.com/go-ggz/ggz/version.BuildDate=$(BUILD_DATE)
 
 all: build
 
