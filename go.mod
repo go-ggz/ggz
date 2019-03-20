@@ -21,7 +21,7 @@ require (
 	github.com/gin-contrib/pprof v1.2.0
 	github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 // indirect
 	github.com/gin-gonic/gin v1.3.0
-	github.com/go-ggz/ui v0.0.0-20190313015816-d4f4942eb021
+	github.com/go-ggz/ui v0.0.0-20190320164302-c495f4114069
 	github.com/go-ini/ini v1.42.0 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/core v0.6.2
