@@ -3,8 +3,6 @@ package mailer
 import (
 	"fmt"
 
-	"github.com/go-ggz/ggz/config"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -19,8 +17,12 @@ const (
 
 // SES for aws ses
 type SES struct {
-	sess   *session.Session
-	source *string
+	sess    *session.Session
+	source  *string
+	to      []*string
+	cc      []*string
+	subject *string
+	body    *string
 }
 
 func (c SES) From(name, address string) Mail {
@@ -29,44 +31,62 @@ func (c SES) From(name, address string) Mail {
 	return c
 }
 
+func (c SES) To(address ...string) Mail {
+	for _, v := range address {
+		c.to = append(c.to, aws.String(v))
+	}
+
+	return c
+}
+
+func (c SES) Cc(address ...string) Mail {
+	for _, v := range address {
+		c.cc = append(c.cc, aws.String(v))
+	}
+
+	return c
+}
+
+func (c SES) Subject(subject string) Mail {
+	c.subject = aws.String(subject)
+
+	return c
+}
+
+func (c SES) Body(body string) Mail {
+	c.body = aws.String(body)
+
+	return c
+}
+
 // Send single email
-func (c SES) Send(meta config.Meta) (interface{}, error) {
-	toAddresses := []*string{}
-	ccAddresses := []*string{}
-	for _, v := range meta.ToAddresses {
-		toAddresses = append(toAddresses, aws.String(v))
-	}
-
-	for _, v := range meta.CcAddresses {
-		ccAddresses = append(ccAddresses, aws.String(v))
-	}
-
+func (c SES) Send() (interface{}, error) {
 	// Create an SES session.
 	svc := ses.New(c.sess)
 
 	// Assemble the email.
 	input := &ses.SendEmailInput{
 		Destination: &ses.Destination{
-			CcAddresses: ccAddresses,
-			ToAddresses: toAddresses,
+			CcAddresses: c.cc,
+			ToAddresses: c.to,
 		},
 		Message: &ses.Message{
 			Body: &ses.Body{
 				Html: &ses.Content{
 					Charset: aws.String(CharSet),
-					Data:    aws.String(meta.Body),
+					Data:    c.body,
 				},
 				Text: &ses.Content{
 					Charset: aws.String(CharSet),
-					Data:    aws.String(meta.Body),
+					Data:    c.body,
 				},
 			},
 			Subject: &ses.Content{
 				Charset: aws.String(CharSet),
-				Data:    aws.String(meta.Subject),
+				Data:    c.subject,
 			},
 		},
-		Source: aws.String(fmt.Sprintf("%s <%s>", meta.Sender.Name, meta.Sender.Email)),
+		Source: c.source,
 		// Uncomment to use a configuration set
 		//ConfigurationSetName: aws.String(ConfigurationSet),
 	}

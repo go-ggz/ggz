@@ -103,21 +103,6 @@ type smtp struct {
 	Password string
 }
 
-// To for email sender
-type To struct {
-	Name  string
-	Email string
-}
-
-// Meta for send email data
-type Meta struct {
-	ToAddresses []string
-	CcAddresses []string
-	Sender      To
-	Subject     string
-	Body        string
-}
-
 type aws struct {
 	AccessID  string
 	SecretKey string

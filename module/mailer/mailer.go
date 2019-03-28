@@ -1,15 +1,17 @@
 package mailer
 
 import (
-	"github.com/go-ggz/ggz/config"
-
 	"github.com/rs/zerolog/log"
 )
 
 // Mail for smtp or ses interface
 type Mail interface {
 	From(string, string) Mail
-	Send(config.Meta) (interface{}, error)
+	To(...string) Mail
+	Cc(...string) Mail
+	Subject(string) Mail
+	Body(string) Mail
+	Send() (interface{}, error)
 }
 
 type Config struct {
@@ -17,6 +19,7 @@ type Config struct {
 	Port     string
 	Username string
 	Password string
+	Driver   string
 }
 
 // Client for mail interface
@@ -24,7 +27,7 @@ var Client Mail
 
 // NewEngine return storage interface
 func NewEngine(c Config) (mail Mail, err error) {
-	switch config.MailService.Driver {
+	switch c.Driver {
 	case "smtp":
 		Client, err = SMTPEngine(
 			c.Host,

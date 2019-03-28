@@ -69,7 +69,9 @@ func Mail() *cli.Command {
 		},
 		Action: func(c *cli.Context) error {
 			// initial mailer service
-			if _, err := mailer.NewEngine(mailer.Config{}); err != nil {
+			if _, err := mailer.NewEngine(mailer.Config{
+				Driver: "ses",
+			}); err != nil {
 				log.Fatal().Err(err).Msgf("failed to initial mailer")
 			}
 
@@ -79,19 +81,14 @@ func Mail() *cli.Command {
 			for i := 0; i < count; i++ {
 				wg.Add(1)
 				go func(k int, wg *sync.WaitGroup) {
-					data := config.Meta{
-						Sender: config.To{
-							Name:  "Bo-Yi Wu",
-							Email: "appleboy.tw@gmail.com",
-						},
-						Subject:     fmt.Sprintf("[Fullinn] 測試 AWS 電子郵件系統 [%d]", (k + 1)),
-						ToAddresses: []string{"appleboy.tw@gmail.com"},
-						Body: "<h1>繁體中文 Amazon SES Test Email (AWS SDK for Go)</h1><p>This email was sent with " +
+					resp, err := mailer.Client.
+						From("Bo-Yi Wu", "appleboy.tw@gmail.com").
+						Subject(fmt.Sprintf("[Go 語言] 測試電子郵件系統 [%d]", (k + 1))).
+						To("appleboy.tw@gmail.com").
+						Body("<h1>繁體中文 Amazon SES Test Email (AWS SDK for Go)</h1><p>This email was sent with " +
 							"<a href='https://aws.amazon.com/ses/'>Amazon SES</a> using the " +
-							"<a href='https://aws.amazon.com/sdk-for-go/'>AWS SDK for Go</a>.</p>",
-					}
-
-					resp, err := mailer.Client.Send(data)
+							"<a href='https://aws.amazon.com/sdk-for-go/'>AWS SDK for Go</a>.</p>").
+						Send()
 
 					if err != nil {
 						log.Fatal().Err(err).Msgf("failed to send email")

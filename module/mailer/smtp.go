@@ -4,8 +4,6 @@ import (
 	"net/mail"
 	"net/smtp"
 
-	"github.com/go-ggz/ggz/config"
-
 	"github.com/scorredoira/email"
 )
 
@@ -21,6 +19,10 @@ type SMTP struct {
 	username string
 	password string
 	from     from
+	to       []string
+	cc       []string
+	subject  string
+	body     string
 }
 
 func (c SMTP) From(name, address string) Mail {
@@ -32,15 +34,39 @@ func (c SMTP) From(name, address string) Mail {
 	return c
 }
 
+func (c SMTP) To(address ...string) Mail {
+	c.to = address
+
+	return c
+}
+
+func (c SMTP) Cc(address ...string) Mail {
+	c.cc = address
+
+	return c
+}
+
+func (c SMTP) Subject(subject string) Mail {
+	c.subject = subject
+
+	return c
+}
+
+func (c SMTP) Body(body string) Mail {
+	c.body = body
+
+	return c
+}
+
 // Send single email
-func (c SMTP) Send(meta config.Meta) (interface{}, error) {
-	m := email.NewHTMLMessage(meta.Subject, meta.Body)
+func (c SMTP) Send() (interface{}, error) {
+	m := email.NewHTMLMessage(c.subject, c.body)
 	m.From = mail.Address{
-		Name:    meta.Sender.Name,
-		Address: meta.Sender.Email,
+		Name:    c.from.Name,
+		Address: c.from.Address,
 	}
-	m.To = meta.ToAddresses
-	m.Cc = meta.CcAddresses
+	m.To = c.to
+	m.Cc = c.cc
 
 	// send it
 	auth := smtp.PlainAuth("", c.username, c.password, c.host)
