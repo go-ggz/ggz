@@ -5,6 +5,7 @@ require (
 	github.com/appleboy/com v0.0.1
 	github.com/appleboy/gofight v2.0.0+incompatible
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
+	github.com/aws/aws-sdk-go v1.19.4
 	github.com/buger/jsonparser v0.0.0-20181115193947-bf1c66bbce23 // indirect
 	github.com/codegangsta/negroni v1.0.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -49,6 +50,7 @@ require (
 	github.com/prometheus/client_golang v0.9.2
 	github.com/rs/zerolog v1.12.0
 	github.com/satori/go.uuid v1.2.0
+	github.com/scorredoira/email v0.0.0-20181116225458-c1787f8317a8
 	github.com/skip2/go-qrcode v0.0.0-20190110000554-dc11ecdae0a9
 	github.com/smartystreets/goconvey v0.0.0-20190306220146-200a235640ff // indirect
 	github.com/stretchr/testify v1.3.0

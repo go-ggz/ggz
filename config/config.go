@@ -92,6 +92,32 @@ func (c ContextKey) String() string {
 	return "user context key " + string(c)
 }
 
+type mailService struct {
+	Driver string
+}
+
+type smtp struct {
+	Host     string
+	Port     string
+	Username string
+	Password string
+}
+
+// To for email sender
+type To struct {
+	Name  string
+	Email string
+}
+
+// Meta for send email data
+type Meta struct {
+	ToAddresses []string
+	CcAddresses []string
+	Sender      To
+	Subject     string
+	Body        string
+}
+
 var (
 	// Database represents the current database connection details.
 	Database = &database{}
@@ -128,4 +154,10 @@ var (
 
 	// Logs for zerolog
 	Logs = &logs{}
+
+	// MailService mail setting
+	MailService = &mailService{}
+
+	// SMTP email setting
+	SMTP = &smtp{}
 )
