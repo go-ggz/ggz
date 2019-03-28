@@ -1,4 +1,4 @@
-package ses
+package mailer
 
 import (
 	"fmt"
@@ -17,13 +17,20 @@ const (
 	CharSet = "UTF-8"
 )
 
-// Client for ses
-type Client struct {
-	sess *session.Session
+// SES for aws ses
+type SES struct {
+	sess   *session.Session
+	source *string
+}
+
+func (c SES) From(name, address string) Mail {
+	c.source = aws.String(fmt.Sprintf("%s <%s>", name, address))
+
+	return c
 }
 
 // Send single email
-func (c *Client) Send(meta config.Meta) (interface{}, error) {
+func (c SES) Send(meta config.Meta) (interface{}, error) {
 	toAddresses := []*string{}
 	ccAddresses := []*string{}
 	for _, v := range meta.ToAddresses {
@@ -92,8 +99,8 @@ func (c *Client) Send(meta config.Meta) (interface{}, error) {
 	return resp, nil
 }
 
-// NewEngine initial ses
-func NewEngine() (*Client, error) {
+// SESEngine initial ses
+func SESEngine() (*SES, error) {
 	// Create a new session in the us-west-2 region.
 	// Replace us-west-2 with the AWS Region you're using for Amazon SES.
 	sess, err := session.NewSession(&aws.Config{
@@ -104,7 +111,7 @@ func NewEngine() (*Client, error) {
 		return nil, err
 	}
 
-	return &Client{
+	return &SES{
 		sess: sess,
 	}, nil
 }

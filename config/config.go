@@ -118,6 +118,11 @@ type Meta struct {
 	Body        string
 }
 
+type aws struct {
+	AccessID  string
+	SecretKey string
+}
+
 var (
 	// Database represents the current database connection details.
 	Database = &database{}
@@ -154,6 +159,9 @@ var (
 
 	// Logs for zerolog
 	Logs = &logs{}
+
+	// AWS config
+	AWS = &aws{}
 
 	// MailService mail setting
 	MailService = &mailService{}

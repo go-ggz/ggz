@@ -1,4 +1,4 @@
-package smtp
+package mailer
 
 import (
 	"net/mail"
@@ -9,16 +9,31 @@ import (
 	"github.com/scorredoira/email"
 )
 
+type from struct {
+	Name    string
+	Address string
+}
+
 // Client for smtp
-type Client struct {
+type SMTP struct {
 	host     string
 	port     string
 	username string
 	password string
+	from     from
+}
+
+func (c SMTP) From(name, address string) Mail {
+	c.from = from{
+		Name:    name,
+		Address: address,
+	}
+
+	return c
 }
 
 // Send single email
-func (c *Client) Send(meta config.Meta) (interface{}, error) {
+func (c SMTP) Send(meta config.Meta) (interface{}, error) {
 	m := email.NewHTMLMessage(meta.Subject, meta.Body)
 	m.From = mail.Address{
 		Name:    meta.Sender.Name,
@@ -34,8 +49,8 @@ func (c *Client) Send(meta config.Meta) (interface{}, error) {
 }
 
 // NewEngine initial smtp
-func NewEngine(host, port, username, password string) (*Client, error) {
-	return &Client{
+func SMTPEngine(host, port, username, password string) (*SMTP, error) {
+	return &SMTP{
 		host:     host,
 		port:     port,
 		username: username,
