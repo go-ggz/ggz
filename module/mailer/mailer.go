@@ -20,7 +20,12 @@ var Client Mail
 func NewEngine() (main Mail, err error) {
 	switch config.MailService.Driver {
 	case "smtp":
-		Client, err = smtp.NewEngine()
+		Client, err = smtp.NewEngine(
+			config.SMTP.Host,
+			config.SMTP.Port,
+			config.SMTP.Username,
+			config.SMTP.Password,
+		)
 		if err != nil {
 			return nil, err
 		}

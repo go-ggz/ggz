@@ -34,11 +34,11 @@ func (c *Client) Send(meta config.Meta) (interface{}, error) {
 }
 
 // NewEngine initial smtp
-func NewEngine() (*Client, error) {
+func NewEngine(host, port, username, password string) (*Client, error) {
 	return &Client{
-		host:     config.SMTP.Host,
-		port:     config.SMTP.Port,
-		username: config.SMTP.Username,
-		password: config.SMTP.Password,
+		host:     host,
+		port:     port,
+		username: username,
+		password: password,
 	}, nil
 }
