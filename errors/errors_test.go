@@ -2,6 +2,7 @@ package errors
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"testing"
 
@@ -117,4 +118,50 @@ func TestErrorType(t *testing.T) {
 		assert.Equal(t, http.StatusInternalServerError, unknown.Code())
 		assert.Equal(t, "Unknown error", unknown.String())
 	})
+}
+
+func TestType_String(t *testing.T) {
+	tests := []struct {
+		name string
+		t    Type
+		want string
+	}{
+		{
+			name: "Internal",
+			t:    Internal,
+			want: "Internal Error",
+		},
+		{
+			name: "NotFound",
+			t:    NotFound,
+			want: "Item not found",
+		},
+		{
+			name: "AlreadyExists",
+			t:    AlreadyExists,
+			want: "Item already exists",
+		},
+		{
+			name: "Validation",
+			t:    Validation,
+			want: "Validation error",
+		},
+		{
+			name: "BadRequest",
+			t:    BadRequest,
+			want: "BadRequest error",
+		},
+		{
+			name: "Unauthorized",
+			t:    Unauthorized,
+			want: "Unauthorized error",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := fmt.Sprintf("%s", tt.t); got != tt.want {
+				t.Errorf("Type.String() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }
