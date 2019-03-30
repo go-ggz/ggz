@@ -14,6 +14,7 @@ type Mail interface {
 	Send() (interface{}, error)
 }
 
+// Config for mailer
 type Config struct {
 	Host     string
 	Port     string

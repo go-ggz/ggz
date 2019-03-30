@@ -12,7 +12,7 @@ type from struct {
 	Address string
 }
 
-// Client for smtp
+// SMTP setting
 type SMTP struct {
 	host     string
 	port     string
@@ -25,6 +25,7 @@ type SMTP struct {
 	body     string
 }
 
+// From for sender information
 func (c SMTP) From(name, address string) Mail {
 	c.from = from{
 		Name:    name,
@@ -34,31 +35,35 @@ func (c SMTP) From(name, address string) Mail {
 	return c
 }
 
+// To for mailto list
 func (c SMTP) To(address ...string) Mail {
 	c.to = address
 
 	return c
 }
 
+// Cc for cc list
 func (c SMTP) Cc(address ...string) Mail {
 	c.cc = address
 
 	return c
 }
 
+// Subject for email title
 func (c SMTP) Subject(subject string) Mail {
 	c.subject = subject
 
 	return c
 }
 
+// Body for email body
 func (c SMTP) Body(body string) Mail {
 	c.body = body
 
 	return c
 }
 
-// Send single email
+// Send email
 func (c SMTP) Send() (interface{}, error) {
 	m := email.NewHTMLMessage(c.subject, c.body)
 	m.From = mail.Address{
@@ -74,7 +79,7 @@ func (c SMTP) Send() (interface{}, error) {
 	return nil, email.Send(c.host+":"+c.port, auth, m)
 }
 
-// NewEngine initial smtp
+// SMTPEngine initial smtp object
 func SMTPEngine(host, port, username, password string) (*SMTP, error) {
 	return &SMTP{
 		host:     host,

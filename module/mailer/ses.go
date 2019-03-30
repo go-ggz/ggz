@@ -25,12 +25,14 @@ type SES struct {
 	body    *string
 }
 
+// From for sender information
 func (c SES) From(name, address string) Mail {
 	c.source = aws.String(fmt.Sprintf("%s <%s>", name, address))
 
 	return c
 }
 
+// To for mailto list
 func (c SES) To(address ...string) Mail {
 	for _, v := range address {
 		c.to = append(c.to, aws.String(v))
@@ -39,6 +41,7 @@ func (c SES) To(address ...string) Mail {
 	return c
 }
 
+// Cc for cc list
 func (c SES) Cc(address ...string) Mail {
 	for _, v := range address {
 		c.cc = append(c.cc, aws.String(v))
@@ -47,19 +50,21 @@ func (c SES) Cc(address ...string) Mail {
 	return c
 }
 
+// Subject for email title
 func (c SES) Subject(subject string) Mail {
 	c.subject = aws.String(subject)
 
 	return c
 }
 
+// Body for email body
 func (c SES) Body(body string) Mail {
 	c.body = aws.String(body)
 
 	return c
 }
 
-// Send single email
+// Send email
 func (c SES) Send() (interface{}, error) {
 	// Create an SES session.
 	svc := ses.New(c.sess)
