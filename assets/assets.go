@@ -86,8 +86,8 @@ func ReadSource(origPath string) (content []byte, err error) {
 	return content, err
 }
 
-// Handler support gin heep handler.
-func Handler() gin.HandlerFunc {
+// ViewHandler support dist handler from UI
+func ViewHandler() gin.HandlerFunc {
 	fileServer := http.FileServer(dist.HTTP)
 	data := []byte(time.Now().String())
 	etag := fmt.Sprintf("%x", md5.Sum(data))

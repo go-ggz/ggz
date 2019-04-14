@@ -57,7 +57,7 @@ require (
 	github.com/ugorji/go/codec v0.0.0-20190309163734-c4a1c341dc93 // indirect
 	github.com/valyala/fasttemplate v1.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
-	golang.org/x/net v0.0.0-20190213061140-3a22650c66bd // indirect
+	golang.org/x/net v0.0.0-20190213061140-3a22650c66bd
 	golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6
 	gopkg.in/gin-gonic/gin.v1 v1.3.0 // indirect
 	gopkg.in/ini.v1 v1.42.0 // indirect
