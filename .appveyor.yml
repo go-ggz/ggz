@@ -1,23 +1,32 @@
 version: '{build}'
-image: 'Previous Visual Studio 2017'
+image: 'Visual Studio 2017'
 platform: x64
 
-clone_folder: 'c:\go\src\github.com\go-ggz\ggz'
+clone_folder: 'c:\gopath\src\github.com\go-ggz\ggz'
 max_jobs: 1
 
 environment:
-  GOPATH: c:\go
+  GOPATH: c:\gopath
   docker_username:
     secure: em/TNLUXxG19O/HvbvfJuQ==
   docker_password:
     secure: Yo9FJJqihaNz5q8T4Jz8tQ==
   GO111MODULE: on
+  GOVERSION: 1.12.4
 
 branches:
   only:
     - master
 
 install:
+  # Install the specific Go version.
+  - rmdir c:\go /s /q
+  - appveyor DownloadFile https://storage.googleapis.com/golang/go%GOVERSION%.windows-amd64.msi
+  - msiexec /i go%GOVERSION%.windows-amd64.msi /q
+  - choco install bzr
+  - set Path=c:\go\bin;c:\gopath\bin;C:\Program Files (x86)\Bazaar\;C:\Program Files\Mercurial\%Path%
+  - go version
+  - go env
   - ps: |
       docker version
       go version
