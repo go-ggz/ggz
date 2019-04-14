@@ -75,6 +75,10 @@ type auth0 struct {
 	Debug   bool
 }
 
+type auth struct {
+	Driver string
+}
+
 type prometheus struct {
 	AuthToken string
 }
@@ -132,6 +136,9 @@ var (
 
 	// Auth0 token information
 	Auth0 = &auth0{}
+
+	// Auth driver
+	Auth = &auth{}
 
 	// ContextKeyUser for user
 	ContextKeyUser = ContextKey("user")

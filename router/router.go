@@ -10,7 +10,7 @@ import (
 	"github.com/go-ggz/ggz/module/loader"
 	"github.com/go-ggz/ggz/module/socket"
 	"github.com/go-ggz/ggz/module/storage"
-	"github.com/go-ggz/ggz/router/middleware/auth0"
+	"github.com/go-ggz/ggz/router/middleware/auth"
 	"github.com/go-ggz/ggz/router/middleware/graphql"
 	"github.com/go-ggz/ggz/router/middleware/header"
 	"github.com/go-ggz/ggz/router/middleware/prometheus"
@@ -104,14 +104,14 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		root.GET("/assets/*name", gzip.Gzip(gzip.DefaultCompression), assets.ViewHandler())
 
 		api := e.Group("/v1")
-		api.Use(auth0.Check())
+		api.Use(auth.Check())
 		{
 			api.POST("/url/meta", web.URLMeta)
 			api.POST("/s", web.CreateShortenURL)
 		}
 
 		g := e.Group("/graphql")
-		g.Use(auth0.Check())
+		g.Use(auth.Check())
 		{
 			g.POST("", graphql.Handler())
 			if config.Server.GraphiQL {

@@ -2,6 +2,7 @@ module github.com/go-ggz/ggz
 
 require (
 	cloud.google.com/go v0.36.0 // indirect
+	firebase.google.com/go v3.7.0+incompatible
 	github.com/appleboy/com v0.0.1
 	github.com/appleboy/gofight v2.0.0+incompatible
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
@@ -29,7 +30,6 @@ require (
 	github.com/go-xorm/xorm v0.7.1
 	github.com/googollee/go-engine.io v0.0.0-20180829091931-e2f255711dcb // indirect
 	github.com/googollee/go-socket.io v0.0.0-20181101151912-c8aeb1ed9b49
-	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/mux v1.7.0 // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/graphql-go/graphql v0.7.7
@@ -47,7 +47,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/opentracing/opentracing-go v1.0.2 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/prometheus/client_golang v0.9.2
+	github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829
 	github.com/rs/zerolog v1.12.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/scorredoira/email v0.0.0-20181116225458-c1787f8317a8
@@ -57,8 +57,9 @@ require (
 	github.com/ugorji/go/codec v0.0.0-20190309163734-c4a1c341dc93 // indirect
 	github.com/valyala/fasttemplate v1.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
-	golang.org/x/net v0.0.0-20190213061140-3a22650c66bd
+	golang.org/x/net v0.0.0-20190311183353-d8887717615a
 	golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6
+	google.golang.org/api v0.3.2
 	gopkg.in/gin-gonic/gin.v1 v1.3.0 // indirect
 	gopkg.in/ini.v1 v1.42.0 // indirect
 	gopkg.in/nicksrandall/dataloader.v5 v5.0.0

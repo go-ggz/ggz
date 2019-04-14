@@ -18,8 +18,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-//go:generate fileb0x ab0x.yaml
-
 var fileServer = http.FileServer(dist.HTTP)
 
 // Load initializes the static files.
@@ -62,7 +60,7 @@ func (c ChainedFS) Open(origPath string) (http.File, error) {
 
 // ReadSource is adapTed from ioutil
 func ReadSource(origPath string) (content []byte, err error) {
-	content, err = dist.ReadFile(origPath)
+	content, err = ReadFile(origPath)
 
 	if err != nil {
 		log.Warn().Err(err).Msgf("Failed to read builtin %s file.", origPath)
