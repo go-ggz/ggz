@@ -143,6 +143,7 @@
           GO111MODULE: 'on',
         },
         commands: [
+          'make generate',
           'go build -v -ldflags "-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
         ],
         when: {
@@ -160,6 +161,7 @@
           GO111MODULE: 'on',
         },
         commands: [
+          'make generate',
           'go build -v -ldflags "-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
         ],
         when: {
