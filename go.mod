@@ -60,3 +60,5 @@ require (
 	gopkg.in/testfixtures.v2 v2.5.3
 	gopkg.in/urfave/cli.v2 v2.0.0-20180128182452-d3ae77c26ac8
 )
+
+replace google.golang.org/api => google.golang.org/api v0.3.2
