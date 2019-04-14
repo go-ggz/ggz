@@ -8,6 +8,23 @@
     },
     steps: [
       {
+        name: 'generate',
+        image: 'golang:1.12',
+        pull: 'always',
+        environment: {
+          GO111MODULE: 'on',
+        },
+        commands: [
+          'make generate',
+        ],
+        volumes: [
+          {
+            name: 'gopath',
+            path: '/go',
+          },
+        ],
+      },
+      {
         name: 'vet',
         image: 'golang:1.12',
         pull: 'always',
