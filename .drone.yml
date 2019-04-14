@@ -7,6 +7,17 @@ platform:
   arch: amd64
 
 steps:
+- name: generate
+  pull: always
+  image: golang:1.12
+  commands:
+  - make generate
+  environment:
+    GO111MODULE: on
+  volumes:
+  - name: gopath
+    path: /go
+
 - name: vet
   pull: always
   image: golang:1.12
@@ -86,6 +97,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/amd64/ggz-server ./cmd/ggz-server"
   environment:
     CGO_ENABLED: 0
@@ -99,6 +111,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/amd64/ggz-server ./cmd/ggz-server"
   environment:
     CGO_ENABLED: 0
@@ -167,6 +180,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm64/ggz-server ./cmd/ggz-server"
   environment:
     CGO_ENABLED: 0
@@ -180,6 +194,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm64/ggz-server ./cmd/ggz-server"
   environment:
     CGO_ENABLED: 0
@@ -248,6 +263,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm/ggz-server ./cmd/ggz-server"
   environment:
     CGO_ENABLED: 0
@@ -261,6 +277,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm/ggz-server ./cmd/ggz-server"
   environment:
     CGO_ENABLED: 0
@@ -329,6 +346,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/amd64/ggz-redirect ./cmd/ggz-redirect"
   environment:
     CGO_ENABLED: 0
@@ -342,6 +360,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/amd64/ggz-redirect ./cmd/ggz-redirect"
   environment:
     CGO_ENABLED: 0
@@ -410,6 +429,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm64/ggz-redirect ./cmd/ggz-redirect"
   environment:
     CGO_ENABLED: 0
@@ -423,6 +443,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm64/ggz-redirect ./cmd/ggz-redirect"
   environment:
     CGO_ENABLED: 0
@@ -491,6 +512,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm/ggz-redirect ./cmd/ggz-redirect"
   environment:
     CGO_ENABLED: 0
@@ -504,6 +526,7 @@ steps:
   pull: always
   image: golang:1.12
   commands:
+  - make generate
   - "go build -v -ldflags \"-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm/ggz-redirect ./cmd/ggz-redirect"
   environment:
     CGO_ENABLED: 0

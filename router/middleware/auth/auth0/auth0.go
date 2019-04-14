@@ -55,83 +55,71 @@ func Check() gin.HandlerFunc {
 
 		// If there was an error, do not continue.
 		if err != nil {
-			log.Error().Err(err).Msg("verify jwt token error.")
-			c.AbortWithStatusJSON(
-				http.StatusOK,
-				gin.H{
-					"data": nil,
-					"errors": []map[string]interface{}{
-						{
-							"message": "token expire or parse error",
-						},
-					},
-				},
-			)
-			return
-		}
-
-		userClaim := helper.GetUserDataFromToken(c.Request.Context())
-		if _, ok := userClaim["email"]; !ok {
-			c.AbortWithStatusJSON(
-				http.StatusOK,
-				gin.H{
-					"data": nil,
-					"errors": []map[string]interface{}{
-						{
-							"message": "email not found.",
-						},
-					},
-				},
-			)
-			return
-		}
-
-		// check user exist
-		user, err = model.GetUserByEmail(userClaim["email"].(string))
-
-		if err != nil {
-			if !model.IsErrUserNotExist(err) {
-				log.Error().Err(err).Msg("database error.")
-				c.AbortWithStatusJSON(
-					http.StatusBadRequest,
-					gin.H{
-						"data": nil,
-						"errors": []map[string]interface{}{
-							{
-								"message": "database query error",
-							},
-						},
-					},
-				)
-				return
-			}
-
-			// create new user
-			user = &model.User{
-				Email:    userClaim["email"].(string),
-				FullName: userClaim["name"].(string),
-				IsActive: userClaim["email_verified"].(bool),
-			}
-			err := model.CreateUser(user)
-
-			if err != nil {
-				log.Error().Err(err).Msg("database error.")
+			c.Next()
+		} else {
+			userClaim := helper.GetUserDataFromToken(c.Request.Context())
+			if _, ok := userClaim["email"]; !ok {
 				c.AbortWithStatusJSON(
 					http.StatusOK,
 					gin.H{
 						"data": nil,
 						"errors": []map[string]interface{}{
 							{
-								"message": "can't create new user",
+								"message": "email not found.",
 							},
 						},
 					},
 				)
 				return
 			}
-		}
 
-		ctx := context.WithValue(c.Request.Context(), config.ContextKeyUser, user)
-		c.Request = c.Request.WithContext(ctx)
+			// check user exist
+			user, err = model.GetUserByEmail(userClaim["email"].(string))
+
+			if err != nil {
+				if !model.IsErrUserNotExist(err) {
+					log.Error().Err(err).Msg("database error.")
+					c.AbortWithStatusJSON(
+						http.StatusBadRequest,
+						gin.H{
+							"data": nil,
+							"errors": []map[string]interface{}{
+								{
+									"message": "database query error",
+								},
+							},
+						},
+					)
+					return
+				}
+
+				// create new user
+				user = &model.User{
+					Email:    userClaim["email"].(string),
+					FullName: userClaim["name"].(string),
+					IsActive: userClaim["email_verified"].(bool),
+				}
+				err := model.CreateUser(user)
+
+				if err != nil {
+					log.Error().Err(err).Msg("database error.")
+					c.AbortWithStatusJSON(
+						http.StatusOK,
+						gin.H{
+							"data": nil,
+							"errors": []map[string]interface{}{
+								{
+									"message": "can't create new user",
+								},
+							},
+						},
+					)
+					return
+				}
+			}
+
+			ctx := context.WithValue(c.Request.Context(), config.ContextKeyUser, user)
+			c.Request = c.Request.WithContext(ctx)
+		}
 	}
 }

@@ -62,8 +62,9 @@ func NewEngine(driver, prefix string, expire int) error {
 func userBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	var results []*dataloader.Result
 	id, _ := getCacheID(keys[0].String())
+	n, _ := strconv.ParseInt(id.(string), 10, 64)
 
-	user, err := model.GetUserByID(id.(int64))
+	user, err := model.GetUserByID(n)
 
 	results = append(results, &dataloader.Result{
 		Data:  user,

@@ -315,6 +315,13 @@ func Server() *cli.Command {
 				Usage:       "token to secure prometheus metrics endpoint",
 				Destination: &config.Prometheus.AuthToken,
 			},
+			&cli.StringFlag{
+				Name:        "auth-driver",
+				EnvVars:     []string{"GGZ_AUTH_DRIVER"},
+				Usage:       "auth driver",
+				Value:       "auth0",
+				Destination: &config.Auth.Driver,
+			},
 		},
 		Before: func(c *cli.Context) error {
 			if len(c.StringSlice("admin-user")) > 0 {

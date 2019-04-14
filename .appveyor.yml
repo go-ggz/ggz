@@ -1,5 +1,5 @@
 version: '{build}'
-image: 'Visual Studio 2017'
+image: 'Previous Visual Studio 2017'
 platform: x64
 
 clone_folder: 'c:\go\src\github.com\go-ggz\ggz'
@@ -33,7 +33,8 @@ build_script:
         $version = $env:APPVEYOR_REPO_TAG_NAME
         $buildDate = $env:APPVEYOR_REPO_COMMIT_TIMESTAMP
       }
-
+      go get -u github.com/UnnoTed/fileb0x
+      go generate ./assets/...
       go build -ldflags "-X github.com/go-ggz/ggz/version.Version=$version -X github.com/go-ggz/ggz/version.BuildDate=$buildDate" -a -o release/ggz-server.exe ./cmd/ggz-server
       go build -ldflags "-X github.com/go-ggz/ggz/version.Version=$version -X github.com/go-ggz/ggz/version.BuildDate=$buildDate" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
 

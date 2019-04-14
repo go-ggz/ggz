@@ -1,0 +1,13 @@
+{
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "dev": {
+        "url": "http://localhost:8080/graphql"
+      },
+      "prod": {
+        "url": "https://api.ggz.tw/graphql"
+      }
+    }
+  }
+}
