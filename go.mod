@@ -1,5 +1,7 @@
 module github.com/go-ggz/ggz
 
+go 1.11
+
 require (
 	firebase.google.com/go v3.7.0+incompatible
 	github.com/appleboy/com v0.0.1
