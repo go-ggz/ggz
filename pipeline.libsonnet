@@ -15,8 +15,6 @@
           GO111MODULE: 'on',
         },
         commands: [
-          'apt-get -y update',
-          'apt-get -y upgrade git',
           'make generate',
         ],
         volumes: [

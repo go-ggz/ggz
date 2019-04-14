@@ -11,8 +11,6 @@ steps:
   pull: always
   image: golang:1.12
   commands:
-  - apt-get -y update
-  - apt-get -y upgrade git
   - make generate
   environment:
     GO111MODULE: on
