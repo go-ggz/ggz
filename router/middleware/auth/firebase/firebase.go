@@ -105,6 +105,11 @@ func Check() gin.HandlerFunc {
 					Email:    userData.Claims["email"].(string),
 					IsActive: userData.Claims["email_verified"].(bool),
 				}
+
+				if v, ok := userData.Claims["name"]; ok {
+					user.FullName = v.(string)
+				}
+
 				err := model.CreateUser(user)
 
 				if err != nil {
