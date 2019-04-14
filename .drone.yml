@@ -7,17 +7,6 @@ platform:
   arch: amd64
 
 steps:
-- name: vet
-  pull: always
-  image: golang:1.12
-  commands:
-  - make vet
-  environment:
-    GO111MODULE: on
-  volumes:
-  - name: gopath
-    path: /go
-
 - name: lint
   pull: always
   image: golang:1.12
