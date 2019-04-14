@@ -8,7 +8,7 @@ import (
 	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/module/loader"
-	"github.com/go-ggz/ggz/module/socket"
+	// "github.com/go-ggz/ggz/module/socket"
 	"github.com/go-ggz/ggz/module/storage"
 	"github.com/go-ggz/ggz/router/middleware/auth"
 	"github.com/go-ggz/ggz/router/middleware/graphql"
@@ -30,9 +30,9 @@ func GlobalInit() {
 	}
 
 	// initial socket module
-	if err := socket.NewEngine(); err != nil {
-		log.Fatal().Err(err).Msg("Failed to initialize Socket IO engine")
-	}
+	// if err := socket.NewEngine(); err != nil {
+	// 	log.Fatal().Err(err).Msg("Failed to initialize Socket IO engine")
+	// }
 
 	if config.QRCode.Enable {
 		var err error
@@ -120,10 +120,10 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		}
 
 		// socket connection
-		root.GET("/socket.io/", socket.Handler())
-		root.POST("/socket.io/", socket.Handler())
-		root.Handle("WS", "/socket.io", socket.Handler())
-		root.Handle("WSS", "/socket.io", socket.Handler())
+		// root.GET("/socket.io/", socket.Handler())
+		// root.POST("/socket.io/", socket.Handler())
+		// root.Handle("WS", "/socket.io", socket.Handler())
+		// root.Handle("WSS", "/socket.io", socket.Handler())
 	}
 
 	return e

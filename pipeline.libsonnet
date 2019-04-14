@@ -7,23 +7,23 @@
       arch: 'amd64',
     },
     steps: [
-      // {
-      //   name: 'vet',
-      //   image: 'golang:1.12',
-      //   pull: 'always',
-      //   environment: {
-      //     GO111MODULE: 'on',
-      //   },
-      //   commands: [
-      //     'make vet',
-      //   ],
-      //   volumes: [
-      //     {
-      //       name: 'gopath',
-      //       path: '/go',
-      //     },
-      //   ],
-      // },
+      {
+        name: 'vet',
+        image: 'golang:1.12',
+        pull: 'always',
+        environment: {
+          GO111MODULE: 'on',
+        },
+        commands: [
+          'make vet',
+        ],
+        volumes: [
+          {
+            name: 'gopath',
+            path: '/go',
+          },
+        ],
+      },
       {
         name: 'lint',
         image: 'golang:1.12',
