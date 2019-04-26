@@ -29,10 +29,6 @@ LDFLAGS ?= -X github.com/go-ggz/ggz/version.Version=$(VERSION) -X github.com/go-
 
 all: build
 
-.PHONY: install-module
-install-module:
-	$(GO) mod download
-
 .PHONY: tar
 tar:
 	tar -zcvf release.tar.gz bin Dockerfile Makefile
