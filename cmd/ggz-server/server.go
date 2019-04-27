@@ -480,7 +480,6 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 func startServer(s *http.Server) error {
 	if s.TLSConfig == nil {
 		return s.ListenAndServe()
-	} else {
-		return s.ListenAndServeTLS("", "")
 	}
+	return s.ListenAndServeTLS("", "")
 }
