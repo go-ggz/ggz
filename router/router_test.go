@@ -19,6 +19,7 @@ func TestHealthzOnRedirectService(t *testing.T) {
 		r.GET("/healthz").
 			Run(LoadRedirct(), func(r gofight.HTTPResponse, rq gofight.HTTPRequest) {
 				assert.Equal(t, http.StatusOK, r.Code)
+				assert.Equal(t, "ok", r.Body.String())
 			})
 	})
 }

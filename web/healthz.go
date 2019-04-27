@@ -9,4 +9,5 @@ import (
 // Heartbeat for check server status
 func Heartbeat(c *gin.Context) {
 	c.AbortWithStatus(http.StatusOK)
+	c.String(http.StatusOK, "ok")
 }
