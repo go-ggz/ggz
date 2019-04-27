@@ -24,3 +24,4 @@ release/
 coverage.txt
 assets/ab0x.go
 assets/dist/firebase/serviceAccountKey.json
+vendor

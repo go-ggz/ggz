@@ -54,6 +54,10 @@ generate:
 	fi
 	$(GO) generate $(PACKAGES)
 
+.PHONY: vendor
+vendor:
+	GO111MODULE=on $(GO) mod tidy && GO111MODULE=on $(GO) mod vendor
+
 .PHONY: fmt
 fmt:
 	$(GOFMT) -w $(GOFILES)
@@ -116,7 +120,7 @@ upx:
 test: fmt-check
 	@$(GO) test -v -cover -tags $(TAGS) -coverprofile coverage.txt $(PACKAGES) && echo "\n==>\033[32m Ok\033[m\n" || exit 1
 
-release: release-dirs release-build release-copy release-check
+release: release-dirs release-build release-copy release-compress release-check
 
 release-dirs:
 	mkdir -p $(DIST)/binaries $(DIST)/release
@@ -126,6 +130,13 @@ release-build:
 		$(GO) get -u github.com/mitchellh/gox; \
 	fi
 	gox -os="$(TARGETS)" -arch="$(ARCHS)" -tags="$(TAGS)" -ldflags="$(EXTLDFLAGS)-s -w $(LDFLAGS)" -output="$(DIST)/binaries/$(SERVICE)-$(VERSION)-{{.OS}}-{{.Arch}}" ./cmd/$(SERVICE)/...
+
+.PHONY: release-compress
+release-compress:
+	@hash gxz > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		$(GO) get -u github.com/ulikunitz/xz/cmd/gxz; \
+	fi
+	cd $(DIST)/release/; for file in `find . -type f -name "*"`; do echo "compressing $${file}" && gxz -k -9 $${file}; done;
 
 release-copy:
 	$(foreach file,$(wildcard $(DIST)/binaries/$(SERVICE)-*),cp $(file) $(DIST)/release/$(notdir $(file));)
