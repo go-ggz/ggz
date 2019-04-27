@@ -3,6 +3,7 @@ package router
 import (
 	"net/http"
 	"path"
+	"regexp"
 
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/config"
@@ -21,6 +22,10 @@ import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
+)
+
+var (
+	rxURL = regexp.MustCompile(`^/(socket.io|graphql).*`)
 )
 
 // GlobalInit is for global configuration reload-able.
@@ -63,7 +68,10 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 	e := gin.New()
 
 	e.Use(gin.Recovery())
-	e.Use(logger.SetLogger())
+	e.Use(logger.SetLogger(logger.Config{
+		UTC:            true,
+		SkipPathRegexp: rxURL,
+	}))
 	// e.Use(gzip.Gzip(gzip.DefaultCompression))
 	e.Use(header.Options)
 	e.Use(header.Secure)
@@ -140,7 +148,10 @@ func LoadRedirct(middleware ...gin.HandlerFunc) http.Handler {
 	e := gin.New()
 
 	e.Use(gin.Recovery())
-	e.Use(logger.SetLogger())
+	e.Use(logger.SetLogger(logger.Config{
+		UTC:            true,
+		SkipPathRegexp: rxURL,
+	}))
 	e.Use(gzip.Gzip(gzip.DefaultCompression))
 	e.Use(header.Options)
 	e.Use(header.Secure)
