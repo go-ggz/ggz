@@ -591,6 +591,17 @@ platform:
   arch: amd64
 
 steps:
+- name: generate
+  pull: always
+  image: golang:1.12
+  commands:
+  - make generate
+  environment:
+    GO111MODULE: on
+  volumes:
+  - name: gopath
+    path: /go
+
 - name: build-all-binary
   pull: always
   image: golang:1.12
@@ -598,6 +609,9 @@ steps:
   - make release
   environment:
     GO111MODULE: on
+  volumes:
+  - name: gopath
+    path: /go
   when:
     event:
     - tag

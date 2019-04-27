@@ -234,6 +234,23 @@
     },
     steps: [
       {
+        name: 'generate',
+        image: 'golang:1.12',
+        pull: 'always',
+        environment: {
+          GO111MODULE: 'on',
+        },
+        commands: [
+          'make generate',
+        ],
+        volumes: [
+          {
+            name: 'gopath',
+            path: '/go',
+          },
+        ],
+      },
+      {
         name: 'build-all-binary',
         image: 'golang:1.12',
         pull: 'always',
@@ -246,6 +263,12 @@
         when: {
           event: [ 'tag' ],
         },
+        volumes: [
+          {
+            name: 'gopath',
+            path: '/go',
+          },
+        ],
       },
       {
         name: 'deploy-all-binary',
