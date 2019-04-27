@@ -462,3 +462,11 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 	log.Printf("Redirecting to %s", target)
 	http.Redirect(w, req, target, http.StatusTemporaryRedirect)
 }
+
+func startServer(s *http.Server) error {
+	if s.TLSConfig == nil {
+		return s.ListenAndServe()
+	} else {
+		return s.ListenAndServeTLS("", "")
+	}
+}
