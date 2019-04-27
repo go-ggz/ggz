@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
 	"crypto/tls"
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
+	"os/signal"
 	"path"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/go-ggz/ggz/config"
@@ -332,6 +336,38 @@ func Server() *cli.Command {
 			return nil
 		},
 		Action: func(c *cli.Context) error {
+			idleConnsClosed := make(chan struct{})
+
+			// load global script
+			log.Info().Msg("Initial module engine.")
+			router.GlobalInit()
+
+			server := &http.Server{
+				Addr:         config.Server.Addr,
+				Handler:      router.LoadRedirct(),
+				ReadTimeout:  5 * time.Second,
+				WriteTimeout: 10 * time.Second,
+			}
+
+			go func(srv *http.Server) {
+				sigint := make(chan os.Signal, 1)
+
+				// interrupt signal sent from terminal
+				signal.Notify(sigint, os.Interrupt)
+				// sigterm signal sent from kubernetes
+				signal.Notify(sigint, syscall.SIGTERM)
+
+				<-sigint
+
+				log.Info().Msg("received an interrupt signal, shut down the server.")
+				// We received an interrupt signal, shut down.
+				if err := srv.Shutdown(context.Background()); err != nil {
+					// Error from closing listeners, or context timeout:
+					log.Error().Err(err).Msg("HTTP server Shutdown")
+				}
+				close(idleConnsClosed)
+			}(server)
+
 			if config.Server.LetsEncrypt || (config.Server.Cert != "" && config.Server.Key != "") {
 				cfg := &tls.Config{
 					PreferServerCipherSuites: true,
@@ -381,10 +417,6 @@ func Server() *cli.Command {
 					splitAddr := strings.SplitN(config.Server.Addr, ":", 2)
 					log.Info().Msgf("Starting on %s:80 and %s:443", splitAddr[0], splitAddr[0])
 
-					// load global script
-					log.Info().Msg("Initial module engine.")
-					router.GlobalInit()
-
 					g.Go(func() error {
 						return http.ListenAndServe(
 							fmt.Sprintf("%s:80", splitAddr[0]),
@@ -393,13 +425,9 @@ func Server() *cli.Command {
 					})
 
 					g.Go(func() error {
-						return startServer(&http.Server{
-							Addr:         fmt.Sprintf("%s:443", splitAddr[0]),
-							Handler:      router.Load(),
-							ReadTimeout:  5 * time.Second,
-							WriteTimeout: 10 * time.Second,
-							TLSConfig:    cfg,
-						})
+						server.Addr = fmt.Sprintf("%s:443", splitAddr[0])
+						server.TLSConfig = cfg
+						return startServer(server)
 					})
 
 					if err := g.Wait(); err != nil {
@@ -419,17 +447,8 @@ func Server() *cli.Command {
 						cert,
 					}
 
-					// load global script
-					log.Info().Msg("Initial module engine.")
-					router.GlobalInit()
-
-					server := &http.Server{
-						Addr:         config.Server.Addr,
-						Handler:      router.Load(),
-						ReadTimeout:  5 * time.Second,
-						WriteTimeout: 10 * time.Second,
-						TLSConfig:    cfg,
-					}
+					// Add TLS config
+					server.TLSConfig = cfg
 
 					if err := startServer(server); err != nil {
 						log.Fatal().Err(err)
@@ -440,17 +459,6 @@ func Server() *cli.Command {
 					g errgroup.Group
 				)
 
-				// load global script
-				log.Info().Msg("Initial module engine.")
-				router.GlobalInit()
-
-				server := &http.Server{
-					Addr:         config.Server.Addr,
-					Handler:      router.Load(),
-					ReadTimeout:  5 * time.Second,
-					WriteTimeout: 10 * time.Second,
-				}
-
 				g.Go(func() error {
 					log.Info().Msgf("Starting shorten server on %s", config.Server.Addr)
 					return startServer(server)
@@ -460,6 +468,8 @@ func Server() *cli.Command {
 					log.Fatal().Err(err)
 				}
 			}
+
+			<-idleConnsClosed
 
 			return nil
 		},
