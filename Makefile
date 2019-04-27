@@ -4,6 +4,7 @@ SERVICE ?= ggz-server
 DOCKER_ACCOUNT := goggz
 DOCKER_IMAGE := $(SERVICE)
 GOFMT ?= gofmt "-s"
+SHASUM ?= shasum -a 256
 GO ?= go
 TARGETS ?= linux darwin windows
 ARCHS ?= amd64 386
