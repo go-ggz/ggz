@@ -126,102 +126,107 @@
     ],
   },
 
-  build(name, os='linux', arch='amd64'):: {
-    kind: 'pipeline',
-    name: name + '-' + os + '-' + arch,
-    platform: {
-      os: os,
-      arch: arch,
-    },
-    steps: [
-      {
-        name: 'build-push',
-        image: 'golang:1.12',
-        pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
-        commands: [
-          'make generate',
-          'go build -v -tags sqlite -ldflags "-extldflags -static -X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
-        ],
-        when: {
-          event: {
-            exclude: [ 'tag' ],
+  build(name, os='linux', arch='amd64', cgo=false)::
+    local build_sqlite = if cgo then "-tags sqlite" else "";
+    local build_static = if cgo then "-extldflags -static" else "";
+    {
+      kind: 'pipeline',
+      name: name + '-' + os + '-' + arch,
+      platform: {
+        os: os,
+        arch: arch,
+      },
+      steps: [
+        {
+          name: 'build-push',
+          image: 'golang:1.12',
+          pull: 'always',
+          environment: {
+            GO111MODULE: 'on',
+            CGO_ENABLED: if cgo then "1" else "0"
+          },
+          commands: [
+            'make generate',
+            'go build -v '+ build_sqlite +' -ldflags "'+ build_static +' -X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
+          ],
+          when: {
+            event: {
+              exclude: [ 'tag' ],
+            },
           },
         },
-      },
-      {
-        name: 'build-tag',
-        image: 'golang:1.12',
-        pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
-        commands: [
-          'make generate',
-          'go build -v -tags sqlite -ldflags "-extldflags -static -X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
-        ],
-        when: {
-          event: [ 'tag' ],
-        },
-      },
-      {
-        name: 'executable',
-        image: 'golang:1.12',
-        pull: 'always',
-        commands: [
-          './release/' + os + '/' + arch + '/' + name + ' --help',
-        ],
-      },
-      {
-        name: 'dryrun',
-        image: 'plugins/docker:' + os + '-' + arch,
-        pull: 'always',
-        settings: {
-          daemon_off: false,
-          dry_run: true,
-          tags: os + '-' + arch,
-          dockerfile: 'docker/' + name + '/Dockerfile.' + os + '.' + arch,
-          repo: 'goggz/' + name,
-          cache_from: 'goggz/' + name,
-        },
-        when: {
-          event: [ 'pull_request' ],
-        },
-      },
-      {
-        name: 'publish',
-        image: 'plugins/docker:' + os + '-' + arch,
-        pull: 'always',
-        settings: {
-          daemon_off: 'false',
-          auto_tag: true,
-          auto_tag_suffix: os + '-' + arch,
-          dockerfile: 'docker/' + name + '/Dockerfile.' + os + '.' + arch,
-          repo: 'goggz/' + name,
-          cache_from: 'goggz/' + name,
-          username: { 'from_secret': 'docker_username' },
-          password: { 'from_secret': 'docker_password' },
-        },
-        when: {
-          event: {
-            exclude: [ 'pull_request' ],
+        {
+          name: 'build-tag',
+          image: 'golang:1.12',
+          pull: 'always',
+          environment: {
+            GO111MODULE: 'on',
+            CGO_ENABLED: if cgo then "1" else "0"
+          },
+          commands: [
+            'make generate',
+            'go build -v '+ build_sqlite +' -ldflags "'+ build_static +' -X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
+          ],
+          when: {
+            event: [ 'tag' ],
           },
         },
-      },
-    ],
-    depends_on: [
-      'testing',
-    ],
-    trigger: {
-      ref: [
-        'refs/heads/master',
-        'refs/pull/**',
-        'refs/tags/**',
+        {
+          name: 'executable',
+          image: 'golang:1.12',
+          pull: 'always',
+          commands: [
+            './release/' + os + '/' + arch + '/' + name + ' --help',
+          ],
+        },
+        {
+          name: 'dryrun',
+          image: 'plugins/docker:' + os + '-' + arch,
+          pull: 'always',
+          settings: {
+            daemon_off: false,
+            dry_run: true,
+            tags: os + '-' + arch,
+            dockerfile: 'docker/' + name + '/Dockerfile.' + os + '.' + arch,
+            repo: 'goggz/' + name,
+            cache_from: 'goggz/' + name,
+          },
+          when: {
+            event: [ 'pull_request' ],
+          },
+        },
+        {
+          name: 'publish',
+          image: 'plugins/docker:' + os + '-' + arch,
+          pull: 'always',
+          settings: {
+            daemon_off: 'false',
+            auto_tag: true,
+            auto_tag_suffix: os + '-' + arch,
+            dockerfile: 'docker/' + name + '/Dockerfile.' + os + '.' + arch,
+            repo: 'goggz/' + name,
+            cache_from: 'goggz/' + name,
+            username: { 'from_secret': 'docker_username' },
+            password: { 'from_secret': 'docker_password' },
+          },
+          when: {
+            event: {
+              exclude: [ 'pull_request' ],
+            },
+          },
+        },
       ],
+      depends_on: [
+        'testing',
+      ],
+      trigger: {
+        ref: [
+          'refs/heads/master',
+          'refs/pull/**',
+          'refs/tags/**',
+        ],
+      },
     },
-  },
 
   release:: {
     kind: 'pipeline',

@@ -3,9 +3,9 @@ local ggzServer = 'ggz-server';
 local ggzRedirect = 'ggz-redirect';
 [
   pipeline.test,
-  pipeline.build(ggzServer, 'linux', 'amd64'),
-  pipeline.build(ggzServer, 'linux', 'arm64'),
-  pipeline.build(ggzServer, 'linux', 'arm'),
+  pipeline.build(ggzServer, 'linux', 'amd64', true),
+  pipeline.build(ggzServer, 'linux', 'arm64', true),
+  pipeline.build(ggzServer, 'linux', 'arm', true),
   pipeline.build(ggzRedirect, 'linux', 'amd64'),
   pipeline.build(ggzRedirect, 'linux', 'arm64'),
   pipeline.build(ggzRedirect, 'linux', 'arm'),
