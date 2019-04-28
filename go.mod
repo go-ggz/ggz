@@ -15,7 +15,7 @@ require (
 	github.com/gin-contrib/logger v0.0.1
 	github.com/gin-contrib/pprof v1.2.0
 	github.com/gin-gonic/gin v1.3.0
-	github.com/go-ggz/ui v0.0.0-20190320164302-c495f4114069
+	github.com/go-ggz/ui v0.0.1
 	github.com/go-ini/ini v1.42.0 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/core v0.6.2
