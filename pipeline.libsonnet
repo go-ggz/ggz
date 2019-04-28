@@ -143,7 +143,7 @@
         },
         commands: [
           'make generate',
-          'go build -v -tags sqlite -ldflags "-X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
+          'go build -v -tags sqlite -ldflags "-extldflags -static -X github.com/go-ggz/ggz/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
         ],
         when: {
           event: {
@@ -160,7 +160,7 @@
         },
         commands: [
           'make generate',
-          'go build -v -tags sqlite -ldflags "-X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
+          'go build -v -tags sqlite -ldflags "-extldflags -static -X github.com/go-ggz/ggz/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/' + os + '/' + arch + '/' + name + ' ./cmd/' + name,
         ],
         when: {
           event: [ 'tag' ],
