@@ -344,7 +344,7 @@ func Server() *cli.Command {
 
 			server := &http.Server{
 				Addr:         config.Server.Addr,
-				Handler:      router.LoadRedirct(),
+				Handler:      router.Load(),
 				ReadTimeout:  5 * time.Second,
 				WriteTimeout: 10 * time.Second,
 			}
