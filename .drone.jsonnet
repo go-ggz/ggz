@@ -6,9 +6,9 @@ local ggzRedirect = 'ggz-redirect';
   pipeline.build(ggzServer, 'linux', 'amd64', true),
   pipeline.build(ggzServer, 'linux', 'arm64', true),
   pipeline.build(ggzServer, 'linux', 'arm', true),
-  pipeline.build(ggzRedirect, 'linux', 'amd64'),
-  pipeline.build(ggzRedirect, 'linux', 'arm64'),
-  pipeline.build(ggzRedirect, 'linux', 'arm'),
+  pipeline.build(ggzRedirect, 'linux', 'amd64', true),
+  pipeline.build(ggzRedirect, 'linux', 'arm64', true),
+  pipeline.build(ggzRedirect, 'linux', 'arm', true),
   pipeline.release,
   pipeline.notifications(ggzServer, depends_on=[
     ggzServer + '-linux-amd64',
