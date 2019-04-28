@@ -355,7 +355,8 @@ func Server() *cli.Command {
 				// interrupt signal sent from terminal
 				signal.Notify(sigint, os.Interrupt)
 				// sigterm signal sent from kubernetes
-				signal.Notify(sigint, syscall.SIGTERM)
+				signal.Notify(sigint, syscall.SIGINT, syscall.SIGTERM)
+				defer signal.Stop(sigint)
 
 				<-sigint
 
