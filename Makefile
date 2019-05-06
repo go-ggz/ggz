@@ -12,7 +12,6 @@ BUILD_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 PACKAGES ?= $(shell $(GO) list ./...)
 GOFILES := $(shell find . -name "*.go" -type f)
 TAGS ?= sqlite
-TMPDIR := $(shell mktemp -d 2>/dev/null || mktemp -d -t 'tempdir')
 
 ifneq ($(shell uname), Darwin)
 	EXTLDFLAGS = -extldflags "-static" $(null)
