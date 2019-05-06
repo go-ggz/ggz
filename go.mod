@@ -43,6 +43,7 @@ require (
 	github.com/skip2/go-qrcode v0.0.0-20190110000554-dc11ecdae0a9
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a // indirect
 	github.com/stretchr/testify v1.3.0
+	github.com/testcontainers/testcontainers-go v0.0.3
 	github.com/valyala/fasttemplate v1.0.1 // indirect
 	golang.org/x/crypto v0.0.0-20190411191339-88737f569e3a
 	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3
