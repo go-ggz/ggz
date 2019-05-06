@@ -100,6 +100,6 @@ func main() {
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		os.Exit(1)
+		log.Fatal().Err(err).Msg("can't run app")
 	}
 }
