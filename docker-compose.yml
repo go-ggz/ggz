@@ -6,11 +6,6 @@ services:
     restart: always
     ports:
       - 8080:8080
-    environment:
-      - GGZ_DB_DRIVER=sqlite3
-      - GGZ_SERVER_HOST=http://localhost:8080
-      - GGZ_SERVER_SHORTEN_HOST=http://localhost:8081
-      - GGZ_AUTH0_PEM_PATH=test.pem
 
   ggz-redirect:
     image: goggz/ggz-redirect
