@@ -9,7 +9,7 @@ GO ?= go
 TARGETS ?= linux darwin windows
 ARCHS ?= amd64 386
 BUILD_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
-PACKAGES ?= $(shell $(GO) list ./...)
+PACKAGES ?= $(shell $(GO) list ./... | grep -v intergrations)
 GOFILES := $(shell find . -name "*.go" -type f)
 TAGS ?= sqlite
 
