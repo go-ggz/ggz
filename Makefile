@@ -11,7 +11,7 @@ ARCHS ?= amd64 386
 BUILD_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 PACKAGES ?= $(shell $(GO) list ./... | grep -v integrations)
 GOFILES := $(shell find . -name "*.go" -type f)
-TAGS ?= sqlite
+TAGS ?= sqlite sqlite_unlock_notify
 
 ifneq ($(shell uname), Darwin)
 	EXTLDFLAGS = -extldflags "-static" $(null)
