@@ -346,8 +346,10 @@ func Server() *cli.Command {
 				<-sigint
 
 				log.Info().Msg("received an interrupt signal, shut down the server.")
+				ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+				defer cancel()
 				// We received an interrupt signal, shut down.
-				if err := srv.Shutdown(context.Background()); err != nil {
+				if err := srv.Shutdown(ctx); err != nil {
 					// Error from closing listeners, or context timeout:
 					log.Error().Err(err).Msg("HTTP server Shutdown")
 				}
