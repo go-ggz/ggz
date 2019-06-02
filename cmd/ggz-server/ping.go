@@ -18,7 +18,7 @@ func Ping() *cli.Command {
 				return err
 			}
 			defer resp.Body.Close()
-			if resp.StatusCode != 200 {
+			if resp.StatusCode != http.StatusOK {
 				return fmt.Errorf("server returned non-200 status code")
 			}
 			return nil
