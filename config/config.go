@@ -87,6 +87,7 @@ type logs struct {
 	Color  bool
 	Debug  bool
 	Pretty bool
+	Level  string `default:"debug"`
 }
 
 // ContextKey for context package

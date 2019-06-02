@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"strings"
 	"time"
 
 	"github.com/go-ggz/ggz/config"
@@ -15,9 +16,21 @@ import (
 )
 
 func setupLogging() {
-	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	if config.Server.Debug {
+	switch strings.ToLower(config.Logs.Level) {
+	case "panic":
+		zerolog.SetGlobalLevel(zerolog.PanicLevel)
+	case "fatal":
+		zerolog.SetGlobalLevel(zerolog.FatalLevel)
+	case "error":
+		zerolog.SetGlobalLevel(zerolog.ErrorLevel)
+	case "warn":
+		zerolog.SetGlobalLevel(zerolog.WarnLevel)
+	case "info":
+		zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	case "debug":
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	default:
+		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	}
 
 	if config.Logs.Pretty {
@@ -59,18 +72,25 @@ func main() {
 				Destination: &config.Server.Debug,
 			},
 			&cli.BoolFlag{
-				Name:        "color",
+				Name:        "log-color",
 				Value:       true,
-				Usage:       "Enable pprof debugging server",
+				Usage:       "enable colored logging",
 				EnvVars:     []string{"GGZ_LOGS_COLOR"},
 				Destination: &config.Logs.Color,
 			},
 			&cli.BoolFlag{
-				Name:        "pretty",
+				Name:        "log-pretty",
 				Value:       true,
-				Usage:       "Enable pprof debugging server",
+				Usage:       "enable pretty logging",
 				EnvVars:     []string{"GGZ_LOGS_PRETTY"},
 				Destination: &config.Logs.Pretty,
+			},
+			&cli.StringFlag{
+				Name:        "log-level",
+				Value:       "info",
+				Usage:       "set logging level",
+				EnvVars:     []string{"GGZ_LOGS_LEVEL"},
+				Destination: &config.Logs.Level,
 			},
 		},
 
