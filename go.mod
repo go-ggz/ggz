@@ -58,3 +58,5 @@ require (
 )
 
 replace github.com/ugorji/go v1.1.4 => github.com/ugorji/go/codec v0.0.0-20190204201341-e444a5086c43
+
+replace github.com/airking05/termui v2.2.0+incompatible => github.com/airking05/termui v0.0.0-20180528121417-a42394913439
