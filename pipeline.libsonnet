@@ -144,6 +144,7 @@
           environment: {
             GO111MODULE: 'on',
             CGO_ENABLED: if cgo then "1" else "0",
+            GOPROXY: 'https://goproxy.io',
           },
           commands: [
             'make generate',
@@ -162,6 +163,7 @@
           environment: {
             GO111MODULE: 'on',
             CGO_ENABLED: if cgo then "1" else "0",
+            GOPROXY: 'https://goproxy.io',
           },
           commands: [
             'make generate',
