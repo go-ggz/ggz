@@ -42,10 +42,10 @@ func healthFlags() []cli.Flag {
 	}
 }
 
-// Ping provides the sub-command to check server live.
-func Ping() *cli.Command {
+// Health provides the sub-command to perform a health check.
+func Health() *cli.Command {
 	return &cli.Command{
-		Name:   "ping",
+		Name:   "health",
 		Usage:  "perform health checks",
 		Flags:  healthFlags(),
 		Action: healthAction(),

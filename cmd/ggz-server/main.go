@@ -58,7 +58,7 @@ func globalFlags() []cli.Flag {
 func globalCommands() []*cli.Command {
 	return []*cli.Command{
 		Server(),
-		Ping(),
+		Health(),
 		Mail(),
 	}
 }

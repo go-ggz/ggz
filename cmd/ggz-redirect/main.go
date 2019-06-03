@@ -102,7 +102,7 @@ func main() {
 
 		Commands: []*cli.Command{
 			Server(),
-			Ping(),
+			Health(),
 		},
 	}
 
