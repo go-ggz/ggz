@@ -13,6 +13,7 @@
         pull: 'always',
         environment: {
           GO111MODULE: 'on',
+          GOPROXY: 'https://proxy.golang.org',
         },
         commands: [
           'make generate',
@@ -30,6 +31,7 @@
         pull: 'always',
         environment: {
           GO111MODULE: 'on',
+          GOPROXY: 'https://proxy.golang.org',
         },
         commands: [
           'make vet',
@@ -47,6 +49,7 @@
         pull: 'always',
         environment: {
           GO111MODULE: 'on',
+          GOPROXY: 'https://proxy.golang.org',
         },
         commands: [
           'make lint',
@@ -64,6 +67,7 @@
         pull: 'always',
         environment: {
           GO111MODULE: 'on',
+          GOPROXY: 'https://proxy.golang.org',
         },
         commands: [
           'make misspell-check',
@@ -81,6 +85,7 @@
         pull: 'always',
         environment: {
           GO111MODULE: 'on',
+          GOPROXY: 'https://proxy.golang.org',
         },
         commands: [
           'make embedmd',
@@ -98,6 +103,7 @@
         pull: 'always',
         environment: {
           GO111MODULE: 'on',
+          GOPROXY: 'https://proxy.golang.org',
         },
         commands: [
           'make test',
@@ -144,7 +150,7 @@
           environment: {
             GO111MODULE: 'on',
             CGO_ENABLED: if cgo then "1" else "0",
-            GOPROXY: 'https://goproxy.io',
+            GOPROXY: 'https://proxy.golang.org',
           },
           commands: [
             'make generate',
@@ -163,7 +169,7 @@
           environment: {
             GO111MODULE: 'on',
             CGO_ENABLED: if cgo then "1" else "0",
-            GOPROXY: 'https://goproxy.io',
+            GOPROXY: 'https://proxy.golang.org',
           },
           commands: [
             'make generate',
