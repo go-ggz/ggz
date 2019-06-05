@@ -7,12 +7,12 @@ import (
 	// "net/http"
 
 	// "github.com/go-ggz/ggz/pkg/config"
-	// "github.com/go-ggz/ggz/helper"
+	// "github.com/go-ggz/ggz/pkg/helper"
 	// "github.com/go-ggz/ggz/router/middleware/auth/auth0"
 
 	// "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/googollee/go-socket.io"
+	socketio "github.com/googollee/go-socket.io"
 	// "github.com/rs/zerolog/log"
 )
 

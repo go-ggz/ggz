@@ -7,11 +7,11 @@ import (
 	"net/http"
 
 	"github.com/go-ggz/ggz/assets"
-	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/pkg/config"
+	"github.com/go-ggz/ggz/pkg/helper"
 
-	"github.com/auth0/go-jwt-middleware"
+	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
