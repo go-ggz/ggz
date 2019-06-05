@@ -1,7 +1,7 @@
 package graphql
 
 import (
-	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ggz/schema"
 
 	"github.com/gin-gonic/gin"

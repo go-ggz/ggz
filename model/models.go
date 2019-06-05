@@ -9,7 +9,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/pkg/config"
 
 	// Needed for the MySQL driver
 	_ "github.com/go-sql-driver/mysql"

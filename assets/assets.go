@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ui/dist"
 
 	"github.com/appleboy/com/file"

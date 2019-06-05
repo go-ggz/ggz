@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/go-ggz/ggz/assets"
-	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/pkg/config"
 
 	"firebase.google.com/go"
 	"github.com/gin-gonic/gin"

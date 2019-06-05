@@ -7,9 +7,9 @@ import (
 	"net/http"
 
 	"github.com/go-ggz/ggz/assets"
-	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/helper"
 	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/pkg/config"
 
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"

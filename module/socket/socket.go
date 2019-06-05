@@ -6,7 +6,7 @@ import (
 	// "fmt"
 	// "net/http"
 
-	// "github.com/go-ggz/ggz/config"
+	// "github.com/go-ggz/ggz/pkg/config"
 	// "github.com/go-ggz/ggz/helper"
 	// "github.com/go-ggz/ggz/router/middleware/auth/auth0"
 

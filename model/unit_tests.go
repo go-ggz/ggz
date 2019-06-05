@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/pkg/config"
 
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"

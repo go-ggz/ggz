@@ -13,7 +13,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ggz/router"
 
 	"github.com/rs/zerolog/log"

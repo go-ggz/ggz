@@ -1,9 +1,9 @@
 package storage
 
 import (
-	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/module/storage/disk"
 	"github.com/go-ggz/ggz/module/storage/minio"
+	"github.com/go-ggz/ggz/pkg/config"
 )
 
 // Storage for s3 and disk

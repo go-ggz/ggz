@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/pkg/config"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"

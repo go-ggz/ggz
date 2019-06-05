@@ -6,9 +6,9 @@ import (
 	"regexp"
 
 	"github.com/go-ggz/ggz/assets"
-	"github.com/go-ggz/ggz/config"
 	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/module/loader"
+	"github.com/go-ggz/ggz/pkg/config"
 	// "github.com/go-ggz/ggz/module/socket"
 	"github.com/go-ggz/ggz/module/storage"
 	"github.com/go-ggz/ggz/router/middleware/auth"

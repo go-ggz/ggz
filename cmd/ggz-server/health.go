@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/go-ggz/ggz/config"
+	"github.com/go-ggz/ggz/pkg/config"
 
 	"github.com/rs/zerolog/log"
 	"gopkg.in/urfave/cli.v2"
