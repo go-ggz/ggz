@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/go-ggz/ggz/pkg/config"
-	"github.com/go-ggz/ggz/version"
+	"github.com/go-ggz/ggz/pkg/version"
 
 	"github.com/joho/godotenv"
 	_ "github.com/joho/godotenv/autoload"

@@ -25,7 +25,7 @@ else
 	VERSION ?= $(shell git describe --tags --always | sed 's/-/+/' | sed 's/^v//')
 endif
 
-LDFLAGS ?= -X github.com/go-ggz/ggz/version.Version=$(VERSION) -X github.com/go-ggz/ggz/version.BuildDate=$(BUILD_DATE)
+LDFLAGS ?= -X github.com/go-ggz/ggz/pkg/version.Version=$(VERSION) -X github.com/go-ggz/ggz/pkg/version.BuildDate=$(BUILD_DATE)
 
 all: build
 
