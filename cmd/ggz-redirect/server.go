@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/go-ggz/ggz/pkg/config"
-	"github.com/go-ggz/ggz/router"
+	"github.com/go-ggz/ggz/pkg/router"
 
 	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/acme/autocert"
