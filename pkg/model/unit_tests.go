@@ -23,7 +23,7 @@ func fatalTestError(fmtStr string, args ...interface{}) {
 // test database. Creates the test database, and sets necessary settings.
 func MainTest(m *testing.M, pathToRoot string) {
 	var err error
-	fixturesDir := filepath.Join(pathToRoot, "model", "fixtures")
+	fixturesDir := filepath.Join(pathToRoot, "pkg", "fixtures")
 	if err = createTestEngine(fixturesDir); err != nil {
 		fatalTestError("Error creating test engine: %v\n", err)
 	}
