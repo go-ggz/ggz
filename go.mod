@@ -5,10 +5,10 @@ go 1.12
 require (
 	firebase.google.com/go v3.8.0+incompatible
 	github.com/appleboy/com v0.0.1
-	github.com/appleboy/gofight v2.0.0+incompatible
+	github.com/appleboy/gofight v2.0.0+incompatible // indirect
+	github.com/appleboy/gofight/v2 v2.1.0
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
 	github.com/aws/aws-sdk-go v1.19.41
-	github.com/buger/jsonparser v0.0.0-20181115193947-bf1c66bbce23 // indirect
 	github.com/codegangsta/negroni v1.0.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/gzip v0.0.1
@@ -28,8 +28,6 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/keighl/metabolize v0.0.0-20150915210303-97ab655d4034
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/labstack/echo v3.3.10+incompatible // indirect
-	github.com/labstack/gommon v0.2.8 // indirect
 	github.com/lib/pq v1.1.1
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0
@@ -46,7 +44,6 @@ require (
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a // indirect
 	github.com/stretchr/testify v1.3.0
 	github.com/testcontainers/testcontainers-go v0.0.4
-	github.com/valyala/fasttemplate v1.0.1 // indirect
 	golang.org/x/crypto v0.0.0-20190530122614-20be4c3c3ed5
 	golang.org/x/net v0.0.0-20190522155817-f3200d17e092
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
