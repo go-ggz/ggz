@@ -42,8 +42,8 @@ build_script:
       }
       go get -u github.com/UnnoTed/fileb0x
       go generate ./assets/...
-      go build -ldflags "-X github.com/go-ggz/ggz/version.Version=$version -X github.com/go-ggz/ggz/version.BuildDate=$buildDate" -a -o release/ggz-server.exe ./cmd/ggz-server
-      go build -ldflags "-X github.com/go-ggz/ggz/version.Version=$version -X github.com/go-ggz/ggz/version.BuildDate=$buildDate" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
+      go build -ldflags "-X github.com/go-ggz/ggz/pkg/version.Version=$version -X github.com/go-ggz/ggz/pkg/version.BuildDate=$buildDate" -a -o release/ggz-server.exe ./cmd/ggz-server
+      go build -ldflags "-X github.com/go-ggz/ggz/pkg/version.Version=$version -X github.com/go-ggz/ggz/pkg/version.BuildDate=$buildDate" -a -o release/ggz-redirect.exe ./cmd/ggz-redirect
 
       docker pull microsoft/nanoserver:10.0.14393.1884
       docker build -f docker/ggz-server/Dockerfile.windows.amd64 -t goggz/ggz-server:windows-amd64 .
