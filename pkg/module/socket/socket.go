@@ -8,7 +8,7 @@ import (
 
 	// "github.com/go-ggz/ggz/pkg/config"
 	// "github.com/go-ggz/ggz/pkg/helper"
-	// "github.com/go-ggz/ggz/pkg/router/middleware/auth/auth0"
+	// "github.com/go-ggz/ggz/pkg/middleware/auth/auth0"
 
 	// "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"

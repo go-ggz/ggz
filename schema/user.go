@@ -1,10 +1,10 @@
 package schema
 
 import (
-	"github.com/go-ggz/ggz/model"
-	"github.com/go-ggz/ggz/module/loader"
 	"github.com/go-ggz/ggz/pkg/errors"
 	"github.com/go-ggz/ggz/pkg/helper"
+	"github.com/go-ggz/ggz/pkg/model"
+	"github.com/go-ggz/ggz/pkg/module/loader"
 
 	"github.com/graphql-go/graphql"
 )

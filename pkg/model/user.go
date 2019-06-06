@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-ggz/ggz/module/base"
+	"github.com/go-ggz/ggz/pkg/module/base"
 )
 
 // User represents the object of individual and member of organization.

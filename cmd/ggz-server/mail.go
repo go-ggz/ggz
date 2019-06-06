@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/go-ggz/ggz/module/mailer"
 	"github.com/go-ggz/ggz/pkg/config"
+	"github.com/go-ggz/ggz/pkg/module/mailer"
 
 	"github.com/aws/aws-sdk-go/service/ses"
 	"github.com/rs/zerolog/log"

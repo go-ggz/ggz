@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/pkg/config"
+	"github.com/go-ggz/ggz/pkg/model"
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/testutil"

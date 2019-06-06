@@ -3,7 +3,7 @@ package web
 import (
 	"net/http"
 
-	"github.com/go-ggz/ggz/module/meta"
+	"github.com/go-ggz/ggz/pkg/module/meta"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"

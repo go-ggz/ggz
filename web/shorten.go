@@ -6,11 +6,11 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/go-ggz/ggz/model"
-	"github.com/go-ggz/ggz/module/storage"
 	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ggz/pkg/helper"
-	"github.com/go-ggz/ggz/pkg/router/middleware/prometheus"
+	"github.com/go-ggz/ggz/pkg/middleware/prometheus"
+	"github.com/go-ggz/ggz/pkg/model"
+	"github.com/go-ggz/ggz/pkg/module/storage"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"

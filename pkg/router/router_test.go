@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/pkg/model"
 
 	"github.com/appleboy/gofight"
 	"github.com/stretchr/testify/assert"

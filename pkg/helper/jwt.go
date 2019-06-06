@@ -3,8 +3,8 @@ package helper
 import (
 	"context"
 
-	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/pkg/config"
+	"github.com/go-ggz/ggz/pkg/model"
 
 	"github.com/dgrijalva/jwt-go"
 )

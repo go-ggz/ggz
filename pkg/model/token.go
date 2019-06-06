@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/go-ggz/ggz/module/base"
+	"github.com/go-ggz/ggz/pkg/module/base"
 
 	"github.com/satori/go.uuid"
 )

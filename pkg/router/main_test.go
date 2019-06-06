@@ -3,7 +3,7 @@ package router
 import (
 	"testing"
 
-	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/pkg/model"
 )
 
 func TestMain(m *testing.M) {

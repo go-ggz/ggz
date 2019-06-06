@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/go-ggz/ggz/model"
+	"github.com/go-ggz/ggz/pkg/model"
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/gqlerrors"

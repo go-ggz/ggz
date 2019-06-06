@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-ggz/ggz/module/meta"
+	"github.com/go-ggz/ggz/pkg/module/meta"
 
 	"github.com/appleboy/com/random"
 	"github.com/rs/zerolog/log"

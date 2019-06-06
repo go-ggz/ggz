@@ -3,8 +3,8 @@ package schema
 import (
 	"testing"
 
-	"github.com/go-ggz/ggz/model"
 	"github.com/go-ggz/ggz/pkg/config"
+	"github.com/go-ggz/ggz/pkg/model"
 
 	"github.com/kelseyhightower/envconfig"
 	"github.com/rs/zerolog/log"

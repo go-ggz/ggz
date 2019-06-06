@@ -5,9 +5,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-ggz/ggz/model"
-	"github.com/go-ggz/ggz/module/loader/lru"
-	"github.com/go-ggz/ggz/module/loader/memory"
+	"github.com/go-ggz/ggz/pkg/model"
+	"github.com/go-ggz/ggz/pkg/module/loader/lru"
+	"github.com/go-ggz/ggz/pkg/module/loader/memory"
 
 	"gopkg.in/nicksrandall/dataloader.v5"
 )
