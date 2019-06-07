@@ -5,8 +5,7 @@ go 1.12
 require (
 	firebase.google.com/go v3.8.0+incompatible
 	github.com/appleboy/com v0.0.1
-	github.com/appleboy/gofight v2.0.0+incompatible // indirect
-	github.com/appleboy/gofight/v2 v2.1.0
+	github.com/appleboy/gofight/v2 v2.0.0
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
 	github.com/aws/aws-sdk-go v1.19.41
 	github.com/codegangsta/negroni v1.0.0 // indirect
@@ -21,7 +20,6 @@ require (
 	github.com/go-xorm/core v0.6.2
 	github.com/go-xorm/xorm v0.7.1
 	github.com/googollee/go-socket.io v1.4.1
-	github.com/gorilla/mux v1.7.2 // indirect
 	github.com/graphql-go/graphql v0.7.8
 	github.com/graphql-go/handler v0.2.3
 	github.com/hashicorp/golang-lru v0.5.1
@@ -29,7 +27,6 @@ require (
 	github.com/keighl/metabolize v0.0.0-20150915210303-97ab655d4034
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.1.1
-	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0
 	github.com/minio/minio-go v6.0.14+incompatible
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
@@ -45,7 +42,7 @@ require (
 	github.com/stretchr/testify v1.3.0
 	github.com/testcontainers/testcontainers-go v0.0.4
 	golang.org/x/crypto v0.0.0-20190530122614-20be4c3c3ed5
-	golang.org/x/net v0.0.0-20190522155817-f3200d17e092
+	golang.org/x/net v0.0.0-20190522155817-f3200d17e092 // indirect
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
 	google.golang.org/api v0.5.0
 	gopkg.in/ini.v1 v1.42.0 // indirect
