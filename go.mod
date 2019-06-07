@@ -5,7 +5,7 @@ go 1.12
 require (
 	firebase.google.com/go v3.8.0+incompatible
 	github.com/appleboy/com v0.0.1
-	github.com/appleboy/gofight/v2 v2.0.0
+	github.com/appleboy/gofight/v2 v2.1.1
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
 	github.com/aws/aws-sdk-go v1.19.41
 	github.com/codegangsta/negroni v1.0.0 // indirect
