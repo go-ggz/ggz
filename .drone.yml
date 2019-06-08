@@ -14,7 +14,6 @@ steps:
   - make generate
   environment:
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   volumes:
   - name: gopath
     path: /go
@@ -26,7 +25,6 @@ steps:
   - make vet
   environment:
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   volumes:
   - name: gopath
     path: /go
@@ -38,7 +36,6 @@ steps:
   - make lint
   environment:
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   volumes:
   - name: gopath
     path: /go
@@ -50,7 +47,6 @@ steps:
   - make misspell-check
   environment:
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   volumes:
   - name: gopath
     path: /go
@@ -62,7 +58,6 @@ steps:
   - make embedmd
   environment:
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   volumes:
   - name: gopath
     path: /go
@@ -74,7 +69,6 @@ steps:
   - make test
   environment:
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   volumes:
   - name: gopath
     path: /go
@@ -108,7 +102,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
       exclude:
@@ -123,7 +116,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
     - tag
@@ -193,7 +185,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
       exclude:
@@ -208,7 +199,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
     - tag
@@ -278,7 +268,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
       exclude:
@@ -293,7 +282,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
     - tag
@@ -363,7 +351,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
       exclude:
@@ -378,7 +365,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
     - tag
@@ -448,7 +434,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
       exclude:
@@ -463,7 +448,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
     - tag
@@ -533,7 +517,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
       exclude:
@@ -548,7 +531,6 @@ steps:
   environment:
     CGO_ENABLED: 1
     GO111MODULE: on
-    GOPROXY: https://goproxy.io
   when:
     event:
     - tag
