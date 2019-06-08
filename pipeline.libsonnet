@@ -133,7 +133,7 @@
   },
 
   build(name, os='linux', arch='amd64', cgo=false)::
-    local build_sqlite = if cgo then "-tags sqlite" else "";
+    local build_sqlite = if cgo then "-tags 'sqlite sqlite_unlock_notify'" else "";
     local build_static = if cgo then "-extldflags -static" else "";
     {
       kind: 'pipeline',
