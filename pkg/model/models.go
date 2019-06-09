@@ -8,6 +8,7 @@ import (
 	"os"
 	"path"
 	"strings"
+	"time"
 
 	"github.com/go-ggz/ggz/pkg/config"
 
@@ -127,6 +128,12 @@ func SetEngine() (err error) {
 	// so use log file to instead print to stdout.
 	// x.SetLogger(log.XORMLogger)
 	x.ShowSQL(config.Server.Debug)
+
+	// see https://github.com/go-gitea/gitea/pull/7071
+	if config.Database.Driver == "mysql" {
+		x.SetMaxIdleConns(0)
+		x.SetConnMaxLifetime(3 * time.Second)
+	}
 	return nil
 }
 
