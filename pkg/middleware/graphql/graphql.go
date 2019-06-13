@@ -13,7 +13,7 @@ func Handler() gin.HandlerFunc {
 	// Creates a GraphQL-go HTTP handler with the defined schema
 	h := handler.New(&handler.Config{
 		Schema:   &schema.Schema,
-		Pretty:   true,
+		Pretty:   config.Server.GraphiQL,
 		GraphiQL: config.Server.GraphiQL,
 	})
 
