@@ -12,7 +12,7 @@ environment:
   docker_password:
     secure: Yo9FJJqihaNz5q8T4Jz8tQ==
   GO111MODULE: on
-  GOVERSION: 1.12.5
+  GOVERSION: 1.12.7
 
 branches:
   only:
