@@ -1,4 +1,4 @@
-package web
+package api
 
 import (
 	"crypto/md5"

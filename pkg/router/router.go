@@ -15,7 +15,7 @@ import (
 	"github.com/go-ggz/ggz/pkg/middleware/header"
 	"github.com/go-ggz/ggz/pkg/middleware/prometheus"
 	"github.com/go-ggz/ggz/pkg/module/storage"
-	"github.com/go-ggz/ggz/web"
+	"github.com/go-ggz/ggz/api"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/logger"
@@ -85,7 +85,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 	}
 
 	// redirect to vue page
-	e.NoRoute(gzip.Gzip(gzip.DefaultCompression), web.Index)
+	e.NoRoute(gzip.Gzip(gzip.DefaultCompression), api.Index)
 
 	// default route /
 	root := e.Group(config.Server.Root)
@@ -105,17 +105,17 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 			assets.Load(),
 		)
 
-		root.GET("", gzip.Gzip(gzip.DefaultCompression), web.Index)
-		root.GET("/favicon.ico", web.Favicon)
+		root.GET("", gzip.Gzip(gzip.DefaultCompression), api.Index)
+		root.GET("/favicon.ico", api.Favicon)
 		root.GET("/metrics", prometheus.Handler())
-		root.GET("/healthz", web.Heartbeat)
+		root.GET("/healthz", api.Heartbeat)
 		root.GET("/assets/*name", gzip.Gzip(gzip.DefaultCompression), assets.ViewHandler())
 
-		api := e.Group("/v1")
-		api.Use(auth.Check())
+		v := e.Group("/v1")
+		v.Use(auth.Check())
 		{
-			api.POST("/url/meta", web.URLMeta)
-			api.POST("/s", web.CreateShortenURL)
+			v.POST("/url/meta", api.URLMeta)
+			v.POST("/s", api.CreateShortenURL)
 		}
 
 		g := e.Group("/graphql")
@@ -165,13 +165,13 @@ func LoadRedirct(middleware ...gin.HandlerFunc) http.Handler {
 	}
 
 	// 404 not found
-	e.NoRoute(web.NotFound)
+	e.NoRoute(api.NotFound)
 
 	// default route /
 	root := e.Group(config.Server.Root)
 	{
-		root.GET("", web.Index)
-		root.GET("/:slug", web.RedirectURL)
+		root.GET("", api.Index)
+		root.GET("/:slug", api.RedirectURL)
 	}
 
 	return e

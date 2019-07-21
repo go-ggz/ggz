@@ -7,7 +7,7 @@ import (
 	"github.com/go-ggz/ggz/pkg/model"
 	"github.com/go-ggz/ggz/pkg/module/loader"
 	"github.com/go-ggz/ggz/pkg/module/meta"
-	"github.com/go-ggz/ggz/web"
+	"github.com/go-ggz/ggz/api"
 
 	"github.com/graphql-go/graphql"
 	"github.com/rs/zerolog/log"
@@ -176,7 +176,7 @@ var createShortenURL = graphql.Field{
 
 		// upload QRCode image.
 		go func(slug string) {
-			if err := web.QRCodeGenerator(slug); err != nil {
+			if err := api.QRCodeGenerator(slug); err != nil {
 				log.Error().Err(err).Msg("QRCode Generator fail")
 			}
 		}(row.Slug)
