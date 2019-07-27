@@ -13,6 +13,7 @@ require (
 	github.com/gin-contrib/gzip v0.0.1
 	github.com/gin-contrib/logger v0.0.1
 	github.com/gin-contrib/pprof v1.2.0
+	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-ggz/ui v0.0.1
 	github.com/go-ini/ini v1.42.0 // indirect
@@ -41,9 +42,12 @@ require (
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a // indirect
 	github.com/stretchr/testify v1.3.0
 	github.com/testcontainers/testcontainers-go v0.0.4
+	github.com/ugorji/go v1.1.5-pre // indirect
 	golang.org/x/crypto v0.0.0-20190530122614-20be4c3c3ed5
-	golang.org/x/net v0.0.0-20190522155817-f3200d17e092
+	golang.org/x/net v0.0.0-20190611141213-3f473d35a33a
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
+	golang.org/x/sys v0.0.0-20190610200419-93c9922d18ae // indirect
+	golang.org/x/text v0.3.2 // indirect
 	google.golang.org/api v0.5.0
 	gopkg.in/ini.v1 v1.42.0 // indirect
 	gopkg.in/nicksrandall/dataloader.v5 v5.0.0
