@@ -118,7 +118,7 @@ upx:
 
 .PHONY: test
 test: fmt-check
-	@$(GO) test -v -cover -tags $(TAGS) -coverprofile coverage.txt $(PACKAGES) && echo "\n==>\033[32m Ok\033[m\n" || exit 1
+	@$(GO) test -v -cover -tags '$(TAGS)' -coverprofile coverage.txt $(PACKAGES) && echo "\n==>\033[32m Ok\033[m\n" || exit 1
 
 a:
 	echo $(PACKAGES)
