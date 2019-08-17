@@ -2,7 +2,7 @@ package graphql
 
 import (
 	"github.com/go-ggz/ggz/pkg/config"
-	"github.com/go-ggz/ggz/schema"
+	"github.com/go-ggz/ggz/pkg/schema"
 
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/handler"
