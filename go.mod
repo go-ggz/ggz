@@ -42,7 +42,7 @@ require (
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a // indirect
 	github.com/stretchr/testify v1.3.0
 	github.com/testcontainers/testcontainers-go v0.0.4
-	github.com/ugorji/go v1.1.5-pre // indirect
+	github.com/ugorji/go v1.1.7 // indirect
 	golang.org/x/crypto v0.0.0-20190530122614-20be4c3c3ed5
 	golang.org/x/net v0.0.0-20190611141213-3f473d35a33a
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
@@ -54,7 +54,3 @@ require (
 	gopkg.in/testfixtures.v2 v2.5.3
 	gopkg.in/urfave/cli.v2 v2.0.0-20180128182452-d3ae77c26ac8
 )
-
-replace github.com/ugorji/go v1.1.4 => github.com/ugorji/go/codec v0.0.0-20190204201341-e444a5086c43
-
-replace github.com/airking05/termui v2.2.0+incompatible => github.com/airking05/termui v0.0.0-20180528121417-a42394913439
