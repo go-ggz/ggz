@@ -16,6 +16,7 @@ import (
 	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ggz/pkg/router"
 
+	"github.com/graphql-go/graphql"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/acme/autocert"
 	"golang.org/x/sync/errgroup"
@@ -370,6 +371,15 @@ func Server() *cli.Command {
 				}
 				close(idleConnsClosed)
 			}(server)
+
+			if !config.Server.Debug {
+				graphql.SchemaMetaFieldDef.Resolve = func(p graphql.ResolveParams) (interface{}, error) {
+					return nil, nil
+				}
+				graphql.TypeMetaFieldDef.Resolve = func(p graphql.ResolveParams) (interface{}, error) {
+					return nil, nil
+				}
+			}
 
 			if config.Server.LetsEncrypt || (config.Server.Cert != "" && config.Server.Key != "") {
 				cfg := &tls.Config{
