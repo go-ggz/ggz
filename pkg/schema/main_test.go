@@ -15,5 +15,5 @@ func TestMain(m *testing.M) {
 		log.Fatal().Err(err).Msg("can't load server config")
 	}
 
-	model.MainTest(m, "..")
+	model.MainTest(m, "../..")
 }
