@@ -54,3 +54,5 @@ require (
 	gopkg.in/testfixtures.v2 v2.5.3
 	gopkg.in/urfave/cli.v2 v2.0.0-20180128182452-d3ae77c26ac8
 )
+
+replace github.com/airking05/termui v2.2.0+incompatible => github.com/airking05/termui v0.0.0-20180528121417-a42394913439
