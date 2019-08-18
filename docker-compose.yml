@@ -6,12 +6,26 @@ services:
     restart: always
     ports:
       - 8080:8080
+    environment:
+      - GGZ_PROMETHEUS_AUTH_TOKEN=test-prometheus-token
 
   ggz-redirect:
     image: goggz/ggz-redirect
     restart: always
     ports:
       - 8081:8081
+    environment:
+      - GGZ_PROMETHEUS_AUTH_TOKEN=test-prometheus-token
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - grafana-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - '9090:9090'
 
   # db:
   #   image: mysql
@@ -36,6 +50,7 @@ services:
   #     MINIO_SECRET_KEY: minio1234567890
   #   command: server /data
 
-# volumes:
-#   minio-data:
-#   mysql-data:
+volumes:
+  grafana-data: {}
+  # minio-data:
+  # mysql-data:

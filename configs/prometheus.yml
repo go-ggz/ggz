@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 5s
+  external_labels:
+    monitor: 'my-monitor'
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'ggz-server'
+    static_configs:
+      - targets: ['ggz-server:8080']
+    bearer_token: 'test-prometheus-token'
+  - job_name: 'ggz-redirect'
+    static_configs:
+      - targets: ['ggz-redirect:8081']
+    bearer_token: 'test-prometheus-token'
