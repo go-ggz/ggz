@@ -106,7 +106,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 
 		root.GET("", gzip.Gzip(gzip.DefaultCompression), api.Index)
 		root.GET("/favicon.ico", api.Favicon)
-		root.GET("/metrics", prometheus.Handler())
+		root.GET("/metrics", prometheus.Handler(config.Prometheus.AuthToken))
 		root.GET("/healthz", api.Heartbeat)
 		root.GET("/assets/*name", gzip.Gzip(gzip.DefaultCompression), assets.ViewHandler())
 

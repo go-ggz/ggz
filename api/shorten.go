@@ -112,7 +112,7 @@ func RedirectURL(c *gin.Context) {
 		Heartbeat(c)
 		return
 	} else if slug == "metrics" {
-		prometheus.Handler()(c)
+		prometheus.Handler(config.Prometheus.AuthToken)(c)
 		return
 	}
 
