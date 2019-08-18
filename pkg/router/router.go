@@ -170,7 +170,6 @@ func LoadRedirct(middleware ...gin.HandlerFunc) http.Handler {
 	root := e.Group(config.Server.Root)
 	{
 		root.GET("", api.Index)
-		root.GET("/metrics", prometheus.Handler())
 		root.GET("/:slug", api.RedirectURL)
 	}
 
