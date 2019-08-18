@@ -10,10 +10,12 @@ scrape_configs:
     static_configs:
       - targets: ['ggz-server:8080']
     bearer_token: 'test-prometheus-token'
+
   - job_name: 'ggz-redirect'
     static_configs:
       - targets: ['ggz-redirect:8081']
     bearer_token: 'test-prometheus-token'
+
   - job_name: 'node resources'
     scrape_interval: 10s
     static_configs:

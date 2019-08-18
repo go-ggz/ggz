@@ -21,7 +21,7 @@ services:
     image: prom/prometheus
     volumes:
       - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
-      - grafana-data:/prometheus
+      - prometheus-data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
@@ -31,6 +31,17 @@ services:
     image: prom/node-exporter
     ports:
       - '9100:9100'
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+        - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=pass
+    depends_on:
+      - prometheus
+    ports:
+      - '3000:3000'
 
   # db:
   #   image: mysql
@@ -56,6 +67,7 @@ services:
   #   command: server /data
 
 volumes:
+  prometheus-data: {}
   grafana-data: {}
   # minio-data:
   # mysql-data:
