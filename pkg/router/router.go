@@ -151,7 +151,6 @@ func LoadRedirct(middleware ...gin.HandlerFunc) http.Handler {
 		UTC:            true,
 		SkipPathRegexp: rxURL,
 	}))
-	e.Use(gzip.Gzip(gzip.DefaultCompression))
 	e.Use(header.Options)
 	e.Use(header.Secure)
 	e.Use(middleware...)
@@ -170,9 +169,7 @@ func LoadRedirct(middleware ...gin.HandlerFunc) http.Handler {
 	root := e.Group(config.Server.Root)
 	{
 		root.GET("", api.Index)
-		root.GET("/metrics", prometheus.Handler())
-		root.GET("/healthz", api.Heartbeat)
-		root.GET("/s/:slug", api.RedirectURL)
+		root.GET("/:slug", api.RedirectURL)
 	}
 
 	return e
