@@ -5,7 +5,7 @@ LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
-EXPOSE 8080
+EXPOSE 8081
 
 COPY release/linux/amd64/ggz-redirect /bin/
 
