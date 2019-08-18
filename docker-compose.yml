@@ -27,6 +27,11 @@ services:
     ports:
       - '9090:9090'
 
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - '9100:9100'
+
   # db:
   #   image: mysql
   #   restart: always
