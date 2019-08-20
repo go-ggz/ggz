@@ -158,3 +158,17 @@ func NewEngine() (err error) {
 
 	return nil
 }
+
+// Statistic contains the database statistics
+type Statistic struct {
+	Counter struct {
+		User, Shorten int64
+	}
+}
+
+// GetStatistic returns the database statistics
+func GetStatistic() (stats Statistic) {
+	stats.Counter.User, _ = x.Count(new(User))
+	stats.Counter.Shorten, _ = x.Count(new(Shorten))
+	return
+}

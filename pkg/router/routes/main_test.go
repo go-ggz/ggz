@@ -1,4 +1,4 @@
-package router
+package routes
 
 import (
 	"testing"
@@ -7,5 +7,5 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	model.MainTest(m, "../..")
+	model.MainTest(m, "../../..")
 }

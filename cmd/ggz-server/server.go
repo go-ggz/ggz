@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/go-ggz/ggz/pkg/config"
-	"github.com/go-ggz/ggz/pkg/router"
+	"github.com/go-ggz/ggz/pkg/router/routes"
 
 	"github.com/graphql-go/graphql"
 	"github.com/rs/zerolog/log"
@@ -341,11 +341,11 @@ func Server() *cli.Command {
 
 			// load global script
 			log.Info().Msg("Initial module engine.")
-			router.GlobalInit()
+			routes.GlobalInit()
 
 			server := &http.Server{
 				Addr:         config.Server.Addr,
-				Handler:      router.Load(),
+				Handler:      routes.Load(),
 				ReadTimeout:  5 * time.Second,
 				WriteTimeout: 10 * time.Second,
 			}

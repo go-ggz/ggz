@@ -8,9 +8,9 @@ import (
 
 	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ggz/pkg/helper"
-	"github.com/go-ggz/ggz/pkg/middleware/prometheus"
 	"github.com/go-ggz/ggz/pkg/model"
 	"github.com/go-ggz/ggz/pkg/module/storage"
+	"github.com/go-ggz/ggz/pkg/router"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -112,7 +112,7 @@ func RedirectURL(c *gin.Context) {
 		Heartbeat(c)
 		return
 	} else if slug == "metrics" {
-		prometheus.Handler(config.Prometheus.AuthToken)(c)
+		router.Metrics(config.Prometheus.AuthToken)(c)
 		return
 	}
 
