@@ -1,4 +1,4 @@
-package router
+package routes
 
 import (
 	"net/http"
@@ -11,15 +11,17 @@ import (
 	"github.com/go-ggz/ggz/pkg/middleware/auth"
 	"github.com/go-ggz/ggz/pkg/middleware/graphql"
 	"github.com/go-ggz/ggz/pkg/middleware/header"
-	"github.com/go-ggz/ggz/pkg/middleware/prometheus"
 	"github.com/go-ggz/ggz/pkg/model"
 	"github.com/go-ggz/ggz/pkg/module/loader"
+	"github.com/go-ggz/ggz/pkg/module/metrics"
 	"github.com/go-ggz/ggz/pkg/module/storage"
+	"github.com/go-ggz/ggz/pkg/router"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/rs/zerolog/log"
 )
 
@@ -64,6 +66,9 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
+	c := metrics.NewCollector()
+	prometheus.MustRegister(c)
+
 	e := gin.New()
 
 	e.Use(gin.Recovery())
@@ -106,7 +111,7 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 
 		root.GET("", gzip.Gzip(gzip.DefaultCompression), api.Index)
 		root.GET("/favicon.ico", api.Favicon)
-		root.GET("/metrics", prometheus.Handler(config.Prometheus.AuthToken))
+		root.GET("/metrics", router.Metrics(config.Prometheus.AuthToken))
 		root.GET("/healthz", api.Heartbeat)
 		root.GET("/assets/*name", gzip.Gzip(gzip.DefaultCompression), assets.ViewHandler())
 

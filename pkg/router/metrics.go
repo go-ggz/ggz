@@ -1,4 +1,4 @@
-package prometheus
+package router
 
 import (
 	"errors"
@@ -14,8 +14,8 @@ var (
 	errInvalidToken = errors.New("Invalid or missing token")
 )
 
-// Handler initializes the prometheus middleware.
-func Handler(token string) gin.HandlerFunc {
+// Metrics initializes the prometheus handler.
+func Metrics(token string) gin.HandlerFunc {
 	h := promhttp.Handler()
 
 	return func(c *gin.Context) {
