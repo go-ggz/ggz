@@ -308,13 +308,13 @@ func Server() *cli.Command {
 			},
 			&cli.StringFlag{
 				Name:        "metrics-auth-token",
-				EnvVars:     []string{"CP_METRICS_TOKEN"},
+				EnvVars:     []string{"GGZ_METRICS_TOKEN"},
 				Usage:       "token to secure prometheus metrics endpoint",
 				Destination: &config.Metrics.Token,
 			},
 			&cli.BoolFlag{
 				Name:        "metrics-enabled",
-				EnvVars:     []string{"CP_METRICS_ENABLED"},
+				EnvVars:     []string{"GGZ_METRICS_ENABLED"},
 				Usage:       "enable prometheus metrics",
 				Destination: &config.Metrics.Enabled,
 			},
