@@ -111,9 +111,11 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 
 		root.GET("", gzip.Gzip(gzip.DefaultCompression), api.Index)
 		root.GET("/favicon.ico", api.Favicon)
-		root.GET("/metrics", router.Metrics(config.Prometheus.AuthToken))
 		root.GET("/healthz", api.Heartbeat)
 		root.GET("/assets/*name", gzip.Gzip(gzip.DefaultCompression), assets.ViewHandler())
+		if config.Metrics.Enabled {
+			root.GET("/metrics", router.Metrics(config.Metrics.Token))
+		}
 
 		v := e.Group("/v1")
 		v.Use(auth.Check())

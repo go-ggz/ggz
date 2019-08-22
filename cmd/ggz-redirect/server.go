@@ -307,10 +307,16 @@ func Server() *cli.Command {
 				Destination: &config.Cache.Prefix,
 			},
 			&cli.StringFlag{
-				Name:        "prometheus-auth-token",
-				EnvVars:     []string{"GGZ_PROMETHEUS_AUTH_TOKEN"},
+				Name:        "metrics-auth-token",
+				EnvVars:     []string{"CP_METRICS_TOKEN"},
 				Usage:       "token to secure prometheus metrics endpoint",
-				Destination: &config.Prometheus.AuthToken,
+				Destination: &config.Metrics.Token,
+			},
+			&cli.BoolFlag{
+				Name:        "metrics-enabled",
+				EnvVars:     []string{"CP_METRICS_ENABLED"},
+				Usage:       "enable prometheus metrics",
+				Destination: &config.Metrics.Enabled,
 			},
 		},
 		Before: func(c *cli.Context) error {

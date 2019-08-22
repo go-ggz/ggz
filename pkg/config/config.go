@@ -79,8 +79,9 @@ type auth struct {
 	Driver string
 }
 
-type prometheus struct {
-	AuthToken string
+type metrics struct {
+	Token   string
+	Enabled bool
 }
 
 type logs struct {
@@ -147,8 +148,8 @@ var (
 	// Cache for redis, lur or memory cache
 	Cache = &cache{}
 
-	// Prometheus config
-	Prometheus = &prometheus{}
+	// Metrics config
+	Metrics = &metrics{}
 
 	// Logs for zerolog
 	Logs = &logs{}
