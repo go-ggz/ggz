@@ -1,4 +1,4 @@
-package graphql
+package router
 
 import (
 	"github.com/go-ggz/ggz/pkg/config"
@@ -8,8 +8,8 @@ import (
 	"github.com/graphql-go/handler"
 )
 
-// Handler initializes the prometheus middleware.
-func Handler() gin.HandlerFunc {
+// GraphQL initializes the graphql handler.
+func GraphQL() gin.HandlerFunc {
 	// Creates a GraphQL-go HTTP handler with the defined schema
 	h := handler.New(&handler.Config{
 		Schema:   &schema.Schema,

@@ -1,20 +1,16 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 	"regexp"
-	"strings"
 
 	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ggz/pkg/helper"
 	"github.com/go-ggz/ggz/pkg/model"
-	"github.com/go-ggz/ggz/pkg/module/storage"
 	"github.com/go-ggz/ggz/pkg/router"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"github.com/skip2/go-qrcode"
 )
 
 var shortenPattern = regexp.MustCompile(`^[a-zA-Z0-9]+$`)
@@ -62,7 +58,7 @@ func CreateShortenURL(c *gin.Context) {
 
 	// upload QRCode image.
 	go func(slug string) {
-		if err := QRCodeGenerator(slug); err != nil {
+		if err := helper.QRCodeGenerator(slug); err != nil {
 			log.Error().Err(err).Msg("QRCode Generator fail")
 		}
 	}(row.Slug)
@@ -136,20 +132,4 @@ func RedirectURL(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusMovedPermanently, row.URL)
-}
-
-// QRCodeGenerator create QRCode
-func QRCodeGenerator(slug string) error {
-	objectName := fmt.Sprintf("%s.png", slug)
-	host := strings.TrimRight(config.Server.ShortenHost, "/")
-	png, err := qrcode.Encode(host+"/"+slug, qrcode.Medium, 256)
-	if err != nil {
-		return nil
-	}
-
-	return storage.S3.UploadFile(
-		config.Minio.Bucket,
-		objectName,
-		png,
-	)
 }

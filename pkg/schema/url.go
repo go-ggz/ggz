@@ -1,7 +1,6 @@
 package schema
 
 import (
-	"github.com/go-ggz/ggz/api"
 	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ggz/pkg/errors"
 	"github.com/go-ggz/ggz/pkg/helper"
@@ -176,7 +175,7 @@ var createShortenURL = graphql.Field{
 
 		// upload QRCode image.
 		go func(slug string) {
-			if err := api.QRCodeGenerator(slug); err != nil {
+			if err := helper.QRCodeGenerator(slug); err != nil {
 				log.Error().Err(err).Msg("QRCode Generator fail")
 			}
 		}(row.Slug)

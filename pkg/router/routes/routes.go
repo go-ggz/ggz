@@ -9,7 +9,6 @@ import (
 	"github.com/go-ggz/ggz/assets"
 	"github.com/go-ggz/ggz/pkg/config"
 	"github.com/go-ggz/ggz/pkg/middleware/auth"
-	"github.com/go-ggz/ggz/pkg/middleware/graphql"
 	"github.com/go-ggz/ggz/pkg/middleware/header"
 	"github.com/go-ggz/ggz/pkg/model"
 	"github.com/go-ggz/ggz/pkg/module/loader"
@@ -127,9 +126,9 @@ func Load(middleware ...gin.HandlerFunc) http.Handler {
 		g := e.Group("/graphql")
 		g.Use(auth.Check())
 		{
-			g.POST("", graphql.Handler())
+			g.POST("", router.GraphQL())
 			if config.Server.GraphiQL {
-				g.GET("", graphql.Handler())
+				g.GET("", router.GraphQL())
 			}
 		}
 
