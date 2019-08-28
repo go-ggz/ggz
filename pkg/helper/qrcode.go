@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-  "github.com/go-ggz/ggz/pkg/module/storage"
-  "github.com/go-ggz/ggz/pkg/config"
+	"github.com/go-ggz/ggz/pkg/config"
+	"github.com/go-ggz/ggz/pkg/module/storage"
 
 	"github.com/skip2/go-qrcode"
 )

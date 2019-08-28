@@ -14,5 +14,10 @@ var (
 
 // PrintCLIVersion print server info
 func PrintCLIVersion() string {
-	return fmt.Sprintf("version %s, built on %s, %s", Version, BuildDate, runtime.Version())
+	return fmt.Sprintf(
+		"version %s, built on %s, %s",
+		Version,
+		BuildDate,
+		runtime.Version(),
+	)
 }
