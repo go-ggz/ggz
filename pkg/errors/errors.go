@@ -121,7 +121,7 @@ func EBadRequest(msg string, err error, arg ...interface{}) error {
 	return New(BadRequest, fmt.Sprintf(msg, arg...), err)
 }
 
-// EAlreadyExists creates an error of type EAlreadyExistsl
+// EAlreadyExists creates an error of type AlreadyExists
 func EAlreadyExists(msg string, err error, arg ...interface{}) error {
 	return New(AlreadyExists, fmt.Sprintf(msg, arg...), err)
 }
