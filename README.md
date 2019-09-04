@@ -16,11 +16,12 @@ An URL shortener service written in Golang.
 * Support [MySQL](https://www.mysql.com/), [Postgres](https://www.postgresql.org/) or [SQLite](https://www.sqlite.org/) Database.
 * Support [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) or [GraphQL](http://graphql.org/) API.
 * Support [Auth0](https://auth0.com/) or [Firebase](https://firebase.google.com/) Single Sign On (default is `auth0`).
-* Support expose [prometheus](https://prometheus.io/) metrics.
+* Support expose [prometheus](https://prometheus.io/) metrics and database data like count of registerd users.
 * Support install TLS certificates from [Let's Encrypt](https://letsencrypt.org/) automatically.
 * Support [QR Code](https://en.wikipedia.org/wiki/QR_code) Generator from shorten URL.
 * Support local disk storage or [Minio Object Storage](https://minio.io/).
 * Support linux and windows container, see [Docker Hub](https://hub.docker.com/r/goggz/ggz/tags/).
+* Support integrate with [Grafana](https://grafana.com/) service.
 
 ## Start app using docker-compose
 
