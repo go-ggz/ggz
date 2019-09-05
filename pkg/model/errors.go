@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -12,8 +13,7 @@ type ErrURLExist struct {
 
 // IsErrURLExist checks if an error is a ErrURLExist.
 func IsErrURLExist(err error) bool {
-	_, ok := err.(ErrURLExist)
-	return ok
+	return errors.As(err, &ErrURLExist{})
 }
 
 func (err ErrURLExist) Error() string {
@@ -29,8 +29,7 @@ type ErrUserNotExist struct {
 
 // IsErrUserNotExist checks if an error is a ErrUserNotExist.
 func IsErrUserNotExist(err error) bool {
-	_, ok := err.(ErrUserNotExist)
-	return ok
+	return errors.As(err, &ErrUserNotExist{})
 }
 
 func (err ErrUserNotExist) Error() string {
@@ -44,8 +43,7 @@ type ErrShortenNotExist struct {
 
 // IsErrShortenNotExist checks if an error is a ErrUserNotExist.
 func IsErrShortenNotExist(err error) bool {
-	_, ok := err.(ErrShortenNotExist)
-	return ok
+	return errors.As(err, &ErrShortenNotExist{})
 }
 
 func (err ErrShortenNotExist) Error() string {
@@ -59,8 +57,7 @@ type ErrUserAlreadyExist struct {
 
 // IsErrUserAlreadyExist checks if an error is a ErrUserAlreadyExists.
 func IsErrUserAlreadyExist(err error) bool {
-	_, ok := err.(ErrUserAlreadyExist)
-	return ok
+	return errors.As(err, &ErrUserAlreadyExist{})
 }
 
 func (err ErrUserAlreadyExist) Error() string {
@@ -74,8 +71,7 @@ type ErrEmailAlreadyUsed struct {
 
 // IsErrEmailAlreadyUsed checks if an error is a ErrEmailAlreadyUsed.
 func IsErrEmailAlreadyUsed(err error) bool {
-	_, ok := err.(ErrEmailAlreadyUsed)
-	return ok
+	return errors.As(err, &ErrEmailAlreadyUsed{})
 }
 
 func (err ErrEmailAlreadyUsed) Error() string {
@@ -89,8 +85,7 @@ type ErrAccessTokenNotExist struct {
 
 // IsErrAccessTokenNotExist checks if an error is a ErrAccessTokenNotExist.
 func IsErrAccessTokenNotExist(err error) bool {
-	_, ok := err.(ErrAccessTokenNotExist)
-	return ok
+	return errors.As(err, &ErrAccessTokenNotExist{})
 }
 
 func (err ErrAccessTokenNotExist) Error() string {
@@ -103,8 +98,7 @@ type ErrAccessTokenEmpty struct {
 
 // IsErrAccessTokenEmpty checks if an error is a ErrAccessTokenEmpty.
 func IsErrAccessTokenEmpty(err error) bool {
-	_, ok := err.(ErrAccessTokenEmpty)
-	return ok
+	return errors.As(err, &ErrAccessTokenEmpty{})
 }
 
 func (err ErrAccessTokenEmpty) Error() string {
