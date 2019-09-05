@@ -9,11 +9,8 @@
     steps: [
       {
         name: 'generate',
-        image: 'golang:1.12',
+        image: 'golang:1.13',
         pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
         commands: [
           'make generate',
         ],
@@ -26,11 +23,8 @@
       },
       {
         name: 'vet',
-        image: 'golang:1.12',
+        image: 'golang:1.13',
         pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
         commands: [
           'make vet',
         ],
@@ -43,11 +37,8 @@
       },
       {
         name: 'lint',
-        image: 'golang:1.12',
+        image: 'golang:1.13',
         pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
         commands: [
           'make lint',
         ],
@@ -60,11 +51,8 @@
       },
       {
         name: 'misspell',
-        image: 'golang:1.12',
+        image: 'golang:1.13',
         pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
         commands: [
           'make misspell-check',
         ],
@@ -77,11 +65,8 @@
       },
       {
         name: 'embedmd',
-        image: 'golang:1.12',
+        image: 'golang:1.13',
         pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
         commands: [
           'make embedmd',
         ],
@@ -94,11 +79,8 @@
       },
       {
         name: 'test',
-        image: 'golang:1.12',
+        image: 'golang:1.13',
         pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
         commands: [
           'make test',
         ],
@@ -139,10 +121,9 @@
       steps: [
         {
           name: 'build-push',
-          image: 'golang:1.12',
+          image: 'golang:1.13',
           pull: 'always',
           environment: {
-            GO111MODULE: 'on',
             CGO_ENABLED: if cgo then "1" else "0",
           },
           commands: [
@@ -157,10 +138,9 @@
         },
         {
           name: 'build-tag',
-          image: 'golang:1.12',
+          image: 'golang:1.13',
           pull: 'always',
           environment: {
-            GO111MODULE: 'on',
             CGO_ENABLED: if cgo then "1" else "0",
           },
           commands: [
@@ -173,7 +153,7 @@
         },
         {
           name: 'executable',
-          image: 'golang:1.12',
+          image: 'golang:1.13',
           pull: 'always',
           commands: [
             './release/' + os + '/' + arch + '/' + name + ' --help',
@@ -238,11 +218,8 @@
     steps: [
       {
         name: 'generate',
-        image: 'golang:1.12',
+        image: 'golang:1.13',
         pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
         commands: [
           'make generate',
         ],
@@ -255,11 +232,8 @@
       },
       {
         name: 'build-all-binary',
-        image: 'golang:1.12',
+        image: 'golang:1.13',
         pull: 'always',
-        environment: {
-          GO111MODULE: 'on',
-        },
         commands: [
           'make release'
         ],

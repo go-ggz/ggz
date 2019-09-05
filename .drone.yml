@@ -9,66 +9,54 @@ platform:
 steps:
 - name: generate
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  environment:
-    GO111MODULE: on
   volumes:
   - name: gopath
     path: /go
 
 - name: vet
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make vet
-  environment:
-    GO111MODULE: on
   volumes:
   - name: gopath
     path: /go
 
 - name: lint
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make lint
-  environment:
-    GO111MODULE: on
   volumes:
   - name: gopath
     path: /go
 
 - name: misspell
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make misspell-check
-  environment:
-    GO111MODULE: on
   volumes:
   - name: gopath
     path: /go
 
 - name: embedmd
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make embedmd
-  environment:
-    GO111MODULE: on
   volumes:
   - name: gopath
     path: /go
 
 - name: test
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make test
-  environment:
-    GO111MODULE: on
   volumes:
   - name: gopath
     path: /go
@@ -95,13 +83,12 @@ platform:
 steps:
 - name: build-push
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/amd64/ggz-server ./cmd/ggz-server"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/amd64/ggz-server ./cmd/ggz-server
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
       exclude:
@@ -109,20 +96,19 @@ steps:
 
 - name: build-tag
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/amd64/ggz-server ./cmd/ggz-server"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/amd64/ggz-server ./cmd/ggz-server
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
     - tag
 
 - name: executable
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - ./release/linux/amd64/ggz-server --help
 
@@ -161,8 +147,8 @@ steps:
 trigger:
   ref:
   - refs/heads/master
-  - "refs/pull/**"
-  - "refs/tags/**"
+  - refs/pull/**
+  - refs/tags/**
 
 depends_on:
 - testing
@@ -178,13 +164,12 @@ platform:
 steps:
 - name: build-push
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm64/ggz-server ./cmd/ggz-server"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/arm64/ggz-server ./cmd/ggz-server
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
       exclude:
@@ -192,20 +177,19 @@ steps:
 
 - name: build-tag
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm64/ggz-server ./cmd/ggz-server"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/arm64/ggz-server ./cmd/ggz-server
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
     - tag
 
 - name: executable
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - ./release/linux/arm64/ggz-server --help
 
@@ -244,8 +228,8 @@ steps:
 trigger:
   ref:
   - refs/heads/master
-  - "refs/pull/**"
-  - "refs/tags/**"
+  - refs/pull/**
+  - refs/tags/**
 
 depends_on:
 - testing
@@ -261,13 +245,12 @@ platform:
 steps:
 - name: build-push
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm/ggz-server ./cmd/ggz-server"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/arm/ggz-server ./cmd/ggz-server
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
       exclude:
@@ -275,20 +258,19 @@ steps:
 
 - name: build-tag
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm/ggz-server ./cmd/ggz-server"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/arm/ggz-server ./cmd/ggz-server
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
     - tag
 
 - name: executable
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - ./release/linux/arm/ggz-server --help
 
@@ -327,8 +309,8 @@ steps:
 trigger:
   ref:
   - refs/heads/master
-  - "refs/pull/**"
-  - "refs/tags/**"
+  - refs/pull/**
+  - refs/tags/**
 
 depends_on:
 - testing
@@ -344,13 +326,12 @@ platform:
 steps:
 - name: build-push
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/amd64/ggz-redirect ./cmd/ggz-redirect"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/amd64/ggz-redirect ./cmd/ggz-redirect
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
       exclude:
@@ -358,20 +339,19 @@ steps:
 
 - name: build-tag
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/amd64/ggz-redirect ./cmd/ggz-redirect"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/amd64/ggz-redirect ./cmd/ggz-redirect
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
     - tag
 
 - name: executable
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - ./release/linux/amd64/ggz-redirect --help
 
@@ -410,8 +390,8 @@ steps:
 trigger:
   ref:
   - refs/heads/master
-  - "refs/pull/**"
-  - "refs/tags/**"
+  - refs/pull/**
+  - refs/tags/**
 
 depends_on:
 - testing
@@ -427,13 +407,12 @@ platform:
 steps:
 - name: build-push
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm64/ggz-redirect ./cmd/ggz-redirect"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/arm64/ggz-redirect ./cmd/ggz-redirect
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
       exclude:
@@ -441,20 +420,19 @@ steps:
 
 - name: build-tag
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm64/ggz-redirect ./cmd/ggz-redirect"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/arm64/ggz-redirect ./cmd/ggz-redirect
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
     - tag
 
 - name: executable
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - ./release/linux/arm64/ggz-redirect --help
 
@@ -493,8 +471,8 @@ steps:
 trigger:
   ref:
   - refs/heads/master
-  - "refs/pull/**"
-  - "refs/tags/**"
+  - refs/pull/**
+  - refs/tags/**
 
 depends_on:
 - testing
@@ -510,13 +488,12 @@ platform:
 steps:
 - name: build-push
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm/ggz-redirect ./cmd/ggz-redirect"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_COMMIT_SHA:0:8} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/arm/ggz-redirect ./cmd/ggz-redirect
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
       exclude:
@@ -524,20 +501,19 @@ steps:
 
 - name: build-tag
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  - "go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags \"-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`\" -a -o release/linux/arm/ggz-redirect ./cmd/ggz-redirect"
+  - go build -v -tags 'sqlite sqlite_unlock_notify' -ldflags "-extldflags -static -X github.com/go-ggz/ggz/pkg/version.Version=${DRONE_TAG##v} -X github.com/go-ggz/ggz/pkg/version.BuildDate=`date -u +%Y-%m-%dT%H:%M:%SZ`" -a -o release/linux/arm/ggz-redirect ./cmd/ggz-redirect
   environment:
     CGO_ENABLED: 1
-    GO111MODULE: on
   when:
     event:
     - tag
 
 - name: executable
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - ./release/linux/arm/ggz-redirect --help
 
@@ -576,8 +552,8 @@ steps:
 trigger:
   ref:
   - refs/heads/master
-  - "refs/pull/**"
-  - "refs/tags/**"
+  - refs/pull/**
+  - refs/tags/**
 
 depends_on:
 - testing
@@ -593,22 +569,18 @@ platform:
 steps:
 - name: generate
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make generate
-  environment:
-    GO111MODULE: on
   volumes:
   - name: gopath
     path: /go
 
 - name: build-all-binary
   pull: always
-  image: golang:1.12
+  image: golang:1.13
   commands:
   - make release
-  environment:
-    GO111MODULE: on
   volumes:
   - name: gopath
     path: /go
@@ -623,14 +595,14 @@ steps:
     api_key:
       from_secret: github_release_api_key
     files:
-    - "dist/release/*"
+    - dist/release/*
   when:
     event:
     - tag
 
 trigger:
   ref:
-  - "refs/tags/**"
+  - refs/tags/**
 
 depends_on:
 - testing
@@ -658,7 +630,7 @@ steps:
 trigger:
   ref:
   - refs/heads/master
-  - "refs/tags/**"
+  - refs/tags/**
 
 depends_on:
 - ggz-server-linux-amd64
@@ -689,7 +661,7 @@ steps:
 trigger:
   ref:
   - refs/heads/master
-  - "refs/tags/**"
+  - refs/tags/**
 
 depends_on:
 - ggz-redirect-linux-amd64
