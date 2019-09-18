@@ -80,11 +80,20 @@ embedmd:
 vet:
 	$(GO) vet $(PACKAGES)
 
+.PHONY: lint
 lint:
 	@hash revive > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		$(GO) get -u github.com/mgechev/revive; \
 	fi
 	revive -config .revive.toml ./... || exit 1
+
+.PHONY: golangci-lint
+golangci-lint:
+	@hash golangci-lint > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		export BINARY="golangci-lint"; \
+		curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(GOPATH)/bin v1.18.0; \
+	fi
+	golangci-lint run --deadline=3m
 
 install: $(GOFILES)
 	$(GO) install -v -tags '$(TAGS)' -ldflags '$(EXTLDFLAGS)-s -w $(LDFLAGS)'

@@ -72,7 +72,9 @@ func globalBefore() cli.BeforeFunc {
 
 func main() {
 	if env := os.Getenv("GGZ_ENV_FILE"); env != "" {
-		godotenv.Load(env)
+		if err := godotenv.Load(env); err != nil {
+			log.Fatal().Err(err).Msg("can't load env file")
+		}
 	}
 
 	app := &cli.App{
