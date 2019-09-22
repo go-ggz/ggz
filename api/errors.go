@@ -8,6 +8,7 @@ var (
 	errBadRequest   = InnError{Code: 101, Message: "Bad Input Request"}
 	errSlugNotMatch = InnError{Code: 102, Message: "Slug Not Match"}
 	errSlugNotFound = InnError{Code: 103, Message: "Slug Not Found"}
+	errNotLogin     = InnError{Code: 104, Message: "user not login"}
 
 	// Internal Server Error
 	errInternalServer = InnError{Code: 500, Message: "Internal Server Error"}
