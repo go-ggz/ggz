@@ -12,17 +12,13 @@ environment:
   docker_password:
     secure: Yo9FJJqihaNz5q8T4Jz8tQ==
   GO111MODULE: on
-  GOVERSION: 1.13.4
+  GOVERSION: 1.13.3
 
 branches:
   only:
     - master
 
 install:
-  # Install the specific Go version.
-  - rmdir c:\go /s /q
-  - appveyor DownloadFile https://storage.googleapis.com/golang/go%GOVERSION%.windows-amd64.msi
-  - msiexec /i go%GOVERSION%.windows-amd64.msi /q
   - go version
   - go env
   - ps: |
