@@ -17,9 +17,9 @@ import (
 	"github.com/go-ggz/ggz/pkg/router/routes"
 
 	"github.com/rs/zerolog/log"
+	"github.com/urfave/cli/v2"
 	"golang.org/x/crypto/acme/autocert"
 	"golang.org/x/sync/errgroup"
-	"github.com/urfave/cli/v2"
 )
 
 var (
