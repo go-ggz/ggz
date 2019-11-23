@@ -9,7 +9,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/ses"
 	"github.com/rs/zerolog/log"
-	"gopkg.in/urfave/cli.v2"
+	"github.com/urfave/cli/v2"
 )
 
 // Mail provides the sub-command to send email.

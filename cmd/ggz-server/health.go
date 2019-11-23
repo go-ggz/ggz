@@ -7,7 +7,7 @@ import (
 	"github.com/go-ggz/ggz/pkg/config"
 
 	"github.com/rs/zerolog/log"
-	"gopkg.in/urfave/cli.v2"
+	"github.com/urfave/cli/v2"
 )
 
 func healthAction() cli.ActionFunc {

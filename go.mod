@@ -47,6 +47,7 @@ require (
 	github.com/stretchr/testify v1.3.0
 	github.com/testcontainers/testcontainers-go v0.0.4
 	github.com/ugorji/go v1.1.7 // indirect
+	github.com/urfave/cli/v2 v2.0.0
 	golang.org/x/crypto v0.0.0-20190618222545-ea8f1a30c443
 	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
@@ -56,7 +57,6 @@ require (
 	gopkg.in/ini.v1 v1.42.0 // indirect
 	gopkg.in/nicksrandall/dataloader.v5 v5.0.0
 	gopkg.in/testfixtures.v2 v2.5.3
-	gopkg.in/urfave/cli.v2 v2.0.0-20180128182452-d3ae77c26ac8
 )
 
 replace github.com/airking05/termui v2.2.0+incompatible => github.com/airking05/termui v0.0.0-20180528121417-a42394913439
