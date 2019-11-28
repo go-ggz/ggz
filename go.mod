@@ -13,8 +13,7 @@ require (
 	github.com/gin-contrib/gzip v0.0.1
 	github.com/gin-contrib/logger v0.0.1
 	github.com/gin-contrib/pprof v1.2.0
-	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.4.0
+	github.com/gin-gonic/gin v1.5.0
 	github.com/go-ggz/ui v0.0.1
 	github.com/go-ini/ini v1.42.0 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
@@ -44,14 +43,12 @@ require (
 	github.com/skip2/go-qrcode v0.0.0-20190110000554-dc11ecdae0a9
 	github.com/smartystreets/assertions v0.0.0-20190116191733-b6c0e53d7304 // indirect
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a // indirect
-	github.com/stretchr/testify v1.3.0
+	github.com/stretchr/testify v1.4.0
 	github.com/testcontainers/testcontainers-go v0.0.4
-	github.com/ugorji/go v1.1.7 // indirect
 	github.com/urfave/cli/v2 v2.0.0
 	golang.org/x/crypto v0.0.0-20190618222545-ea8f1a30c443
 	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
-	golang.org/x/sys v0.0.0-20190618155005-516e3c20635f // indirect
 	golang.org/x/text v0.3.2 // indirect
 	google.golang.org/api v0.5.0
 	gopkg.in/ini.v1 v1.42.0 // indirect
