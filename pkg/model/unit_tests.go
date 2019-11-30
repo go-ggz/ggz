@@ -8,10 +8,10 @@ import (
 
 	"github.com/go-ggz/ggz/pkg/config"
 
-	"xorm.io/core"
-	"xorm.io/xorm"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/testfixtures.v2"
+	"xorm.io/core"
+	"xorm.io/xorm"
 )
 
 func fatalTestError(fmtStr string, args ...interface{}) {
