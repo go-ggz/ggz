@@ -18,9 +18,9 @@ import (
 	// Needed for the Postgresql driver
 	_ "github.com/lib/pq"
 
-	"github.com/go-xorm/core"
-	"github.com/go-xorm/xorm"
-	"github.com/go-xorm/xorm/migrate"
+	"xorm.io/core"
+	"xorm.io/xorm"
+	"xorm.io/xorm/migrate"
 )
 
 var (

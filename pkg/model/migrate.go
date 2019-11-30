@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/go-xorm/xorm/migrate"
+	"xorm.io/xorm/migrate"
 )
 
 // Migrations for db migrate

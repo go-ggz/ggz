@@ -8,8 +8,8 @@ import (
 
 	"github.com/go-ggz/ggz/pkg/config"
 
-	"github.com/go-xorm/core"
-	"github.com/go-xorm/xorm"
+	"xorm.io/core"
+	"xorm.io/xorm"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/testfixtures.v2"
 )

@@ -17,8 +17,6 @@ require (
 	github.com/go-ggz/ui v0.0.1
 	github.com/go-ini/ini v1.42.0 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
-	github.com/go-xorm/core v0.6.2
-	github.com/go-xorm/xorm v0.7.3-0.20190620151208-f1b4f8368459
 	github.com/google/go-cmp v0.3.0 // indirect
 	github.com/googollee/go-socket.io v1.4.1
 	github.com/gopherjs/gopherjs v0.0.0-20181103185306-d547d1d9531e // indirect
@@ -54,6 +52,8 @@ require (
 	gopkg.in/ini.v1 v1.42.0 // indirect
 	gopkg.in/nicksrandall/dataloader.v5 v5.0.0
 	gopkg.in/testfixtures.v2 v2.5.3
+	xorm.io/core v0.7.2
+	xorm.io/xorm v0.8.0
 )
 
 replace github.com/airking05/termui v2.2.0+incompatible => github.com/airking05/termui v0.0.0-20180528121417-a42394913439
