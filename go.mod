@@ -5,7 +5,7 @@ go 1.12
 require (
 	firebase.google.com/go v3.8.0+incompatible
 	github.com/appleboy/com v0.0.1
-	github.com/appleboy/gofight/v2 v2.1.1
+	github.com/appleboy/gofight/v2 v2.1.2
 	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
 	github.com/aws/aws-sdk-go v1.19.41
 	github.com/codegangsta/negroni v1.0.0 // indirect
@@ -20,6 +20,7 @@ require (
 	github.com/google/go-cmp v0.3.0 // indirect
 	github.com/googollee/go-socket.io v1.4.1
 	github.com/gopherjs/gopherjs v0.0.0-20181103185306-d547d1d9531e // indirect
+	github.com/gorilla/mux v1.7.2 // indirect
 	github.com/graphql-go/graphql v0.7.8
 	github.com/graphql-go/handler v0.2.3
 	github.com/hashicorp/golang-lru v0.5.1
