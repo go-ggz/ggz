@@ -21,7 +21,7 @@ require (
 	github.com/googollee/go-socket.io v1.4.1
 	github.com/gopherjs/gopherjs v0.0.0-20181103185306-d547d1d9531e // indirect
 	github.com/gorilla/mux v1.7.2 // indirect
-	github.com/graphql-go/graphql v0.7.8
+	github.com/graphql-go/graphql v0.7.9
 	github.com/graphql-go/handler v0.2.3
 	github.com/hashicorp/golang-lru v0.5.1
 	github.com/joho/godotenv v1.3.0
