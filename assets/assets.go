@@ -60,7 +60,7 @@ func (c ChainedFS) Open(origPath string) (http.File, error) {
 
 // ReadSource is adapTed from ioutil
 func ReadSource(origPath string) (content []byte, err error) {
-	content, err = ReadFile(origPath)
+	content, err = ioutil.ReadFile(origPath)
 
 	if err != nil {
 		log.Warn().Err(err).Msgf("Failed to read builtin %s file.", origPath)
