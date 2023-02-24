@@ -45,10 +45,9 @@ require (
 	github.com/stretchr/testify v1.4.0
 	github.com/testcontainers/testcontainers-go v0.0.4
 	github.com/urfave/cli/v2 v2.0.0
-	golang.org/x/crypto v0.0.0-20190618222545-ea8f1a30c443
-	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
-	golang.org/x/sync v0.0.0-20190423024810-112230192c58
-	golang.org/x/text v0.3.2 // indirect
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
+	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
 	google.golang.org/api v0.5.0
 	gopkg.in/ini.v1 v1.42.0 // indirect
 	gopkg.in/nicksrandall/dataloader.v5 v5.0.0
